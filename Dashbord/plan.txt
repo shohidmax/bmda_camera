@@ -1,0 +1,18 @@
+crate an next js app 
+
+feature : login and register with firebase auth and database
+        user will be logged in and user will be able to access the dashboard
+        user can access device 
+        user can see ther live camera information 
+        user can share access with other user
+        user can see history image and video
+        user can login with username and password 
+        user can login with google login button
+        user can see device list specific device controll 
+
+page : login , register, home, reset password, forget account, contact , support, complain , notification, push notification,
+technologu : next js , seo , tailwind css , deshiui
+
+
+
+          

@@ -1,0 +1,1707 @@
+0 verbose cli /Users/sarwarjahan/.npm-global/lib/node_modules/node/bin/node /usr/local/bin/npm
+1 info using npm@10.2.4
+2 info using node@v21.1.0
+3 timing npm:load:whichnode Completed in 0ms
+4 timing config:load:defaults Completed in 1ms
+5 timing config:load:file:/usr/local/lib/node_modules/npm/npmrc Completed in 0ms
+6 timing config:load:builtin Completed in 0ms
+7 timing config:load:cli Completed in 2ms
+8 timing config:load:env Completed in 0ms
+9 timing config:load:file:/Users/sarwarjahan/Desktop/Camera/Dashbord/.npmrc Completed in 0ms
+10 timing config:load:project Completed in 2ms
+11 timing config:load:file:/Users/sarwarjahan/.npmrc Completed in 1ms
+12 timing config:load:user Completed in 1ms
+13 timing config:load:file:/Users/sarwarjahan/.npm-global/etc/npmrc Completed in 0ms
+14 timing config:load:global Completed in 0ms
+15 timing config:load:setEnvs Completed in 1ms
+16 timing config:load Completed in 7ms
+17 timing npm:load:configload Completed in 8ms
+18 timing config:load:flatten Completed in 1ms
+19 timing npm:load:mkdirpcache Completed in 1ms
+20 timing npm:load:mkdirplogs Completed in 0ms
+21 verbose title npm install firebase daisyui lucide-react
+22 verbose argv "install" "firebase" "daisyui" "lucide-react" "--cache" "./npm-cache"
+23 timing npm:load:setTitle Completed in 8ms
+24 timing npm:load:display Completed in 1ms
+25 verbose logfile logs-max:10 dir:/Users/sarwarjahan/Desktop/Camera/Dashbord/npm-cache/_logs/2026-06-26T22_02_14_535Z-
+26 verbose logfile /Users/sarwarjahan/Desktop/Camera/Dashbord/npm-cache/_logs/2026-06-26T22_02_14_535Z-debug-0.log
+27 timing npm:load:logFile Completed in 6ms
+28 timing npm:load:timers Completed in 0ms
+29 timing npm:load:configScope Completed in 0ms
+30 timing npm:load Completed in 34ms
+31 timing arborist:ctor Completed in 1ms
+32 silly logfile done cleaning log files
+33 timing idealTree:init Completed in 115ms
+34 timing idealTree:userRequests Completed in 1ms
+35 silly idealTree buildDeps
+36 silly fetch manifest firebase@*
+37 verbose shrinkwrap failed to load node_modules/.package-lock.json out of date, updated: node_modules
+38 http fetch GET 200 https://registry.npmjs.org/npm 317ms (cache miss)
+39 http fetch GET 200 https://registry.npmjs.org/firebase 679ms (cache miss)
+40 silly fetch manifest daisyui@*
+41 http fetch GET 200 https://registry.npmjs.org/daisyui 314ms (cache miss)
+42 silly fetch manifest lucide-react@*
+43 http fetch GET 200 https://registry.npmjs.org/lucide-react 55ms (cache miss)
+44 silly placeDep ROOT daisyui@5.6.3 OK for: dashboard@0.1.0 want: *
+45 silly placeDep ROOT firebase@12.15.0 OK for: dashboard@0.1.0 want: *
+46 silly fetch manifest @firebase/ai@2.13.1
+47 silly fetch manifest @firebase/app@0.15.0
+48 silly fetch manifest @firebase/auth@1.13.3
+49 silly fetch manifest @firebase/util@1.15.1
+50 silly fetch manifest @firebase/storage@0.14.3
+51 silly fetch manifest @firebase/database@1.1.3
+52 silly fetch manifest @firebase/analytics@0.10.22
+53 silly fetch manifest @firebase/app-check@0.12.0
+54 silly fetch manifest @firebase/app-types@0.9.5
+55 silly fetch manifest @firebase/firestore@4.16.0
+56 silly fetch manifest @firebase/functions@0.13.5
+57 silly fetch manifest @firebase/messaging@0.13.0
+58 silly fetch manifest @firebase/app-compat@0.5.14
+59 silly fetch manifest @firebase/auth-compat@0.6.8
+60 silly fetch manifest @firebase/performance@0.7.12
+61 silly fetch manifest @firebase/data-connect@0.7.1
+62 silly fetch manifest @firebase/installations@0.6.22
+63 silly fetch manifest @firebase/remote-config@0.8.5
+64 silly fetch manifest @firebase/storage-compat@0.4.3
+65 silly fetch manifest @firebase/database-compat@2.1.4
+66 silly fetch manifest @firebase/analytics-compat@0.2.28
+67 silly fetch manifest @firebase/app-check-compat@0.4.5
+68 silly fetch manifest @firebase/firestore-compat@0.4.11
+69 silly fetch manifest @firebase/functions-compat@0.4.5
+70 silly fetch manifest @firebase/messaging-compat@0.2.27
+71 silly fetch manifest @firebase/performance-compat@0.2.25
+72 silly fetch manifest @firebase/installations-compat@0.2.22
+73 silly fetch manifest @firebase/remote-config-compat@0.2.26
+74 silly placeDep ROOT lucide-react@1.21.0 OK for: dashboard@0.1.0 want: *
+75 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffirestore 597ms (cache miss)
+76 http fetch GET 200 https://registry.npmjs.org/@firebase%2fai 904ms (cache miss)
+77 http fetch GET 200 https://registry.npmjs.org/@firebase%2fdata-connect 1587ms (cache miss)
+78 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp 1840ms (cache miss)
+79 http fetch GET 200 https://registry.npmjs.org/@firebase%2futil 4242ms (cache miss)
+80 http fetch GET 200 https://registry.npmjs.org/@firebase%2fstorage-compat 4470ms (cache miss)
+81 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffunctions-compat 4544ms (cache miss)
+82 http fetch GET 200 https://registry.npmjs.org/@firebase%2fanalytics-compat 4568ms (cache miss)
+83 http fetch GET 200 https://registry.npmjs.org/@firebase%2fmessaging-compat 4586ms (cache miss)
+84 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-check-compat 4786ms (cache miss)
+85 http fetch GET 200 https://registry.npmjs.org/@firebase%2fdatabase-compat 4994ms (cache miss)
+86 http fetch GET 200 https://registry.npmjs.org/@firebase%2fauth-compat 5143ms (cache miss)
+87 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffirestore-compat 5259ms (cache miss)
+88 http fetch GET 200 https://registry.npmjs.org/@firebase%2fperformance-compat 5327ms (cache miss)
+89 http fetch GET 200 https://registry.npmjs.org/@firebase%2finstallations-compat 5498ms (cache miss)
+90 http fetch GET 200 https://registry.npmjs.org/@firebase%2fremote-config-compat 5589ms (cache miss)
+91 http fetch GET 200 https://registry.npmjs.org/@firebase%2fstorage 5640ms (cache miss)
+92 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-compat 6264ms (cache miss)
+93 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-check 6452ms (cache miss)
+94 http fetch GET 200 https://registry.npmjs.org/@firebase%2fanalytics 6951ms (cache miss)
+95 http fetch GET 200 https://registry.npmjs.org/@firebase%2fperformance 7256ms (cache miss)
+96 http fetch GET 200 https://registry.npmjs.org/@firebase%2fremote-config 7425ms (cache miss)
+97 http fetch GET 200 https://registry.npmjs.org/@firebase%2finstallations 7650ms (cache miss)
+98 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffunctions 7694ms (cache miss)
+99 http fetch GET 200 https://registry.npmjs.org/@firebase%2fmessaging 7794ms (cache miss)
+100 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-types 7837ms (cache miss)
+101 http fetch GET 200 https://registry.npmjs.org/@firebase%2fauth 7927ms (cache miss)
+102 http fetch GET 200 https://registry.npmjs.org/@firebase%2fdatabase 7980ms (cache miss)
+103 timing idealTree:#root Completed in 9120ms
+104 timing idealTree:node_modules/daisyui Completed in 0ms
+105 silly placeDep ROOT @firebase/ai@2.13.1 OK for: firebase@12.15.0 want: 2.13.1
+106 silly fetch manifest @firebase/app-check-interop-types@0.3.4
+107 silly fetch manifest @firebase/component@0.7.3
+108 silly fetch manifest @firebase/logger@0.5.1
+109 silly placeDep ROOT @firebase/analytics@0.10.22 OK for: firebase@12.15.0 want: 0.10.22
+110 silly placeDep ROOT @firebase/analytics-compat@0.2.28 OK for: firebase@12.15.0 want: 0.2.28
+111 silly fetch manifest @firebase/analytics-types@0.8.4
+112 silly placeDep ROOT @firebase/app@0.15.0 OK for: firebase@12.15.0 want: 0.15.0
+113 silly fetch manifest idb@7.1.1
+114 silly placeDep ROOT @firebase/app-check@0.12.0 OK for: firebase@12.15.0 want: 0.12.0
+115 silly placeDep ROOT @firebase/app-check-compat@0.4.5 OK for: firebase@12.15.0 want: 0.4.5
+116 silly fetch manifest @firebase/app-check-types@0.5.4
+117 silly placeDep ROOT @firebase/app-compat@0.5.14 OK for: firebase@12.15.0 want: 0.5.14
+118 silly placeDep ROOT @firebase/app-types@0.9.5 OK for: firebase@12.15.0 want: 0.9.5
+119 silly placeDep ROOT @firebase/auth@1.13.3 OK for: firebase@12.15.0 want: 1.13.3
+120 silly placeDep ROOT @firebase/auth-compat@0.6.8 OK for: firebase@12.15.0 want: 0.6.8
+121 silly fetch manifest @firebase/auth-types@0.13.1
+122 silly placeDep ROOT @firebase/data-connect@0.7.1 OK for: firebase@12.15.0 want: 0.7.1
+123 silly fetch manifest @firebase/auth-interop-types@0.2.5
+124 silly placeDep ROOT @firebase/database@1.1.3 OK for: firebase@12.15.0 want: 1.1.3
+125 silly fetch manifest faye-websocket@0.11.4
+126 silly placeDep ROOT @firebase/database-compat@2.1.4 OK for: firebase@12.15.0 want: 2.1.4
+127 silly fetch manifest @firebase/database-types@1.0.20
+128 silly placeDep ROOT @firebase/firestore@4.16.0 OK for: firebase@12.15.0 want: 4.16.0
+129 silly fetch manifest @firebase/webchannel-wrapper@1.0.6
+130 silly fetch manifest @grpc/grpc-js@~1.9.0
+131 silly fetch manifest @grpc/proto-loader@^0.7.8
+132 silly fetch manifest re2js@^0.4.2
+133 silly placeDep ROOT @firebase/firestore-compat@0.4.11 OK for: firebase@12.15.0 want: 0.4.11
+134 silly fetch manifest @firebase/firestore-types@3.0.4
+135 silly placeDep ROOT @firebase/functions@0.13.5 OK for: firebase@12.15.0 want: 0.13.5
+136 silly fetch manifest @firebase/messaging-interop-types@0.2.5
+137 silly placeDep ROOT @firebase/functions-compat@0.4.5 OK for: firebase@12.15.0 want: 0.4.5
+138 silly fetch manifest @firebase/functions-types@0.6.4
+139 silly placeDep ROOT @firebase/installations@0.6.22 OK for: firebase@12.15.0 want: 0.6.22
+140 silly placeDep ROOT @firebase/installations-compat@0.2.22 OK for: firebase@12.15.0 want: 0.2.22
+141 silly fetch manifest @firebase/installations-types@0.5.4
+142 silly placeDep ROOT @firebase/messaging@0.13.0 OK for: firebase@12.15.0 want: 0.13.0
+143 silly placeDep ROOT @firebase/messaging-compat@0.2.27 OK for: firebase@12.15.0 want: 0.2.27
+144 silly placeDep ROOT @firebase/performance@0.7.12 OK for: firebase@12.15.0 want: 0.7.12
+145 silly fetch manifest web-vitals@^4.2.4
+146 silly placeDep ROOT @firebase/performance-compat@0.2.25 OK for: firebase@12.15.0 want: 0.2.25
+147 silly fetch manifest @firebase/performance-types@0.2.4
+148 silly placeDep ROOT @firebase/remote-config@0.8.5 OK for: firebase@12.15.0 want: 0.8.5
+149 silly placeDep ROOT @firebase/remote-config-compat@0.2.26 OK for: firebase@12.15.0 want: 0.2.26
+150 silly fetch manifest @firebase/remote-config-types@0.5.1
+151 silly placeDep ROOT @firebase/storage@0.14.3 OK for: firebase@12.15.0 want: 0.14.3
+152 silly placeDep ROOT @firebase/storage-compat@0.4.3 OK for: firebase@12.15.0 want: 0.4.3
+153 silly fetch manifest @firebase/storage-types@0.8.4
+154 silly placeDep ROOT @firebase/util@1.15.1 OK for: firebase@12.15.0 want: 1.15.1
+155 http fetch GET 200 https://registry.npmjs.org/@grpc%2fgrpc-js 175ms (cache miss)
+156 http fetch GET 200 https://registry.npmjs.org/faye-websocket 316ms (cache miss)
+157 http fetch GET 200 https://registry.npmjs.org/re2js 315ms (cache miss)
+158 http fetch GET 200 https://registry.npmjs.org/@grpc%2fproto-loader 350ms (cache miss)
+159 http fetch GET 200 https://registry.npmjs.org/idb 387ms (cache miss)
+160 http fetch GET 200 https://registry.npmjs.org/web-vitals 620ms (cache miss)
+161 http fetch GET 200 https://registry.npmjs.org/@firebase%2fmessaging-interop-types 2449ms (cache miss)
+162 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-check-types 2884ms (cache miss)
+163 http fetch GET 200 https://registry.npmjs.org/@firebase%2fanalytics-types 3471ms (cache miss)
+164 http fetch GET 200 https://registry.npmjs.org/@firebase%2fapp-check-interop-types 3828ms (cache miss)
+165 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffirestore-types 3957ms (cache miss)
+166 http fetch GET 200 https://registry.npmjs.org/@firebase%2fdatabase-types 4164ms (cache miss)
+167 http fetch GET 200 https://registry.npmjs.org/@firebase%2fcomponent 4484ms (cache miss)
+168 http fetch GET 200 https://registry.npmjs.org/@firebase%2flogger 5332ms (cache miss)
+169 http fetch GET 200 https://registry.npmjs.org/@firebase%2fremote-config-types 7015ms (cache miss)
+170 http fetch GET 200 https://registry.npmjs.org/@firebase%2ffunctions-types 7231ms (cache miss)
+171 http fetch GET 200 https://registry.npmjs.org/@firebase%2fwebchannel-wrapper 7519ms (cache miss)
+172 http fetch GET 200 https://registry.npmjs.org/@firebase%2fauth-types 7918ms (cache miss)
+173 http fetch GET 200 https://registry.npmjs.org/@firebase%2fauth-interop-types 8077ms (cache miss)
+174 http fetch GET 200 https://registry.npmjs.org/@firebase%2finstallations-types 8619ms (cache miss)
+175 http fetch GET 200 https://registry.npmjs.org/@firebase%2fperformance-types 9856ms (cache miss)
+176 http fetch GET 200 https://registry.npmjs.org/@firebase%2fstorage-types 10122ms (cache miss)
+177 timing idealTree:node_modules/firebase Completed in 10529ms
+178 silly placeDep ROOT @firebase/app-check-interop-types@0.3.4 OK for: @firebase/ai@2.13.1 want: 0.3.4
+179 silly placeDep ROOT @firebase/component@0.7.3 OK for: @firebase/ai@2.13.1 want: 0.7.3
+180 silly placeDep ROOT @firebase/logger@0.5.1 OK for: @firebase/ai@2.13.1 want: 0.5.1
+181 timing idealTree:node_modules/@firebase/ai Completed in 34ms
+182 timing idealTree:node_modules/@firebase/analytics Completed in 1ms
+183 silly placeDep ROOT @firebase/analytics-types@0.8.4 OK for: @firebase/analytics-compat@0.2.28 want: 0.8.4
+184 timing idealTree:node_modules/@firebase/analytics-compat Completed in 7ms
+185 timing idealTree:node_modules/@firebase/analytics-types Completed in 1ms
+186 silly placeDep ROOT idb@7.1.1 OK for: @firebase/app@0.15.0 want: 7.1.1
+187 timing idealTree:node_modules/@firebase/app Completed in 8ms
+188 timing idealTree:node_modules/@firebase/app-check Completed in 0ms
+189 silly placeDep ROOT @firebase/app-check-types@0.5.4 OK for: @firebase/app-check-compat@0.4.5 want: 0.5.4
+190 timing idealTree:node_modules/@firebase/app-check-compat Completed in 6ms
+191 timing idealTree:node_modules/@firebase/app-check-interop-types Completed in 0ms
+192 timing idealTree:node_modules/@firebase/app-check-types Completed in 0ms
+193 timing idealTree:node_modules/@firebase/app-compat Completed in 0ms
+194 timing idealTree:node_modules/@firebase/app-types Completed in 0ms
+195 timing idealTree:node_modules/@firebase/auth Completed in 0ms
+196 silly placeDep ROOT @firebase/auth-types@0.13.1 OK for: @firebase/auth-compat@0.6.8 want: 0.13.1
+197 timing idealTree:node_modules/@firebase/auth-compat Completed in 14ms
+198 timing idealTree:node_modules/@firebase/auth-types Completed in 0ms
+199 timing idealTree:node_modules/@firebase/component Completed in 0ms
+200 silly placeDep ROOT @firebase/auth-interop-types@0.2.5 OK for: @firebase/data-connect@0.7.1 want: 0.2.5
+201 timing idealTree:node_modules/@firebase/data-connect Completed in 3ms
+202 timing idealTree:node_modules/@firebase/auth-interop-types Completed in 0ms
+203 silly placeDep ROOT faye-websocket@0.11.4 OK for: @firebase/database@1.1.3 want: 0.11.4
+204 silly fetch manifest websocket-driver@>=0.5.1
+205 http fetch GET 200 https://registry.npmjs.org/websocket-driver 296ms (cache miss)
+206 timing idealTree:node_modules/@firebase/database Completed in 304ms
+207 silly placeDep ROOT @firebase/database-types@1.0.20 OK for: @firebase/database-compat@2.1.4 want: 1.0.20
+208 timing idealTree:node_modules/@firebase/database-compat Completed in 9ms
+209 timing idealTree:node_modules/@firebase/database-types Completed in 0ms
+210 silly placeDep ROOT @firebase/webchannel-wrapper@1.0.6 OK for: @firebase/firestore@4.16.0 want: 1.0.6
+211 silly placeDep ROOT @grpc/grpc-js@1.9.16 OK for: @firebase/firestore@4.16.0 want: ~1.9.0
+212 silly placeDep ROOT @grpc/proto-loader@0.7.15 OK for: @firebase/firestore@4.16.0 want: ^0.7.8
+213 silly fetch manifest long@^5.0.0
+214 silly fetch manifest yargs@^17.7.2
+215 silly fetch manifest protobufjs@^7.2.5
+216 silly fetch manifest lodash.camelcase@^4.3.0
+217 silly placeDep ROOT re2js@0.4.3 OK for: @firebase/firestore@4.16.0 want: ^0.4.2
+218 http fetch GET 200 https://registry.npmjs.org/protobufjs 315ms (cache miss)
+219 http fetch GET 200 https://registry.npmjs.org/lodash.camelcase 487ms (cache miss)
+220 http fetch GET 200 https://registry.npmjs.org/long 590ms (cache miss)
+221 http fetch GET 200 https://registry.npmjs.org/yargs 618ms (cache miss)
+222 timing idealTree:node_modules/@firebase/firestore Completed in 667ms
+223 silly placeDep ROOT @firebase/firestore-types@3.0.4 OK for: @firebase/firestore-compat@0.4.11 want: 3.0.4
+224 timing idealTree:node_modules/@firebase/firestore-compat Completed in 7ms
+225 timing idealTree:node_modules/@firebase/firestore-types Completed in 0ms
+226 silly placeDep ROOT @firebase/messaging-interop-types@0.2.5 OK for: @firebase/functions@0.13.5 want: 0.2.5
+227 timing idealTree:node_modules/@firebase/functions Completed in 6ms
+228 silly placeDep ROOT @firebase/functions-types@0.6.4 OK for: @firebase/functions-compat@0.4.5 want: 0.6.4
+229 timing idealTree:node_modules/@firebase/functions-compat Completed in 7ms
+230 timing idealTree:node_modules/@firebase/functions-types Completed in 0ms
+231 timing idealTree:node_modules/@firebase/installations Completed in 0ms
+232 silly placeDep ROOT @firebase/installations-types@0.5.4 OK for: @firebase/installations-compat@0.2.22 want: 0.5.4
+233 timing idealTree:node_modules/@firebase/installations-compat Completed in 49ms
+234 timing idealTree:node_modules/@firebase/installations-types Completed in 0ms
+235 timing idealTree:node_modules/@firebase/logger Completed in 0ms
+236 timing idealTree:node_modules/@firebase/messaging Completed in 0ms
+237 timing idealTree:node_modules/@firebase/messaging-compat Completed in 0ms
+238 timing idealTree:node_modules/@firebase/messaging-interop-types Completed in 3ms
+239 silly placeDep ROOT web-vitals@4.2.4 OK for: @firebase/performance@0.7.12 want: ^4.2.4
+240 timing idealTree:node_modules/@firebase/performance Completed in 23ms
+241 silly placeDep ROOT @firebase/performance-types@0.2.4 OK for: @firebase/performance-compat@0.2.25 want: 0.2.4
+242 timing idealTree:node_modules/@firebase/performance-compat Completed in 4ms
+243 timing idealTree:node_modules/@firebase/performance-types Completed in 1ms
+244 timing idealTree:node_modules/@firebase/remote-config Completed in 0ms
+245 silly placeDep ROOT @firebase/remote-config-types@0.5.1 OK for: @firebase/remote-config-compat@0.2.26 want: 0.5.1
+246 timing idealTree:node_modules/@firebase/remote-config-compat Completed in 6ms
+247 timing idealTree:node_modules/@firebase/remote-config-types Completed in 0ms
+248 timing idealTree:node_modules/@firebase/storage Completed in 0ms
+249 silly placeDep ROOT @firebase/storage-types@0.8.4 OK for: @firebase/storage-compat@0.4.3 want: 0.8.4
+250 timing idealTree:node_modules/@firebase/storage-compat Completed in 3ms
+251 timing idealTree:node_modules/@firebase/storage-types Completed in 0ms
+252 timing idealTree:node_modules/@firebase/util Completed in 0ms
+253 timing idealTree:node_modules/@firebase/webchannel-wrapper Completed in 0ms
+254 timing idealTree:node_modules/@grpc/grpc-js Completed in 0ms
+255 silly placeDep ROOT lodash.camelcase@4.3.0 OK for: @grpc/proto-loader@0.7.15 want: ^4.3.0
+256 silly placeDep ROOT long@5.3.2 OK for: @grpc/proto-loader@0.7.15 want: ^5.0.0
+257 silly placeDep ROOT protobufjs@7.6.4 OK for: @grpc/proto-loader@0.7.15 want: ^7.2.5
+258 silly fetch manifest @protobufjs/path@^1.1.2
+259 silly fetch manifest @protobufjs/pool@^1.1.0
+260 silly fetch manifest @protobufjs/utf8@^1.1.1
+261 silly fetch manifest @protobufjs/fetch@^1.1.1
+262 silly fetch manifest @protobufjs/float@^1.0.2
+263 silly fetch manifest @protobufjs/base64@^1.1.2
+264 silly fetch manifest @protobufjs/codegen@^2.0.5
+265 silly fetch manifest @protobufjs/aspromise@^1.1.2
+266 silly fetch manifest @protobufjs/eventemitter@^1.1.1
+267 silly placeDep ROOT yargs@17.7.3 OK for: @grpc/proto-loader@0.7.15 want: ^17.7.2
+268 silly fetch manifest cliui@^8.0.1
+269 silly fetch manifest get-caller-file@^2.0.5
+270 silly fetch manifest require-directory@^2.1.1
+271 silly fetch manifest string-width@^4.2.3
+272 silly fetch manifest y18n@^5.0.5
+273 silly fetch manifest yargs-parser@^21.1.1
+274 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2futf8 70ms (cache miss)
+275 http fetch GET 200 https://registry.npmjs.org/require-directory 143ms (cache miss)
+276 http fetch GET 200 https://registry.npmjs.org/get-caller-file 175ms (cache miss)
+277 http fetch GET 200 https://registry.npmjs.org/string-width 178ms (cache miss)
+278 http fetch GET 200 https://registry.npmjs.org/y18n 196ms (cache miss)
+279 http fetch GET 200 https://registry.npmjs.org/yargs-parser 329ms (cache miss)
+280 http fetch GET 200 https://registry.npmjs.org/cliui 1017ms (cache miss)
+281 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2faspromise 1078ms (cache miss)
+282 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2fcodegen 1082ms (cache miss)
+283 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2fbase64 1083ms (cache miss)
+284 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2ffetch 1084ms (cache miss)
+285 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2feventemitter 1084ms (cache miss)
+286 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2fpath 1090ms (cache miss)
+287 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2fpool 1090ms (cache miss)
+288 http fetch GET 200 https://registry.npmjs.org/@protobufjs%2ffloat 1089ms (cache miss)
+289 timing idealTree:node_modules/@grpc/proto-loader Completed in 1115ms
+290 silly placeDep ROOT websocket-driver@0.7.5 OK for: faye-websocket@0.11.4 want: >=0.5.1
+291 silly fetch manifest http-parser-js@>=0.5.1
+292 silly fetch manifest safe-buffer@>=5.1.0
+293 silly fetch manifest websocket-extensions@>=0.1.1
+294 http fetch GET 200 https://registry.npmjs.org/websocket-extensions 280ms (cache miss)
+295 http fetch GET 200 https://registry.npmjs.org/safe-buffer 282ms (cache miss)
+296 http fetch GET 200 https://registry.npmjs.org/http-parser-js 311ms (cache miss)
+297 timing idealTree:node_modules/faye-websocket Completed in 317ms
+298 timing idealTree:node_modules/idb Completed in 0ms
+299 timing idealTree:node_modules/lodash.camelcase Completed in 0ms
+300 timing idealTree:node_modules/long Completed in 0ms
+301 timing idealTree:node_modules/lucide-react Completed in 0ms
+302 silly placeDep ROOT @protobufjs/aspromise@1.1.2 OK for: protobufjs@7.6.4 want: ^1.1.2
+303 silly placeDep ROOT @protobufjs/base64@1.1.2 OK for: protobufjs@7.6.4 want: ^1.1.2
+304 silly placeDep ROOT @protobufjs/codegen@2.0.5 OK for: protobufjs@7.6.4 want: ^2.0.5
+305 silly placeDep ROOT @protobufjs/eventemitter@1.1.1 OK for: protobufjs@7.6.4 want: ^1.1.1
+306 silly placeDep ROOT @protobufjs/fetch@1.1.1 OK for: protobufjs@7.6.4 want: ^1.1.1
+307 silly placeDep ROOT @protobufjs/float@1.0.2 OK for: protobufjs@7.6.4 want: ^1.0.2
+308 silly placeDep ROOT @protobufjs/path@1.1.2 OK for: protobufjs@7.6.4 want: ^1.1.2
+309 silly placeDep ROOT @protobufjs/pool@1.1.0 OK for: protobufjs@7.6.4 want: ^1.1.0
+310 silly placeDep ROOT @protobufjs/utf8@1.1.1 OK for: protobufjs@7.6.4 want: ^1.1.1
+311 timing idealTree:node_modules/protobufjs Completed in 20ms
+312 timing idealTree:node_modules/@protobufjs/aspromise Completed in 0ms
+313 timing idealTree:node_modules/@protobufjs/base64 Completed in 0ms
+314 timing idealTree:node_modules/@protobufjs/codegen Completed in 0ms
+315 timing idealTree:node_modules/@protobufjs/eventemitter Completed in 0ms
+316 timing idealTree:node_modules/@protobufjs/fetch Completed in 0ms
+317 timing idealTree:node_modules/@protobufjs/float Completed in 0ms
+318 timing idealTree:node_modules/@protobufjs/path Completed in 0ms
+319 timing idealTree:node_modules/@protobufjs/pool Completed in 0ms
+320 timing idealTree:node_modules/@protobufjs/utf8 Completed in 0ms
+321 timing idealTree:node_modules/re2js Completed in 1ms
+322 timing idealTree:node_modules/web-vitals Completed in 0ms
+323 silly placeDep ROOT http-parser-js@0.5.10 OK for: websocket-driver@0.7.5 want: >=0.5.1
+324 silly placeDep ROOT safe-buffer@5.2.1 OK for: websocket-driver@0.7.5 want: >=5.1.0
+325 silly placeDep ROOT websocket-extensions@0.1.4 OK for: websocket-driver@0.7.5 want: >=0.1.1
+326 timing idealTree:node_modules/websocket-driver Completed in 4ms
+327 timing idealTree:node_modules/http-parser-js Completed in 0ms
+328 timing idealTree:node_modules/safe-buffer Completed in 0ms
+329 timing idealTree:node_modules/websocket-extensions Completed in 0ms
+330 silly placeDep ROOT cliui@8.0.1 OK for: yargs@17.7.3 want: ^8.0.1
+331 silly fetch manifest wrap-ansi@^7.0.0
+332 silly fetch manifest strip-ansi@^6.0.1
+333 silly fetch manifest string-width@^4.2.0
+334 silly placeDep ROOT get-caller-file@2.0.5 OK for: yargs@17.7.3 want: ^2.0.5
+335 silly placeDep ROOT require-directory@2.1.1 OK for: yargs@17.7.3 want: ^2.1.1
+336 silly placeDep ROOT string-width@4.2.3 OK for: yargs@17.7.3 want: ^4.2.3
+337 silly fetch manifest emoji-regex@^8.0.0
+338 silly fetch manifest is-fullwidth-code-point@^3.0.0
+339 silly placeDep ROOT y18n@5.0.8 OK for: yargs@17.7.3 want: ^5.0.5
+340 silly placeDep ROOT yargs-parser@21.1.1 OK for: yargs@17.7.3 want: ^21.1.1
+341 http fetch GET 200 https://registry.npmjs.org/is-fullwidth-code-point 52ms (cache miss)
+342 http fetch GET 200 https://registry.npmjs.org/emoji-regex 56ms (cache miss)
+343 http fetch GET 200 https://registry.npmjs.org/wrap-ansi 325ms (cache miss)
+344 http fetch GET 200 https://registry.npmjs.org/strip-ansi 328ms (cache miss)
+345 timing idealTree:node_modules/yargs Completed in 333ms
+346 silly placeDep ROOT strip-ansi@6.0.1 OK for: cliui@8.0.1 want: ^6.0.1
+347 silly fetch manifest ansi-regex@^5.0.1
+348 silly placeDep ROOT wrap-ansi@7.0.0 OK for: cliui@8.0.1 want: ^7.0.0
+349 http fetch GET 200 https://registry.npmjs.org/ansi-regex 68ms (cache miss)
+350 timing idealTree:node_modules/cliui Completed in 76ms
+351 timing idealTree:node_modules/get-caller-file Completed in 0ms
+352 timing idealTree:node_modules/require-directory Completed in 0ms
+353 silly placeDep node_modules/string-width emoji-regex@8.0.0 OK for: string-width@4.2.3 want: ^8.0.0
+354 silly placeDep ROOT is-fullwidth-code-point@3.0.0 OK for: string-width@4.2.3 want: ^3.0.0
+355 timing idealTree:node_modules/string-width Completed in 10ms
+356 timing idealTree:node_modules/is-fullwidth-code-point Completed in 0ms
+357 silly placeDep ROOT ansi-regex@5.0.1 OK for: strip-ansi@6.0.1 want: ^5.0.1
+358 timing idealTree:node_modules/strip-ansi Completed in 1ms
+359 timing idealTree:node_modules/ansi-regex Completed in 0ms
+360 timing idealTree:node_modules/wrap-ansi Completed in 0ms
+361 timing idealTree:node_modules/y18n Completed in 0ms
+362 timing idealTree:node_modules/yargs-parser Completed in 0ms
+363 timing idealTree:node_modules/string-width/node_modules/emoji-regex Completed in 0ms
+364 timing idealTree:buildDeps Completed in 22772ms
+365 timing idealTree:fixDepFlags Completed in 12ms
+366 warn EBADENGINE Unsupported engine {
+366 warn EBADENGINE   package: 'balanced-match@4.0.4',
+366 warn EBADENGINE   required: { node: '18 || 20 || >=22' },
+366 warn EBADENGINE   current: { node: 'v21.1.0', npm: '10.2.4' }
+366 warn EBADENGINE }
+367 warn EBADENGINE Unsupported engine {
+367 warn EBADENGINE   package: 'brace-expansion@5.0.6',
+367 warn EBADENGINE   required: { node: '18 || 20 || >=22' },
+367 warn EBADENGINE   current: { node: 'v21.1.0', npm: '10.2.4' }
+367 warn EBADENGINE }
+368 warn EBADENGINE Unsupported engine {
+368 warn EBADENGINE   package: 'minimatch@10.2.5',
+368 warn EBADENGINE   required: { node: '18 || 20 || >=22' },
+368 warn EBADENGINE   current: { node: 'v21.1.0', npm: '10.2.4' }
+368 warn EBADENGINE }
+369 warn EBADENGINE Unsupported engine {
+369 warn EBADENGINE   package: 'eslint-visitor-keys@5.0.1',
+369 warn EBADENGINE   required: { node: '^20.19.0 || ^22.13.0 || >=24' },
+369 warn EBADENGINE   current: { node: 'v21.1.0', npm: '10.2.4' }
+369 warn EBADENGINE }
+370 timing idealTree Completed in 22938ms
+371 timing reify:loadTrees Completed in 22939ms
+372 timing reify:diffTrees Completed in 23ms
+373 silly reify moves {}
+374 timing reify:retireShallow Completed in 2ms
+375 timing reify:createSparse Completed in 28ms
+376 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-wasm32-wasi
+377 silly reify mark deleted [
+377 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-wasm32-wasi'
+377 silly reify ]
+378 timing reifyNode:node_modules/@tailwindcss/oxide-wasm32-wasi Completed in 9ms
+379 timing arborist:ctor Completed in 2ms
+380 timing reify:diffTrees Completed in 41ms
+381 timing reify:loadBundles Completed in 72ms
+382 silly audit bulk request {
+382 silly audit   '@alloc/quick-lru': [ '5.2.0' ],
+382 silly audit   '@babel/code-frame': [ '7.29.7' ],
+382 silly audit   '@babel/compat-data': [ '7.29.7' ],
+382 silly audit   '@babel/core': [ '7.29.7' ],
+382 silly audit   '@babel/generator': [ '7.29.7' ],
+382 silly audit   '@babel/helper-compilation-targets': [ '7.29.7' ],
+382 silly audit   '@babel/helper-globals': [ '7.29.7' ],
+382 silly audit   '@babel/helper-module-imports': [ '7.29.7' ],
+382 silly audit   '@babel/helper-module-transforms': [ '7.29.7' ],
+382 silly audit   '@babel/helper-string-parser': [ '7.29.7' ],
+382 silly audit   '@babel/helper-validator-identifier': [ '7.29.7' ],
+382 silly audit   '@babel/helper-validator-option': [ '7.29.7' ],
+382 silly audit   '@babel/helpers': [ '7.29.7' ],
+382 silly audit   '@babel/parser': [ '7.29.7' ],
+382 silly audit   '@babel/template': [ '7.29.7' ],
+382 silly audit   '@babel/traverse': [ '7.29.7' ],
+382 silly audit   '@babel/types': [ '7.29.7' ],
+382 silly audit   '@emnapi/core': [ '1.10.0' ],
+382 silly audit   '@emnapi/runtime': [ '1.11.1', '1.10.0' ],
+382 silly audit   '@emnapi/wasi-threads': [ '1.2.1' ],
+382 silly audit   '@eslint-community/eslint-utils': [ '4.9.1' ],
+382 silly audit   'eslint-visitor-keys': [ '3.4.3', '5.0.1', '4.2.1' ],
+382 silly audit   '@eslint-community/regexpp': [ '4.12.2' ],
+382 silly audit   '@eslint/config-array': [ '0.21.2' ],
+382 silly audit   '@eslint/config-helpers': [ '0.4.2' ],
+382 silly audit   '@eslint/core': [ '0.17.0' ],
+382 silly audit   '@eslint/eslintrc': [ '3.3.5' ],
+382 silly audit   '@eslint/js': [ '9.39.4' ],
+382 silly audit   '@eslint/object-schema': [ '2.1.7' ],
+382 silly audit   '@eslint/plugin-kit': [ '0.4.1' ],
+382 silly audit   '@humanfs/core': [ '0.19.2' ],
+382 silly audit   '@humanfs/node': [ '0.16.8' ],
+382 silly audit   '@humanfs/types': [ '0.15.0' ],
+382 silly audit   '@humanwhocodes/module-importer': [ '1.0.1' ],
+382 silly audit   '@humanwhocodes/retry': [ '0.4.3' ],
+382 silly audit   '@img/colour': [ '1.1.0' ],
+382 silly audit   '@img/sharp-darwin-arm64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-darwin-x64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-libvips-darwin-arm64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-darwin-x64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-arm': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-arm64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-ppc64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-riscv64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-s390x': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linux-x64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linuxmusl-arm64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-libvips-linuxmusl-x64': [ '1.2.4' ],
+382 silly audit   '@img/sharp-linux-arm': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linux-arm64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linux-ppc64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linux-riscv64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linux-s390x': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linux-x64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linuxmusl-arm64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-linuxmusl-x64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-wasm32': [ '0.34.5' ],
+382 silly audit   '@img/sharp-win32-arm64': [ '0.34.5' ],
+382 silly audit   '@img/sharp-win32-ia32': [ '0.34.5' ],
+382 silly audit   '@img/sharp-win32-x64': [ '0.34.5' ],
+382 silly audit   '@jridgewell/gen-mapping': [ '0.3.13' ],
+382 silly audit   '@jridgewell/remapping': [ '2.3.5' ],
+382 silly audit   '@jridgewell/resolve-uri': [ '3.1.2' ],
+382 silly audit   '@jridgewell/sourcemap-codec': [ '1.5.5' ],
+382 silly audit   '@jridgewell/trace-mapping': [ '0.3.31' ],
+382 silly audit   '@napi-rs/wasm-runtime': [ '1.1.6' ],
+382 silly audit   '@next/env': [ '16.2.9' ],
+382 silly audit   '@next/eslint-plugin-next': [ '16.2.9' ],
+382 silly audit   '@next/swc-darwin-arm64': [ '16.2.9' ],
+382 silly audit   '@next/swc-darwin-x64': [ '16.2.9' ],
+382 silly audit   '@next/swc-linux-arm64-gnu': [ '16.2.9' ],
+382 silly audit   '@next/swc-linux-arm64-musl': [ '16.2.9' ],
+382 silly audit   '@next/swc-linux-x64-gnu': [ '16.2.9' ],
+382 silly audit   '@next/swc-linux-x64-musl': [ '16.2.9' ],
+382 silly audit   '@next/swc-win32-arm64-msvc': [ '16.2.9' ],
+382 silly audit   '@next/swc-win32-x64-msvc': [ '16.2.9' ],
+382 silly audit   '@nodelib/fs.scandir': [ '2.1.5' ],
+382 silly audit   '@nodelib/fs.stat': [ '2.0.5' ],
+382 silly audit   '@nodelib/fs.walk': [ '1.2.8' ],
+382 silly audit   '@nolyfill/is-core-module': [ '1.0.39' ],
+382 silly audit   '@rtsao/scc': [ '1.1.0' ],
+382 silly audit   '@swc/helpers': [ '0.5.15' ],
+382 silly audit   '@tailwindcss/node': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-android-arm64': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-darwin-arm64': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-darwin-x64': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-freebsd-x64': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-linux-arm-gnueabihf': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-linux-arm64-gnu': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-linux-arm64-musl': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-linux-x64-gnu': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-linux-x64-musl': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-win32-arm64-msvc': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/oxide-win32-x64-msvc': [ '4.3.1' ],
+382 silly audit   '@tailwindcss/postcss': [ '4.3.1' ],
+382 silly audit   '@tybys/wasm-util': [ '0.10.3' ],
+382 silly audit   '@types/estree': [ '1.0.9' ],
+382 silly audit   '@types/json-schema': [ '7.0.15' ],
+382 silly audit   '@types/json5': [ '0.0.29' ],
+382 silly audit   '@types/node': [ '20.19.43' ],
+382 silly audit   '@types/react': [ '19.2.17' ],
+382 silly audit   '@types/react-dom': [ '19.2.3' ],
+382 silly audit   '@typescript-eslint/eslint-plugin': [ '8.62.0' ],
+382 silly audit   ignore: [ '7.0.5', '5.3.2' ],
+382 silly audit   '@typescript-eslint/parser': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/project-service': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/scope-manager': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/tsconfig-utils': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/type-utils': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/types': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/typescript-estree': [ '8.62.0' ],
+382 silly audit   'balanced-match': [ '4.0.4', '1.0.2' ],
+382 silly audit   'brace-expansion': [ '5.0.6', '1.1.15' ],
+382 silly audit   minimatch: [ '10.2.5', '3.1.5' ],
+382 silly audit   semver: [ '7.8.5', '6.3.1' ],
+382 silly audit   '@typescript-eslint/utils': [ '8.62.0' ],
+382 silly audit   '@typescript-eslint/visitor-keys': [ '8.62.0' ],
+382 silly audit   '@unrs/resolver-binding-android-arm-eabi': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-android-arm64': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-darwin-arm64': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-darwin-x64': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-freebsd-x64': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-arm-gnueabihf': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-arm-musleabihf': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-arm64-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-arm64-musl': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-loong64-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-loong64-musl': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-ppc64-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-riscv64-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-riscv64-musl': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-s390x-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-x64-gnu': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-linux-x64-musl': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-openharmony-arm64': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-wasm32-wasi': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-win32-arm64-msvc': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-win32-ia32-msvc': [ '1.12.2' ],
+382 silly audit   '@unrs/resolver-binding-win32-x64-msvc': [ '1.12.2' ],
+382 silly audit   acorn: [ '8.17.0' ],
+382 silly audit   'acorn-jsx': [ '5.3.2' ],
+382 silly audit   ajv: [ '6.15.0' ],
+382 silly audit   'ansi-styles': [ '4.3.0' ],
+382 silly audit   argparse: [ '2.0.1' ],
+382 silly audit   'aria-query': [ '5.3.2' ],
+382 silly audit   'array-buffer-byte-length': [ '1.0.2' ],
+382 silly audit   'array-includes': [ '3.1.9' ],
+382 silly audit   'array.prototype.findlast': [ '1.2.5' ],
+382 silly audit   'array.prototype.findlastindex': [ '1.2.6' ],
+382 silly audit   'array.prototype.flat': [ '1.3.3' ],
+382 silly audit   'array.prototype.flatmap': [ '1.3.3' ],
+382 silly audit   'array.prototype.tosorted': [ '1.1.4' ],
+382 silly audit   'arraybuffer.prototype.slice': [ '1.0.4' ],
+382 silly audit   'ast-types-flow': [ '0.0.8' ],
+382 silly audit   'async-function': [ '1.0.0' ],
+382 silly audit   'available-typed-arrays': [ '1.0.7' ],
+382 silly audit   'axe-core': [ '4.12.1' ],
+382 silly audit   'axobject-query': [ '4.1.0' ],
+382 silly audit   'baseline-browser-mapping': [ '2.10.40' ],
+382 silly audit   braces: [ '3.0.3' ],
+382 silly audit   browserslist: [ '4.28.4' ],
+382 silly audit   'call-bind': [ '1.0.9' ],
+382 silly audit   'call-bind-apply-helpers': [ '1.0.2' ],
+382 silly audit   'call-bound': [ '1.0.4' ],
+382 silly audit   callsites: [ '3.1.0' ],
+382 silly audit   'caniuse-lite': [ '1.0.30001799' ],
+382 silly audit   chalk: [ '4.1.2' ],
+382 silly audit   'client-only': [ '0.0.1' ],
+382 silly audit   'color-convert': [ '2.0.1' ],
+382 silly audit   'color-name': [ '1.1.4' ],
+382 silly audit   'concat-map': [ '0.0.1' ],
+382 silly audit   'convert-source-map': [ '2.0.0' ],
+382 silly audit   'cross-spawn': [ '7.0.6' ],
+382 silly audit   csstype: [ '3.2.3' ],
+382 silly audit   'damerau-levenshtein': [ '1.0.8' ],
+382 silly audit   'data-view-buffer': [ '1.0.2' ],
+382 silly audit   'data-view-byte-length': [ '1.0.2' ],
+382 silly audit   'data-view-byte-offset': [ '1.0.1' ],
+382 silly audit   debug: [ '4.4.3', '3.2.7' ],
+382 silly audit   'deep-is': [ '0.1.4' ],
+382 silly audit   'define-data-property': [ '1.1.4' ],
+382 silly audit   'define-properties': [ '1.2.1' ],
+382 silly audit   'detect-libc': [ '2.1.2' ],
+382 silly audit   doctrine: [ '2.1.0' ],
+382 silly audit   'dunder-proto': [ '1.0.1' ],
+382 silly audit   'electron-to-chromium': [ '1.5.379' ],
+382 silly audit   'emoji-regex': [ '9.2.2', '8.0.0' ],
+382 silly audit   'enhanced-resolve': [ '5.21.6' ],
+382 silly audit   'es-abstract': [ '1.24.2' ],
+382 silly audit   'es-abstract-get': [ '1.0.0' ],
+382 silly audit   'es-define-property': [ '1.0.1' ],
+382 silly audit   'es-errors': [ '1.3.0' ],
+382 silly audit   'es-iterator-helpers': [ '1.3.3' ],
+382 silly audit   'es-object-atoms': [ '1.1.2' ],
+382 silly audit   'es-set-tostringtag': [ '2.1.0' ],
+382 silly audit   'es-shim-unscopables': [ '1.1.0' ],
+382 silly audit   'es-to-primitive': [ '1.3.4' ],
+382 silly audit   escalade: [ '3.2.0' ],
+382 silly audit   'escape-string-regexp': [ '4.0.0' ],
+382 silly audit   eslint: [ '9.39.4' ],
+382 silly audit   'eslint-config-next': [ '16.2.9' ],
+382 silly audit   globals: [ '16.4.0', '14.0.0' ],
+382 silly audit   'eslint-import-resolver-node': [ '0.3.10' ],
+382 silly audit   'eslint-import-resolver-typescript': [ '3.10.1' ],
+382 silly audit   'eslint-module-utils': [ '2.13.0' ],
+382 silly audit   'eslint-plugin-import': [ '2.32.0' ],
+382 silly audit   'eslint-plugin-jsx-a11y': [ '6.10.2' ],
+382 silly audit   'eslint-plugin-react': [ '7.37.5' ],
+382 silly audit   'eslint-plugin-react-hooks': [ '7.1.1' ],
+382 silly audit   'eslint-scope': [ '8.4.0' ],
+382 silly audit   espree: [ '10.4.0' ],
+382 silly audit   esquery: [ '1.7.0' ],
+382 silly audit   esrecurse: [ '4.3.0' ],
+382 silly audit   estraverse: [ '5.3.0' ],
+382 silly audit   esutils: [ '2.0.3' ],
+382 silly audit   'fast-deep-equal': [ '3.1.3' ],
+382 silly audit   'fast-glob': [ '3.3.1' ],
+382 silly audit   'glob-parent': [ '5.1.2', '6.0.2' ],
+382 silly audit   'fast-json-stable-stringify': [ '2.1.0' ],
+382 silly audit   'fast-levenshtein': [ '2.0.6' ],
+382 silly audit   fastq: [ '1.20.1' ],
+382 silly audit   fdir: [ '6.5.0' ],
+382 silly audit   'file-entry-cache': [ '8.0.0' ],
+382 silly audit   'fill-range': [ '7.1.1' ],
+382 silly audit   'find-up': [ '5.0.0' ],
+382 silly audit   'flat-cache': [ '4.0.1' ],
+382 silly audit   flatted: [ '3.4.2' ],
+382 silly audit   'for-each': [ '0.3.5' ],
+382 silly audit   'function-bind': [ '1.1.2' ],
+382 silly audit   'function.prototype.name': [ '1.2.0' ],
+382 silly audit   'functions-have-names': [ '1.2.3' ],
+382 silly audit   'generator-function': [ '2.0.1' ],
+382 silly audit   gensync: [ '1.0.0-beta.2' ],
+382 silly audit   'get-intrinsic': [ '1.3.0' ],
+382 silly audit   'get-proto': [ '1.0.1' ],
+382 silly audit   'get-symbol-description': [ '1.1.0' ],
+382 silly audit   'get-tsconfig': [ '4.14.0' ],
+382 silly audit   globalthis: [ '1.0.4' ],
+382 silly audit   gopd: [ '1.2.0' ],
+382 silly audit   'graceful-fs': [ '4.2.11' ],
+382 silly audit   'has-bigints': [ '1.1.0' ],
+382 silly audit   'has-flag': [ '4.0.0' ],
+382 silly audit   'has-property-descriptors': [ '1.0.2' ],
+382 silly audit   'has-proto': [ '1.2.0' ],
+382 silly audit   'has-symbols': [ '1.1.0' ],
+382 silly audit   'has-tostringtag': [ '1.0.2' ],
+382 silly audit   hasown: [ '2.0.4' ],
+382 silly audit   'hermes-estree': [ '0.25.1' ],
+382 silly audit   'hermes-parser': [ '0.25.1' ],
+382 silly audit   'import-fresh': [ '3.3.1' ],
+382 silly audit   imurmurhash: [ '0.1.4' ],
+382 silly audit   'internal-slot': [ '1.1.0' ],
+382 silly audit   'is-array-buffer': [ '3.0.5' ],
+382 silly audit   'is-async-function': [ '2.1.1' ],
+382 silly audit   'is-bigint': [ '1.1.0' ],
+382 silly audit   'is-boolean-object': [ '1.2.2' ],
+382 silly audit   'is-bun-module': [ '2.0.0' ],
+382 silly audit   'is-callable': [ '1.2.7' ],
+382 silly audit   'is-core-module': [ '2.16.2' ],
+382 silly audit   'is-data-view': [ '1.0.2' ],
+382 silly audit   'is-date-object': [ '1.1.0' ],
+382 silly audit   'is-document.all': [ '1.0.0' ],
+382 silly audit   'is-extglob': [ '2.1.1' ],
+382 silly audit   'is-finalizationregistry': [ '1.1.1' ],
+382 silly audit   'is-generator-function': [ '1.1.2' ],
+382 silly audit   'is-glob': [ '4.0.3' ],
+382 silly audit   'is-map': [ '2.0.3' ],
+382 silly audit   'is-negative-zero': [ '2.0.3' ],
+382 silly audit   'is-number': [ '7.0.0' ],
+382 silly audit   'is-number-object': [ '1.1.1' ],
+382 silly audit   'is-regex': [ '1.2.1' ],
+382 silly audit   'is-set': [ '2.0.3' ],
+382 silly audit   'is-shared-array-buffer': [ '1.0.4' ],
+382 silly audit   'is-string': [ '1.1.1' ],
+382 silly audit   'is-symbol': [ '1.1.1' ],
+382 silly audit   'is-typed-array': [ '1.1.15' ],
+382 silly audit   'is-weakmap': [ '2.0.2' ],
+382 silly audit   'is-weakref': [ '1.1.1' ],
+382 silly audit   'is-weakset': [ '2.0.4' ],
+382 silly audit   isarray: [ '2.0.5' ],
+382 silly audit   isexe: [ '2.0.0' ],
+382 silly audit   'iterator.prototype': [ '1.1.5' ],
+382 silly audit   jiti: [ '2.7.0' ],
+382 silly audit   'js-tokens': [ '4.0.0' ],
+382 silly audit   'js-yaml': [ '4.2.0' ],
+382 silly audit   jsesc: [ '3.1.0' ],
+382 silly audit   'json-buffer': [ '3.0.1' ],
+382 silly audit   'json-schema-traverse': [ '0.4.1' ],
+382 silly audit   'json-stable-stringify-without-jsonify': [ '1.0.1' ],
+382 silly audit   json5: [ '2.2.3', '1.0.2' ],
+382 silly audit   'jsx-ast-utils': [ '3.3.5' ],
+382 silly audit   keyv: [ '4.5.4' ],
+382 silly audit   'language-subtag-registry': [ '0.3.23' ],
+382 silly audit   'language-tags': [ '1.0.9' ],
+382 silly audit   levn: [ '0.4.1' ],
+382 silly audit   lightningcss: [ '1.32.0' ],
+382 silly audit   'lightningcss-android-arm64': [ '1.32.0' ],
+382 silly audit   'lightningcss-darwin-arm64': [ '1.32.0' ],
+382 silly audit   'lightningcss-darwin-x64': [ '1.32.0' ],
+382 silly audit   'lightningcss-freebsd-x64': [ '1.32.0' ],
+382 silly audit   'lightningcss-linux-arm-gnueabihf': [ '1.32.0' ],
+382 silly audit   'lightningcss-linux-arm64-gnu': [ '1.32.0' ],
+382 silly audit   'lightningcss-linux-arm64-musl': [ '1.32.0' ],
+382 silly audit   'lightningcss-linux-x64-gnu': [ '1.32.0' ],
+382 silly audit   'lightningcss-linux-x64-musl': [ '1.32.0' ],
+382 silly audit   'lightningcss-win32-arm64-msvc': [ '1.32.0' ],
+382 silly audit   'lightningcss-win32-x64-msvc': [ '1.32.0' ],
+382 silly audit   'locate-path': [ '6.0.0' ],
+382 silly audit   'lodash.merge': [ '4.6.2' ],
+382 silly audit   'loose-envify': [ '1.4.0' ],
+382 silly audit   'lru-cache': [ '5.1.1' ],
+382 silly audit   'magic-string': [ '0.30.21' ],
+382 silly audit   'math-intrinsics': [ '1.1.0' ],
+382 silly audit   merge2: [ '1.4.1' ],
+382 silly audit   micromatch: [ '4.0.8' ],
+382 silly audit   minimist: [ '1.2.8' ],
+382 silly audit   ms: [ '2.1.3' ],
+382 silly audit   nanoid: [ '3.3.15' ],
+382 silly audit   'napi-postinstall': [ '0.3.4' ],
+382 silly audit   'natural-compare': [ '1.4.0' ],
+382 silly audit   next: [ '16.2.9' ],
+382 silly audit   postcss: [ '8.4.31', '8.5.15' ],
+382 silly audit   'node-exports-info': [ '1.6.2' ],
+382 silly audit   'node-releases': [ '2.0.50' ],
+382 silly audit   'object-assign': [ '4.1.1' ],
+382 silly audit   'object-inspect': [ '1.13.4' ],
+382 silly audit   'object-keys': [ '1.1.1' ],
+382 silly audit   'object.assign': [ '4.1.7' ],
+382 silly audit   'object.entries': [ '1.1.9' ],
+382 silly audit   'object.fromentries': [ '2.0.8' ],
+382 silly audit   'object.groupby': [ '1.0.3' ],
+382 silly audit   'object.values': [ '1.2.1' ],
+382 silly audit   optionator: [ '0.9.4' ],
+382 silly audit   'own-keys': [ '1.0.1' ],
+382 silly audit   'p-limit': [ '3.1.0' ],
+382 silly audit   'p-locate': [ '5.0.0' ],
+382 silly audit   'parent-module': [ '1.0.1' ],
+382 silly audit   'path-exists': [ '4.0.0' ],
+382 silly audit   'path-key': [ '3.1.1' ],
+382 silly audit   'path-parse': [ '1.0.7' ],
+382 silly audit   picocolors: [ '1.1.1' ],
+382 silly audit   picomatch: [ '2.3.2', '4.0.4' ],
+382 silly audit   'possible-typed-array-names': [ '1.1.0' ],
+382 silly audit   'prelude-ls': [ '1.2.1' ],
+382 silly audit   'prop-types': [ '15.8.1' ],
+382 silly audit   punycode: [ '2.3.1' ],
+382 silly audit   'queue-microtask': [ '1.2.3' ],
+382 silly audit   react: [ '19.2.4' ],
+382 silly audit   'react-dom': [ '19.2.4' ],
+382 silly audit   'react-is': [ '16.13.1' ],
+382 silly audit   'reflect.getprototypeof': [ '1.0.10' ],
+382 silly audit   'regexp.prototype.flags': [ '1.5.4' ],
+382 silly audit   resolve: [ '2.0.0-next.7' ],
+382 silly audit   'resolve-from': [ '4.0.0' ],
+382 silly audit   'resolve-pkg-maps': [ '1.0.0' ],
+382 silly audit   reusify: [ '1.1.0' ],
+382 silly audit   'run-parallel': [ '1.2.0' ],
+382 silly audit   'safe-array-concat': [ '1.1.4' ],
+382 silly audit   'safe-push-apply': [ '1.0.0' ],
+382 silly audit   'safe-regex-test': [ '1.1.0' ],
+382 silly audit   scheduler: [ '0.27.0' ],
+382 silly audit   'set-function-length': [ '1.2.2' ],
+382 silly audit   'set-function-name': [ '2.0.2' ],
+382 silly audit   'set-proto': [ '1.0.0' ],
+382 silly audit   sharp: [ '0.34.5' ],
+382 silly audit   'shebang-command': [ '2.0.0' ],
+382 silly audit   'shebang-regex': [ '3.0.0' ],
+382 silly audit   'side-channel': [ '1.1.1' ],
+382 silly audit   'side-channel-list': [ '1.0.1' ],
+382 silly audit   'side-channel-map': [ '1.0.1' ],
+382 silly audit   'side-channel-weakmap': [ '1.0.2' ],
+382 silly audit   'source-map-js': [ '1.2.1' ],
+382 silly audit   'stable-hash': [ '0.0.5' ],
+382 silly audit   'stop-iteration-iterator': [ '1.1.0' ],
+382 silly audit   'string.prototype.includes': [ '2.0.1' ],
+382 silly audit   'string.prototype.matchall': [ '4.0.12' ],
+382 silly audit   'string.prototype.repeat': [ '1.0.0' ],
+382 silly audit   'string.prototype.trim': [ '1.2.11' ],
+382 silly audit   'string.prototype.trimend': [ '1.0.10' ],
+382 silly audit   'string.prototype.trimstart': [ '1.0.8' ],
+382 silly audit   'strip-bom': [ '3.0.0' ],
+382 silly audit   'strip-json-comments': [ '3.1.1' ],
+382 silly audit   'styled-jsx': [ '5.1.6' ],
+382 silly audit   'supports-color': [ '7.2.0' ],
+382 silly audit   'supports-preserve-symlinks-flag': [ '1.0.0' ],
+382 silly audit   tailwindcss: [ '4.3.1' ],
+382 silly audit   tapable: [ '2.3.3' ],
+382 silly audit   tinyglobby: [ '0.2.17' ],
+382 silly audit   'to-regex-range': [ '5.0.1' ],
+382 silly audit   'ts-api-utils': [ '2.5.0' ],
+382 silly audit   'tsconfig-paths': [ '3.15.0' ],
+382 silly audit   tslib: [ '2.8.1' ],
+382 silly audit   'type-check': [ '0.4.0' ],
+382 silly audit   'typed-array-buffer': [ '1.0.3' ],
+382 silly audit   'typed-array-byte-length': [ '1.0.3' ],
+382 silly audit   'typed-array-byte-offset': [ '1.0.4' ],
+382 silly audit   'typed-array-length': [ '1.0.8' ],
+382 silly audit   typescript: [ '5.9.3' ],
+382 silly audit   'typescript-eslint': [ '8.62.0' ],
+382 silly audit   'unbox-primitive': [ '1.1.0' ],
+382 silly audit   'undici-types': [ '6.21.0' ],
+382 silly audit   'unrs-resolver': [ '1.12.2' ],
+382 silly audit   'update-browserslist-db': [ '1.2.3' ],
+382 silly audit   'uri-js': [ '4.4.1' ],
+382 silly audit   which: [ '2.0.2' ],
+382 silly audit   'which-boxed-primitive': [ '1.1.1' ],
+382 silly audit   'which-builtin-type': [ '1.2.1' ],
+382 silly audit   'which-collection': [ '1.0.2' ],
+382 silly audit   'which-typed-array': [ '1.1.22' ],
+382 silly audit   'word-wrap': [ '1.2.5' ],
+382 silly audit   yallist: [ '3.1.1' ],
+382 silly audit   'yocto-queue': [ '0.1.0' ],
+382 silly audit   zod: [ '4.4.3' ],
+382 silly audit   'zod-validation-error': [ '4.0.2' ],
+382 silly audit   daisyui: [ '5.6.3' ],
+382 silly audit   firebase: [ '12.15.0' ],
+382 silly audit   'lucide-react': [ '1.21.0' ],
+382 silly audit   '@firebase/ai': [ '2.13.1' ],
+382 silly audit   '@firebase/analytics': [ '0.10.22' ],
+382 silly audit   '@firebase/analytics-compat': [ '0.2.28' ],
+382 silly audit   '@firebase/app': [ '0.15.0' ],
+382 silly audit   '@firebase/app-check': [ '0.12.0' ],
+382 silly audit   '@firebase/app-check-compat': [ '0.4.5' ],
+382 silly audit   '@firebase/app-compat': [ '0.5.14' ],
+382 silly audit   '@firebase/app-types': [ '0.9.5' ],
+382 silly audit   '@firebase/auth': [ '1.13.3' ],
+382 silly audit   '@firebase/auth-compat': [ '0.6.8' ],
+382 silly audit   '@firebase/data-connect': [ '0.7.1' ],
+382 silly audit   '@firebase/database': [ '1.1.3' ],
+382 silly audit   '@firebase/database-compat': [ '2.1.4' ],
+382 silly audit   '@firebase/firestore': [ '4.16.0' ],
+382 silly audit   '@firebase/firestore-compat': [ '0.4.11' ],
+382 silly audit   '@firebase/functions': [ '0.13.5' ],
+382 silly audit   '@firebase/functions-compat': [ '0.4.5' ],
+382 silly audit   '@firebase/installations': [ '0.6.22' ],
+382 silly audit   '@firebase/installations-compat': [ '0.2.22' ],
+382 silly audit   '@firebase/messaging': [ '0.13.0' ],
+382 silly audit   '@firebase/messaging-compat': [ '0.2.27' ],
+382 silly audit   '@firebase/performance': [ '0.7.12' ],
+382 silly audit   '@firebase/performance-compat': [ '0.2.25' ],
+382 silly audit   '@firebase/remote-config': [ '0.8.5' ],
+382 silly audit   '@firebase/remote-config-compat': [ '0.2.26' ],
+382 silly audit   '@firebase/storage': [ '0.14.3' ],
+382 silly audit   '@firebase/storage-compat': [ '0.4.3' ],
+382 silly audit   '@firebase/util': [ '1.15.1' ],
+382 silly audit   '@firebase/app-check-interop-types': [ '0.3.4' ],
+382 silly audit   '@firebase/component': [ '0.7.3' ],
+382 silly audit   '@firebase/logger': [ '0.5.1' ],
+382 silly audit   '@firebase/analytics-types': [ '0.8.4' ],
+382 silly audit   idb: [ '7.1.1' ],
+382 silly audit   '@firebase/app-check-types': [ '0.5.4' ],
+382 silly audit   '@firebase/auth-types': [ '0.13.1' ],
+382 silly audit   '@firebase/auth-interop-types': [ '0.2.5' ],
+382 silly audit   'faye-websocket': [ '0.11.4' ],
+382 silly audit   '@firebase/database-types': [ '1.0.20' ],
+382 silly audit   '@firebase/webchannel-wrapper': [ '1.0.6' ],
+382 silly audit   '@grpc/grpc-js': [ '1.9.16' ],
+382 silly audit   '@grpc/proto-loader': [ '0.7.15' ],
+382 silly audit   re2js: [ '0.4.3' ],
+382 silly audit   '@firebase/firestore-types': [ '3.0.4' ],
+382 silly audit   '@firebase/messaging-interop-types': [ '0.2.5' ],
+382 silly audit   '@firebase/functions-types': [ '0.6.4' ],
+382 silly audit   '@firebase/installations-types': [ '0.5.4' ],
+382 silly audit   'web-vitals': [ '4.2.4' ],
+382 silly audit   '@firebase/performance-types': [ '0.2.4' ],
+382 silly audit   '@firebase/remote-config-types': [ '0.5.1' ],
+382 silly audit   '@firebase/storage-types': [ '0.8.4' ],
+382 silly audit   'lodash.camelcase': [ '4.3.0' ],
+382 silly audit   long: [ '5.3.2' ],
+382 silly audit   protobufjs: [ '7.6.4' ],
+382 silly audit   yargs: [ '17.7.3' ],
+382 silly audit   'websocket-driver': [ '0.7.5' ],
+382 silly audit   '@protobufjs/aspromise': [ '1.1.2' ],
+382 silly audit   '@protobufjs/base64': [ '1.1.2' ],
+382 silly audit   '@protobufjs/codegen': [ '2.0.5' ],
+382 silly audit   '@protobufjs/eventemitter': [ '1.1.1' ],
+382 silly audit   '@protobufjs/fetch': [ '1.1.1' ],
+382 silly audit   '@protobufjs/float': [ '1.0.2' ],
+382 silly audit   '@protobufjs/path': [ '1.1.2' ],
+382 silly audit   '@protobufjs/pool': [ '1.1.0' ],
+382 silly audit   '@protobufjs/utf8': [ '1.1.1' ],
+382 silly audit   'http-parser-js': [ '0.5.10' ],
+382 silly audit   'safe-buffer': [ '5.2.1' ],
+382 silly audit   'websocket-extensions': [ '0.1.4' ],
+382 silly audit   cliui: [ '8.0.1' ],
+382 silly audit   'get-caller-file': [ '2.0.5' ],
+382 silly audit   'require-directory': [ '2.1.1' ],
+382 silly audit   'string-width': [ '4.2.3' ],
+382 silly audit   y18n: [ '5.0.8' ],
+382 silly audit   'yargs-parser': [ '21.1.1' ],
+382 silly audit   'strip-ansi': [ '6.0.1' ],
+382 silly audit   'wrap-ansi': [ '7.0.0' ],
+382 silly audit   'is-fullwidth-code-point': [ '3.0.0' ],
+382 silly audit   'ansi-regex': [ '5.0.1' ],
+382 silly audit   '@tailwindcss/oxide-wasm32-wasi': [ '4.3.1' ]
+382 silly audit }
+383 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-win32-x64-msvc
+384 silly reify mark deleted [
+384 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-win32-x64-msvc'
+384 silly reify ]
+385 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-win32-arm64-msvc
+386 silly reify mark deleted [
+386 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-win32-arm64-msvc'
+386 silly reify ]
+387 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-x64-musl
+388 silly reify mark deleted [
+388 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-x64-musl'
+388 silly reify ]
+389 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-x64-gnu
+390 silly reify mark deleted [
+390 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-x64-gnu'
+390 silly reify ]
+391 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm64-musl
+392 silly reify mark deleted [
+392 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm64-musl'
+392 silly reify ]
+393 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm64-gnu
+394 silly reify mark deleted [
+394 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm64-gnu'
+394 silly reify ]
+395 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm-gnueabihf
+396 silly reify mark deleted [
+396 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-linux-arm-gnueabihf'
+396 silly reify ]
+397 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-freebsd-x64
+398 silly reify mark deleted [
+398 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-freebsd-x64'
+398 silly reify ]
+399 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-darwin-x64
+400 silly reify mark deleted [
+400 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-darwin-x64'
+400 silly reify ]
+401 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-android-arm64
+402 silly reify mark deleted [
+402 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/lightningcss-android-arm64'
+402 silly reify ]
+403 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-x64-msvc
+404 silly reify mark deleted [
+404 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-x64-msvc'
+404 silly reify ]
+405 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-ia32-msvc
+406 silly reify mark deleted [
+406 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-ia32-msvc'
+406 silly reify ]
+407 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-arm64-msvc
+408 silly reify mark deleted [
+408 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-win32-arm64-msvc'
+408 silly reify ]
+409 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-wasm32-wasi
+410 silly reify mark deleted [
+410 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-wasm32-wasi'
+410 silly reify ]
+411 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-wasm32-wasi/node_modules/@emnapi/runtime
+412 silly reify mark deleted [
+412 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-wasm32-wasi/node_modules/@emnapi/runtime'
+412 silly reify ]
+413 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-openharmony-arm64
+414 silly reify mark deleted [
+414 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-openharmony-arm64'
+414 silly reify ]
+415 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-x64-musl
+416 silly reify mark deleted [
+416 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-x64-musl'
+416 silly reify ]
+417 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-x64-gnu
+418 silly reify mark deleted [
+418 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-x64-gnu'
+418 silly reify ]
+419 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-s390x-gnu
+420 silly reify mark deleted [
+420 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-s390x-gnu'
+420 silly reify ]
+421 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-riscv64-musl
+422 silly reify mark deleted [
+422 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-riscv64-musl'
+422 silly reify ]
+423 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-riscv64-gnu
+424 silly reify mark deleted [
+424 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-riscv64-gnu'
+424 silly reify ]
+425 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-ppc64-gnu
+426 silly reify mark deleted [
+426 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-ppc64-gnu'
+426 silly reify ]
+427 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-loong64-musl
+428 silly reify mark deleted [
+428 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-loong64-musl'
+428 silly reify ]
+429 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-loong64-gnu
+430 silly reify mark deleted [
+430 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-loong64-gnu'
+430 silly reify ]
+431 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm64-musl
+432 silly reify mark deleted [
+432 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm64-musl'
+432 silly reify ]
+433 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm64-gnu
+434 silly reify mark deleted [
+434 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm64-gnu'
+434 silly reify ]
+435 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm-musleabihf
+436 silly reify mark deleted [
+436 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm-musleabihf'
+436 silly reify ]
+437 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm-gnueabihf
+438 silly reify mark deleted [
+438 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-linux-arm-gnueabihf'
+438 silly reify ]
+439 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-freebsd-x64
+440 silly reify mark deleted [
+440 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-freebsd-x64'
+440 silly reify ]
+441 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-darwin-x64
+442 silly reify mark deleted [
+442 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-darwin-x64'
+442 silly reify ]
+443 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-android-arm64
+444 silly reify mark deleted [
+444 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-android-arm64'
+444 silly reify ]
+445 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-android-arm-eabi
+446 silly reify mark deleted [
+446 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@unrs/resolver-binding-android-arm-eabi'
+446 silly reify ]
+447 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-win32-x64-msvc
+448 silly reify mark deleted [
+448 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-win32-x64-msvc'
+448 silly reify ]
+449 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-win32-arm64-msvc
+450 silly reify mark deleted [
+450 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-win32-arm64-msvc'
+450 silly reify ]
+451 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-x64-musl
+452 silly reify mark deleted [
+452 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-x64-musl'
+452 silly reify ]
+453 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-x64-gnu
+454 silly reify mark deleted [
+454 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-x64-gnu'
+454 silly reify ]
+455 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm64-musl
+456 silly reify mark deleted [
+456 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm64-musl'
+456 silly reify ]
+457 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm64-gnu
+458 silly reify mark deleted [
+458 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm64-gnu'
+458 silly reify ]
+459 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm-gnueabihf
+460 silly reify mark deleted [
+460 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-linux-arm-gnueabihf'
+460 silly reify ]
+461 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-freebsd-x64
+462 silly reify mark deleted [
+462 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-freebsd-x64'
+462 silly reify ]
+463 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-darwin-x64
+464 silly reify mark deleted [
+464 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-darwin-x64'
+464 silly reify ]
+465 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-android-arm64
+466 silly reify mark deleted [
+466 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@tailwindcss/oxide-android-arm64'
+466 silly reify ]
+467 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-win32-x64-msvc
+468 silly reify mark deleted [
+468 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-win32-x64-msvc'
+468 silly reify ]
+469 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-win32-arm64-msvc
+470 silly reify mark deleted [
+470 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-win32-arm64-msvc'
+470 silly reify ]
+471 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-x64-musl
+472 silly reify mark deleted [
+472 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-x64-musl'
+472 silly reify ]
+473 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-x64-gnu
+474 silly reify mark deleted [
+474 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-x64-gnu'
+474 silly reify ]
+475 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-arm64-musl
+476 silly reify mark deleted [
+476 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-arm64-musl'
+476 silly reify ]
+477 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-arm64-gnu
+478 silly reify mark deleted [
+478 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-linux-arm64-gnu'
+478 silly reify ]
+479 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-darwin-x64
+480 silly reify mark deleted [
+480 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@next/swc-darwin-x64'
+480 silly reify ]
+481 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-x64
+482 silly reify mark deleted [
+482 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-x64'
+482 silly reify ]
+483 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-ia32
+484 silly reify mark deleted [
+484 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-ia32'
+484 silly reify ]
+485 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-arm64
+486 silly reify mark deleted [
+486 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-win32-arm64'
+486 silly reify ]
+487 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-wasm32
+488 silly reify mark deleted [
+488 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-wasm32'
+488 silly reify ]
+489 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linuxmusl-x64
+490 silly reify mark deleted [
+490 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linuxmusl-x64'
+490 silly reify ]
+491 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linuxmusl-arm64
+492 silly reify mark deleted [
+492 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linuxmusl-arm64'
+492 silly reify ]
+493 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-x64
+494 silly reify mark deleted [
+494 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-x64'
+494 silly reify ]
+495 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-s390x
+496 silly reify mark deleted [
+496 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-s390x'
+496 silly reify ]
+497 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-riscv64
+498 silly reify mark deleted [
+498 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-riscv64'
+498 silly reify ]
+499 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-ppc64
+500 silly reify mark deleted [
+500 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-ppc64'
+500 silly reify ]
+501 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-arm64
+502 silly reify mark deleted [
+502 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-arm64'
+502 silly reify ]
+503 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-arm
+504 silly reify mark deleted [
+504 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-linux-arm'
+504 silly reify ]
+505 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linuxmusl-x64
+506 silly reify mark deleted [
+506 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linuxmusl-x64'
+506 silly reify ]
+507 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linuxmusl-arm64
+508 silly reify mark deleted [
+508 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linuxmusl-arm64'
+508 silly reify ]
+509 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-x64
+510 silly reify mark deleted [
+510 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-x64'
+510 silly reify ]
+511 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-s390x
+512 silly reify mark deleted [
+512 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-s390x'
+512 silly reify ]
+513 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-riscv64
+514 silly reify mark deleted [
+514 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-riscv64'
+514 silly reify ]
+515 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-ppc64
+516 silly reify mark deleted [
+516 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-ppc64'
+516 silly reify ]
+517 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-arm64
+518 silly reify mark deleted [
+518 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-arm64'
+518 silly reify ]
+519 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-arm
+520 silly reify mark deleted [
+520 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-linux-arm'
+520 silly reify ]
+521 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-darwin-x64
+522 silly reify mark deleted [
+522 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-libvips-darwin-x64'
+522 silly reify ]
+523 verbose reify failed optional dependency /Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-darwin-x64
+524 silly reify mark deleted [
+524 silly reify   '/Users/sarwarjahan/Desktop/Camera/Dashbord/node_modules/@img/sharp-darwin-x64'
+524 silly reify ]
+525 timing reifyNode:node_modules/lightningcss-win32-x64-msvc Completed in 44ms
+526 timing reifyNode:node_modules/lightningcss-win32-arm64-msvc Completed in 44ms
+527 timing reifyNode:node_modules/lightningcss-linux-x64-musl Completed in 44ms
+528 timing reifyNode:node_modules/lightningcss-linux-x64-gnu Completed in 44ms
+529 timing reifyNode:node_modules/lightningcss-linux-arm64-musl Completed in 45ms
+530 timing reifyNode:node_modules/lightningcss-linux-arm64-gnu Completed in 45ms
+531 timing reifyNode:node_modules/lightningcss-linux-arm-gnueabihf Completed in 45ms
+532 timing reifyNode:node_modules/lightningcss-freebsd-x64 Completed in 45ms
+533 timing reifyNode:node_modules/lightningcss-darwin-x64 Completed in 45ms
+534 timing reifyNode:node_modules/lightningcss-android-arm64 Completed in 45ms
+535 timing reifyNode:node_modules/@unrs/resolver-binding-win32-x64-msvc Completed in 45ms
+536 timing reifyNode:node_modules/@unrs/resolver-binding-win32-ia32-msvc Completed in 45ms
+537 timing reifyNode:node_modules/@unrs/resolver-binding-win32-arm64-msvc Completed in 45ms
+538 timing reifyNode:node_modules/@unrs/resolver-binding-wasm32-wasi Completed in 45ms
+539 timing reifyNode:node_modules/@unrs/resolver-binding-openharmony-arm64 Completed in 45ms
+540 timing reifyNode:node_modules/@unrs/resolver-binding-linux-x64-musl Completed in 46ms
+541 timing reifyNode:node_modules/@unrs/resolver-binding-linux-x64-gnu Completed in 45ms
+542 timing reifyNode:node_modules/@unrs/resolver-binding-linux-s390x-gnu Completed in 45ms
+543 timing reifyNode:node_modules/@unrs/resolver-binding-linux-riscv64-musl Completed in 45ms
+544 timing reifyNode:node_modules/@unrs/resolver-binding-linux-riscv64-gnu Completed in 45ms
+545 timing reifyNode:node_modules/@unrs/resolver-binding-linux-ppc64-gnu Completed in 45ms
+546 timing reifyNode:node_modules/@unrs/resolver-binding-linux-loong64-musl Completed in 49ms
+547 timing reifyNode:node_modules/@unrs/resolver-binding-linux-loong64-gnu Completed in 49ms
+548 timing reifyNode:node_modules/@unrs/resolver-binding-linux-arm64-musl Completed in 49ms
+549 timing reifyNode:node_modules/@unrs/resolver-binding-linux-arm64-gnu Completed in 50ms
+550 timing reifyNode:node_modules/@unrs/resolver-binding-linux-arm-musleabihf Completed in 50ms
+551 timing reifyNode:node_modules/@unrs/resolver-binding-linux-arm-gnueabihf Completed in 50ms
+552 timing reifyNode:node_modules/@unrs/resolver-binding-freebsd-x64 Completed in 50ms
+553 timing reifyNode:node_modules/@unrs/resolver-binding-darwin-x64 Completed in 50ms
+554 timing reifyNode:node_modules/@unrs/resolver-binding-android-arm64 Completed in 50ms
+555 timing reifyNode:node_modules/@unrs/resolver-binding-android-arm-eabi Completed in 50ms
+556 timing reifyNode:node_modules/@tailwindcss/oxide-win32-x64-msvc Completed in 50ms
+557 timing reifyNode:node_modules/@tailwindcss/oxide-win32-arm64-msvc Completed in 50ms
+558 timing reifyNode:node_modules/@tailwindcss/oxide-linux-x64-musl Completed in 50ms
+559 timing reifyNode:node_modules/@tailwindcss/oxide-linux-x64-gnu Completed in 50ms
+560 timing reifyNode:node_modules/@tailwindcss/oxide-linux-arm64-musl Completed in 50ms
+561 timing reifyNode:node_modules/@tailwindcss/oxide-linux-arm64-gnu Completed in 50ms
+562 timing reifyNode:node_modules/@tailwindcss/oxide-linux-arm-gnueabihf Completed in 50ms
+563 timing reifyNode:node_modules/@tailwindcss/oxide-freebsd-x64 Completed in 50ms
+564 timing reifyNode:node_modules/@tailwindcss/oxide-darwin-x64 Completed in 50ms
+565 timing reifyNode:node_modules/@tailwindcss/oxide-android-arm64 Completed in 50ms
+566 timing reifyNode:node_modules/@next/swc-win32-x64-msvc Completed in 51ms
+567 timing reifyNode:node_modules/@next/swc-win32-arm64-msvc Completed in 51ms
+568 timing reifyNode:node_modules/@next/swc-linux-x64-musl Completed in 51ms
+569 timing reifyNode:node_modules/@next/swc-linux-x64-gnu Completed in 51ms
+570 timing reifyNode:node_modules/@next/swc-linux-arm64-musl Completed in 51ms
+571 timing reifyNode:node_modules/@next/swc-linux-arm64-gnu Completed in 50ms
+572 timing reifyNode:node_modules/@next/swc-darwin-x64 Completed in 50ms
+573 timing reifyNode:node_modules/@img/sharp-win32-x64 Completed in 50ms
+574 timing reifyNode:node_modules/@img/sharp-win32-ia32 Completed in 50ms
+575 timing reifyNode:node_modules/@img/sharp-win32-arm64 Completed in 50ms
+576 timing reifyNode:node_modules/@img/sharp-wasm32 Completed in 50ms
+577 timing reifyNode:node_modules/@img/sharp-linuxmusl-x64 Completed in 50ms
+578 timing reifyNode:node_modules/@img/sharp-linuxmusl-arm64 Completed in 50ms
+579 timing reifyNode:node_modules/@img/sharp-linux-x64 Completed in 50ms
+580 timing reifyNode:node_modules/@img/sharp-linux-s390x Completed in 50ms
+581 timing reifyNode:node_modules/@img/sharp-linux-riscv64 Completed in 50ms
+582 timing reifyNode:node_modules/@img/sharp-linux-ppc64 Completed in 50ms
+583 timing reifyNode:node_modules/@img/sharp-linux-arm64 Completed in 50ms
+584 timing reifyNode:node_modules/@img/sharp-linux-arm Completed in 50ms
+585 timing reifyNode:node_modules/@img/sharp-libvips-linuxmusl-x64 Completed in 50ms
+586 timing reifyNode:node_modules/@img/sharp-libvips-linuxmusl-arm64 Completed in 50ms
+587 timing reifyNode:node_modules/@img/sharp-libvips-linux-x64 Completed in 50ms
+588 timing reifyNode:node_modules/@img/sharp-libvips-linux-s390x Completed in 50ms
+589 timing reifyNode:node_modules/@img/sharp-libvips-linux-riscv64 Completed in 50ms
+590 timing reifyNode:node_modules/@img/sharp-libvips-linux-ppc64 Completed in 50ms
+591 timing reifyNode:node_modules/@img/sharp-libvips-linux-arm64 Completed in 50ms
+592 timing reifyNode:node_modules/@img/sharp-libvips-linux-arm Completed in 50ms
+593 timing reifyNode:node_modules/@img/sharp-libvips-darwin-x64 Completed in 50ms
+594 timing reifyNode:node_modules/@img/sharp-darwin-x64 Completed in 50ms
+595 silly tarball no local data for ansi-regex@https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz. Extracting by manifest.
+596 silly tarball no local data for is-fullwidth-code-point@https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz. Extracting by manifest.
+597 silly tarball no local data for strip-ansi@https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz. Extracting by manifest.
+598 silly tarball no local data for yargs-parser@https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.1.1.tgz. Extracting by manifest.
+599 silly tarball no local data for wrap-ansi@https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz. Extracting by manifest.
+600 silly tarball no local data for get-caller-file@https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz. Extracting by manifest.
+601 silly tarball no local data for cliui@https://registry.npmjs.org/cliui/-/cliui-8.0.1.tgz. Extracting by manifest.
+602 silly tarball no local data for websocket-extensions@https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz. Extracting by manifest.
+603 silly tarball no local data for safe-buffer@https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz. Extracting by manifest.
+604 silly tarball no local data for http-parser-js@https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.5.10.tgz. Extracting by manifest.
+605 silly tarball no local data for @protobufjs/utf8@https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.1.tgz. Extracting by manifest.
+606 silly tarball no local data for @protobufjs/pool@https://registry.npmjs.org/@protobufjs/pool/-/pool-1.1.0.tgz. Extracting by manifest.
+607 silly tarball no local data for @protobufjs/path@https://registry.npmjs.org/@protobufjs/path/-/path-1.1.2.tgz. Extracting by manifest.
+608 silly tarball no local data for @protobufjs/float@https://registry.npmjs.org/@protobufjs/float/-/float-1.0.2.tgz. Extracting by manifest.
+609 silly tarball no local data for @protobufjs/fetch@https://registry.npmjs.org/@protobufjs/fetch/-/fetch-1.1.1.tgz. Extracting by manifest.
+610 silly tarball no local data for @protobufjs/eventemitter@https://registry.npmjs.org/@protobufjs/eventemitter/-/eventemitter-1.1.1.tgz. Extracting by manifest.
+611 silly tarball no local data for @protobufjs/codegen@https://registry.npmjs.org/@protobufjs/codegen/-/codegen-2.0.5.tgz. Extracting by manifest.
+612 silly tarball no local data for @protobufjs/base64@https://registry.npmjs.org/@protobufjs/base64/-/base64-1.1.2.tgz. Extracting by manifest.
+613 silly tarball no local data for @protobufjs/aspromise@https://registry.npmjs.org/@protobufjs/aspromise/-/aspromise-1.1.2.tgz. Extracting by manifest.
+614 silly tarball no local data for websocket-driver@https://registry.npmjs.org/websocket-driver/-/websocket-driver-0.7.5.tgz. Extracting by manifest.
+615 silly tarball no local data for yargs@https://registry.npmjs.org/yargs/-/yargs-17.7.3.tgz. Extracting by manifest.
+616 silly tarball no local data for protobufjs@https://registry.npmjs.org/protobufjs/-/protobufjs-7.6.4.tgz. Extracting by manifest.
+617 silly tarball no local data for long@https://registry.npmjs.org/long/-/long-5.3.2.tgz. Extracting by manifest.
+618 silly tarball no local data for lodash.camelcase@https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz. Extracting by manifest.
+619 silly tarball no local data for @firebase/storage-types@https://registry.npmjs.org/@firebase/storage-types/-/storage-types-0.8.4.tgz. Extracting by manifest.
+620 silly tarball no local data for @firebase/remote-config-types@https://registry.npmjs.org/@firebase/remote-config-types/-/remote-config-types-0.5.1.tgz. Extracting by manifest.
+621 silly tarball no local data for @firebase/performance-types@https://registry.npmjs.org/@firebase/performance-types/-/performance-types-0.2.4.tgz. Extracting by manifest.
+622 silly tarball no local data for web-vitals@https://registry.npmjs.org/web-vitals/-/web-vitals-4.2.4.tgz. Extracting by manifest.
+623 silly tarball no local data for @firebase/installations-types@https://registry.npmjs.org/@firebase/installations-types/-/installations-types-0.5.4.tgz. Extracting by manifest.
+624 silly tarball no local data for y18n@https://registry.npmjs.org/y18n/-/y18n-5.0.8.tgz. Extracting by manifest.
+625 silly tarball no local data for @firebase/messaging-interop-types@https://registry.npmjs.org/@firebase/messaging-interop-types/-/messaging-interop-types-0.2.5.tgz. Extracting by manifest.
+626 silly tarball no local data for @firebase/functions-types@https://registry.npmjs.org/@firebase/functions-types/-/functions-types-0.6.4.tgz. Extracting by manifest.
+627 silly tarball no local data for re2js@https://registry.npmjs.org/re2js/-/re2js-0.4.3.tgz. Extracting by manifest.
+628 silly tarball no local data for @grpc/proto-loader@https://registry.npmjs.org/@grpc/proto-loader/-/proto-loader-0.7.15.tgz. Extracting by manifest.
+629 silly tarball no local data for @grpc/grpc-js@https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.9.16.tgz. Extracting by manifest.
+630 silly tarball no local data for @firebase/webchannel-wrapper@https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.6.tgz. Extracting by manifest.
+631 silly tarball no local data for @firebase/database-types@https://registry.npmjs.org/@firebase/database-types/-/database-types-1.0.20.tgz. Extracting by manifest.
+632 silly tarball no local data for faye-websocket@https://registry.npmjs.org/faye-websocket/-/faye-websocket-0.11.4.tgz. Extracting by manifest.
+633 silly tarball no local data for @firebase/auth-interop-types@https://registry.npmjs.org/@firebase/auth-interop-types/-/auth-interop-types-0.2.5.tgz. Extracting by manifest.
+634 silly tarball no local data for @firebase/auth-types@https://registry.npmjs.org/@firebase/auth-types/-/auth-types-0.13.1.tgz. Extracting by manifest.
+635 silly tarball no local data for @firebase/app-check-types@https://registry.npmjs.org/@firebase/app-check-types/-/app-check-types-0.5.4.tgz. Extracting by manifest.
+636 silly tarball no local data for @firebase/firestore-types@https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-3.0.4.tgz. Extracting by manifest.
+637 silly tarball no local data for @firebase/logger@https://registry.npmjs.org/@firebase/logger/-/logger-0.5.1.tgz. Extracting by manifest.
+638 silly tarball no local data for @firebase/analytics-types@https://registry.npmjs.org/@firebase/analytics-types/-/analytics-types-0.8.4.tgz. Extracting by manifest.
+639 silly tarball no local data for @firebase/component@https://registry.npmjs.org/@firebase/component/-/component-0.7.3.tgz. Extracting by manifest.
+640 silly tarball no local data for @firebase/app-check-interop-types@https://registry.npmjs.org/@firebase/app-check-interop-types/-/app-check-interop-types-0.3.4.tgz. Extracting by manifest.
+641 silly tarball no local data for idb@https://registry.npmjs.org/idb/-/idb-7.1.1.tgz. Extracting by manifest.
+642 silly tarball no local data for @firebase/util@https://registry.npmjs.org/@firebase/util/-/util-1.15.1.tgz. Extracting by manifest.
+643 silly tarball no local data for @firebase/storage-compat@https://registry.npmjs.org/@firebase/storage-compat/-/storage-compat-0.4.3.tgz. Extracting by manifest.
+644 silly tarball no local data for @firebase/storage@https://registry.npmjs.org/@firebase/storage/-/storage-0.14.3.tgz. Extracting by manifest.
+645 silly tarball no local data for require-directory@https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz. Extracting by manifest.
+646 silly tarball no local data for @firebase/remote-config-compat@https://registry.npmjs.org/@firebase/remote-config-compat/-/remote-config-compat-0.2.26.tgz. Extracting by manifest.
+647 silly tarball no local data for @firebase/performance-compat@https://registry.npmjs.org/@firebase/performance-compat/-/performance-compat-0.2.25.tgz. Extracting by manifest.
+648 silly tarball no local data for @firebase/performance@https://registry.npmjs.org/@firebase/performance/-/performance-0.7.12.tgz. Extracting by manifest.
+649 silly tarball no local data for @firebase/messaging@https://registry.npmjs.org/@firebase/messaging/-/messaging-0.13.0.tgz. Extracting by manifest.
+650 silly tarball no local data for @firebase/messaging-compat@https://registry.npmjs.org/@firebase/messaging-compat/-/messaging-compat-0.2.27.tgz. Extracting by manifest.
+651 silly tarball no local data for string-width@https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz. Extracting by manifest.
+652 silly tarball no local data for @firebase/installations-compat@https://registry.npmjs.org/@firebase/installations-compat/-/installations-compat-0.2.22.tgz. Extracting by manifest.
+653 silly tarball no local data for @firebase/functions-compat@https://registry.npmjs.org/@firebase/functions-compat/-/functions-compat-0.4.5.tgz. Extracting by manifest.
+654 silly tarball no local data for @firebase/remote-config@https://registry.npmjs.org/@firebase/remote-config/-/remote-config-0.8.5.tgz. Extracting by manifest.
+655 silly tarball no local data for @firebase/functions@https://registry.npmjs.org/@firebase/functions/-/functions-0.13.5.tgz. Extracting by manifest.
+656 silly tarball no local data for @firebase/firestore-compat@https://registry.npmjs.org/@firebase/firestore-compat/-/firestore-compat-0.4.11.tgz. Extracting by manifest.
+657 silly tarball no local data for @firebase/database-compat@https://registry.npmjs.org/@firebase/database-compat/-/database-compat-2.1.4.tgz. Extracting by manifest.
+658 silly tarball no local data for @firebase/database@https://registry.npmjs.org/@firebase/database/-/database-1.1.3.tgz. Extracting by manifest.
+659 silly tarball no local data for @firebase/firestore@https://registry.npmjs.org/@firebase/firestore/-/firestore-4.16.0.tgz. Extracting by manifest.
+660 silly tarball no local data for @firebase/data-connect@https://registry.npmjs.org/@firebase/data-connect/-/data-connect-0.7.1.tgz. Extracting by manifest.
+661 silly tarball no local data for @firebase/app-types@https://registry.npmjs.org/@firebase/app-types/-/app-types-0.9.5.tgz. Extracting by manifest.
+662 silly tarball no local data for @firebase/app-compat@https://registry.npmjs.org/@firebase/app-compat/-/app-compat-0.5.14.tgz. Extracting by manifest.
+663 silly tarball no local data for @firebase/app-check-compat@https://registry.npmjs.org/@firebase/app-check-compat/-/app-check-compat-0.4.5.tgz. Extracting by manifest.
+664 silly tarball no local data for @firebase/app-check@https://registry.npmjs.org/@firebase/app-check/-/app-check-0.12.0.tgz. Extracting by manifest.
+665 silly tarball no local data for @firebase/app@https://registry.npmjs.org/@firebase/app/-/app-0.15.0.tgz. Extracting by manifest.
+666 silly tarball no local data for @firebase/auth@https://registry.npmjs.org/@firebase/auth/-/auth-1.13.3.tgz. Extracting by manifest.
+667 silly tarball no local data for @firebase/auth-compat@https://registry.npmjs.org/@firebase/auth-compat/-/auth-compat-0.6.8.tgz. Extracting by manifest.
+668 silly tarball no local data for @firebase/ai@https://registry.npmjs.org/@firebase/ai/-/ai-2.13.1.tgz. Extracting by manifest.
+669 silly tarball no local data for @firebase/analytics@https://registry.npmjs.org/@firebase/analytics/-/analytics-0.10.22.tgz. Extracting by manifest.
+670 silly tarball no local data for firebase@https://registry.npmjs.org/firebase/-/firebase-12.15.0.tgz. Extracting by manifest.
+671 silly tarball no local data for @firebase/analytics-compat@https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.2.28.tgz. Extracting by manifest.
+672 silly tarball no local data for emoji-regex@https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz. Extracting by manifest.
+673 silly tarball no local data for @emnapi/runtime@https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.10.0.tgz. Extracting by manifest.
+674 silly tarball no local data for daisyui@https://registry.npmjs.org/daisyui/-/daisyui-5.6.3.tgz. Extracting by manifest.
+675 silly tarball no local data for lucide-react@https://registry.npmjs.org/lucide-react/-/lucide-react-1.21.0.tgz. Extracting by manifest.
+676 silly tarball no local data for @firebase/installations@https://registry.npmjs.org/@firebase/installations/-/installations-0.6.22.tgz. Extracting by manifest.
+677 http fetch GET 200 https://registry.npmjs.org/http-parser-js/-/http-parser-js-0.5.10.tgz 158ms (cache miss)
+678 timing reifyNode:node_modules/http-parser-js Completed in 275ms
+679 http fetch GET 200 https://registry.npmjs.org/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz 168ms (cache miss)
+680 timing reifyNode:node_modules/is-fullwidth-code-point Completed in 283ms
+681 http fetch GET 200 https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.2.1.tgz 163ms (cache miss)
+682 timing reifyNode:node_modules/safe-buffer Completed in 279ms
+683 http fetch GET 200 https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz 178ms (cache miss)
+684 timing reifyNode:node_modules/ansi-regex Completed in 287ms
+685 http fetch GET 200 https://registry.npmjs.org/strip-ansi/-/strip-ansi-6.0.1.tgz 172ms (cache miss)
+686 timing reifyNode:node_modules/strip-ansi Completed in 287ms
+687 http fetch GET 200 https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz 170ms (cache miss)
+688 timing reifyNode:node_modules/wrap-ansi Completed in 288ms
+689 http fetch GET 200 https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz 168ms (cache miss)
+690 timing reifyNode:node_modules/get-caller-file Completed in 282ms
+691 http fetch GET 200 https://registry.npmjs.org/cliui/-/cliui-8.0.1.tgz 168ms (cache miss)
+692 timing reifyNode:node_modules/cliui Completed in 283ms
+693 http fetch GET 200 https://registry.npmjs.org/websocket-extensions/-/websocket-extensions-0.1.4.tgz 170ms (cache miss)
+694 timing reifyNode:node_modules/websocket-extensions Completed in 286ms
+695 http fetch GET 200 https://registry.npmjs.org/yargs-parser/-/yargs-parser-21.1.1.tgz 180ms (cache miss)
+696 timing reifyNode:node_modules/yargs-parser Completed in 292ms
+697 http fetch GET 200 https://registry.npmjs.org/lodash.camelcase/-/lodash.camelcase-4.3.0.tgz 187ms (cache miss)
+698 timing reifyNode:node_modules/lodash.camelcase Completed in 310ms
+699 http fetch GET 200 https://registry.npmjs.org/websocket-driver/-/websocket-driver-0.7.5.tgz 188ms (cache miss)
+700 timing reifyNode:node_modules/websocket-driver Completed in 310ms
+701 http fetch GET 200 https://registry.npmjs.org/long/-/long-5.3.2.tgz 193ms (cache miss)
+702 timing reifyNode:node_modules/long Completed in 316ms
+703 http fetch GET 200 https://registry.npmjs.org/yargs/-/yargs-17.7.3.tgz 260ms (cache miss)
+704 timing reifyNode:node_modules/yargs Completed in 382ms
+705 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 417ms
+706 timing auditReport:getReport Completed in 438ms
+707 silly audit report {
+707 silly audit report   postcss: [
+707 silly audit report     {
+707 silly audit report       id: 1117015,
+707 silly audit report       url: 'https://github.com/advisories/GHSA-qx2v-qp2m-jg93',
+707 silly audit report       title: 'PostCSS has XSS via Unescaped </style> in its CSS Stringify Output',
+707 silly audit report       severity: 'moderate',
+707 silly audit report       vulnerable_versions: '<8.5.10',
+707 silly audit report       cwe: [Array],
+707 silly audit report       cvss: [Object]
+707 silly audit report     }
+707 silly audit report   ]
+707 silly audit report }
+708 timing metavuln:cache:get:security-advisory:postcss:685RVq5xScaqegAXk2BRJrsMaZmsz1d/volUoA67iVw3AvHhUlX03u+VPRrmo8iuObcSDvuZF+fuiOnLC9L1uA== Completed in 3ms
+709 http fetch GET 200 https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.1.tgz 369ms (cache miss)
+710 timing reifyNode:node_modules/@protobufjs/utf8 Completed in 487ms
+711 http fetch GET 200 https://registry.npmjs.org/@protobufjs/pool/-/pool-1.1.0.tgz 370ms (cache miss)
+712 timing reifyNode:node_modules/@protobufjs/pool Completed in 488ms
+713 http fetch GET 200 https://registry.npmjs.org/@protobufjs/path/-/path-1.1.2.tgz 372ms (cache miss)
+714 timing reifyNode:node_modules/@protobufjs/path Completed in 490ms
+715 http fetch GET 200 https://registry.npmjs.org/@protobufjs/float/-/float-1.0.2.tgz 373ms (cache miss)
+716 timing reifyNode:node_modules/@protobufjs/float Completed in 493ms
+717 http fetch GET 200 https://registry.npmjs.org/y18n/-/y18n-5.0.8.tgz 364ms (cache miss)
+718 http fetch GET 200 https://registry.npmjs.org/@protobufjs/fetch/-/fetch-1.1.1.tgz 376ms (cache miss)
+719 timing reifyNode:node_modules/@protobufjs/fetch Completed in 495ms
+720 timing reifyNode:node_modules/y18n Completed in 498ms
+721 http fetch GET 200 https://registry.npmjs.org/@protobufjs/eventemitter/-/eventemitter-1.1.1.tgz 448ms (cache miss)
+722 timing reifyNode:node_modules/@protobufjs/eventemitter Completed in 568ms
+723 http fetch GET 200 https://registry.npmjs.org/@protobufjs/aspromise/-/aspromise-1.1.2.tgz 449ms (cache miss)
+724 timing reifyNode:node_modules/@protobufjs/aspromise Completed in 570ms
+725 http fetch GET 200 https://registry.npmjs.org/@protobufjs/codegen/-/codegen-2.0.5.tgz 452ms (cache miss)
+726 timing reifyNode:node_modules/@protobufjs/codegen Completed in 576ms
+727 http fetch GET 200 https://registry.npmjs.org/@protobufjs/base64/-/base64-1.1.2.tgz 464ms (cache miss)
+728 timing reifyNode:node_modules/@protobufjs/base64 Completed in 585ms
+729 http fetch GET 200 https://registry.npmjs.org/faye-websocket/-/faye-websocket-0.11.4.tgz 454ms (cache miss)
+730 http fetch GET 200 https://registry.npmjs.org/@firebase/storage-types/-/storage-types-0.8.4.tgz 466ms (cache miss)
+731 timing reifyNode:node_modules/@firebase/storage-types Completed in 589ms
+732 http fetch GET 200 https://registry.npmjs.org/@firebase/performance-types/-/performance-types-0.2.4.tgz 463ms (cache miss)
+733 timing reifyNode:node_modules/@firebase/performance-types Completed in 592ms
+734 http fetch GET 200 https://registry.npmjs.org/@firebase/remote-config-types/-/remote-config-types-0.5.1.tgz 471ms (cache miss)
+735 timing reifyNode:node_modules/@firebase/remote-config-types Completed in 594ms
+736 timing reifyNode:node_modules/faye-websocket Completed in 591ms
+737 http fetch GET 200 https://registry.npmjs.org/web-vitals/-/web-vitals-4.2.4.tgz 514ms (cache miss)
+738 http fetch GET 200 https://registry.npmjs.org/protobufjs/-/protobufjs-7.6.4.tgz 520ms (cache miss)
+739 timing reifyNode:node_modules/protobufjs Completed in 643ms
+740 timing reifyNode:node_modules/web-vitals Completed in 643ms
+741 http fetch GET 200 https://registry.npmjs.org/@firebase/installations-types/-/installations-types-0.5.4.tgz 557ms (cache miss)
+742 timing reifyNode:node_modules/@firebase/installations-types Completed in 686ms
+743 http fetch GET 200 https://registry.npmjs.org/re2js/-/re2js-0.4.3.tgz 572ms (cache miss)
+744 timing reifyNode:node_modules/re2js Completed in 699ms
+745 http fetch GET 200 https://registry.npmjs.org/@firebase/messaging-interop-types/-/messaging-interop-types-0.2.5.tgz 831ms (cache miss)
+746 timing reifyNode:node_modules/@firebase/messaging-interop-types Completed in 962ms
+747 http fetch GET 200 https://registry.npmjs.org/@firebase/database-types/-/database-types-1.0.20.tgz 837ms (cache miss)
+748 timing reifyNode:node_modules/@firebase/database-types Completed in 964ms
+749 http fetch GET 200 https://registry.npmjs.org/@firebase/functions-types/-/functions-types-0.6.4.tgz 839ms (cache miss)
+750 timing reifyNode:node_modules/@firebase/functions-types Completed in 970ms
+751 http fetch GET 200 https://registry.npmjs.org/@firebase/auth-types/-/auth-types-0.13.1.tgz 840ms (cache miss)
+752 timing reifyNode:node_modules/@firebase/auth-types Completed in 967ms
+753 http fetch GET 200 https://registry.npmjs.org/require-directory/-/require-directory-2.1.1.tgz 837ms (cache miss)
+754 timing reifyNode:node_modules/require-directory Completed in 975ms
+755 http fetch GET 200 https://registry.npmjs.org/@firebase/component/-/component-0.7.3.tgz 840ms (cache miss)
+756 http fetch GET 200 https://registry.npmjs.org/@firebase/firestore-types/-/firestore-types-3.0.4.tgz 843ms (cache miss)
+757 timing reifyNode:node_modules/@firebase/firestore-types Completed in 976ms
+758 http fetch GET 200 https://registry.npmjs.org/string-width/-/string-width-4.2.3.tgz 843ms (cache miss)
+759 timing reifyNode:node_modules/string-width Completed in 982ms
+760 http fetch GET 200 https://registry.npmjs.org/@grpc/proto-loader/-/proto-loader-0.7.15.tgz 854ms (cache miss)
+761 http fetch GET 200 https://registry.npmjs.org/idb/-/idb-7.1.1.tgz 853ms (cache miss)
+762 timing reifyNode:node_modules/@grpc/proto-loader Completed in 989ms
+763 http fetch GET 200 https://registry.npmjs.org/@firebase/app-check-interop-types/-/app-check-interop-types-0.3.4.tgz 861ms (cache miss)
+764 timing reifyNode:node_modules/@firebase/app-check-interop-types Completed in 989ms
+765 timing reifyNode:node_modules/idb Completed in 990ms
+766 http fetch GET 200 https://registry.npmjs.org/@firebase/logger/-/logger-0.5.1.tgz 864ms (cache miss)
+767 timing reifyNode:node_modules/@firebase/logger Completed in 993ms
+768 timing reifyNode:node_modules/@firebase/component Completed in 1019ms
+769 http fetch GET 200 https://registry.npmjs.org/@firebase/webchannel-wrapper/-/webchannel-wrapper-1.0.6.tgz 906ms (cache miss)
+770 timing reifyNode:node_modules/@firebase/webchannel-wrapper Completed in 1033ms
+771 http fetch GET 200 https://registry.npmjs.org/@firebase/storage-compat/-/storage-compat-0.4.3.tgz 913ms (cache miss)
+772 timing reifyNode:node_modules/@firebase/storage-compat Completed in 1042ms
+773 http fetch GET 200 https://registry.npmjs.org/@firebase/auth-interop-types/-/auth-interop-types-0.2.5.tgz 959ms (cache miss)
+774 timing reifyNode:node_modules/@firebase/auth-interop-types Completed in 1087ms
+775 http fetch GET 200 https://registry.npmjs.org/@firebase/util/-/util-1.15.1.tgz 985ms (cache miss)
+776 timing reifyNode:node_modules/@firebase/util Completed in 1116ms
+777 http fetch GET 200 https://registry.npmjs.org/@firebase/remote-config-compat/-/remote-config-compat-0.2.26.tgz 989ms (cache miss)
+778 timing reifyNode:node_modules/@firebase/remote-config-compat Completed in 1124ms
+779 http fetch GET 200 https://registry.npmjs.org/@firebase/app-check-types/-/app-check-types-0.5.4.tgz 1000ms (cache miss)
+780 timing reifyNode:node_modules/@firebase/app-check-types Completed in 1127ms
+781 http fetch GET 200 https://registry.npmjs.org/@firebase/analytics-types/-/analytics-types-0.8.4.tgz 1036ms (cache miss)
+782 timing reifyNode:node_modules/@firebase/analytics-types Completed in 1164ms
+783 http fetch GET 200 https://registry.npmjs.org/@firebase/performance-compat/-/performance-compat-0.2.25.tgz 1345ms (cache miss)
+784 http fetch GET 200 https://registry.npmjs.org/@firebase/functions/-/functions-0.13.5.tgz 1374ms (cache miss)
+785 timing reifyNode:node_modules/@firebase/functions Completed in 1507ms
+786 timing reifyNode:node_modules/@firebase/performance-compat Completed in 1550ms
+787 http fetch GET 200 https://registry.npmjs.org/@firebase/app-types/-/app-types-0.9.5.tgz 1424ms (cache miss)
+788 timing reifyNode:node_modules/@firebase/app-types Completed in 1558ms
+789 http fetch GET 200 https://registry.npmjs.org/@firebase/messaging-compat/-/messaging-compat-0.2.27.tgz 1431ms (cache miss)
+790 http fetch GET 200 https://registry.npmjs.org/@firebase/installations-compat/-/installations-compat-0.2.22.tgz 1463ms (cache miss)
+791 timing reifyNode:node_modules/@firebase/installations-compat Completed in 1696ms
+792 timing reifyNode:node_modules/@firebase/messaging-compat Completed in 1853ms
+793 http fetch GET 200 https://registry.npmjs.org/@firebase/app-check-compat/-/app-check-compat-0.4.5.tgz 1746ms (cache miss)
+794 http fetch GET 200 https://registry.npmjs.org/@firebase/functions-compat/-/functions-compat-0.4.5.tgz 1750ms (cache miss)
+795 timing reifyNode:node_modules/@firebase/app-check-compat Completed in 1958ms
+796 timing reifyNode:node_modules/@firebase/functions-compat Completed in 1975ms
+797 http fetch GET 200 https://registry.npmjs.org/emoji-regex/-/emoji-regex-8.0.0.tgz 1841ms (cache miss)
+798 timing reifyNode:node_modules/string-width/node_modules/emoji-regex Completed in 1998ms
+799 http fetch GET 200 https://registry.npmjs.org/@firebase/analytics-compat/-/analytics-compat-0.2.28.tgz 2004ms (cache miss)
+800 http fetch GET 200 https://registry.npmjs.org/@firebase/remote-config/-/remote-config-0.8.5.tgz 2026ms (cache miss)
+801 timing reifyNode:node_modules/@firebase/remote-config Completed in 2159ms
+802 http fetch GET 200 https://registry.npmjs.org/@firebase/app-compat/-/app-compat-0.5.14.tgz 2062ms (cache miss)
+803 timing reifyNode:node_modules/@firebase/analytics-compat Completed in 2202ms
+804 timing reifyNode:node_modules/@firebase/app-compat Completed in 2210ms
+805 http fetch GET 200 https://registry.npmjs.org/@firebase/performance/-/performance-0.7.12.tgz 2204ms (cache miss)
+806 timing reifyNode:node_modules/@firebase/performance Completed in 2371ms
+807 http fetch GET 200 https://registry.npmjs.org/@firebase/firestore-compat/-/firestore-compat-0.4.11.tgz 2405ms (cache miss)
+808 timing reifyNode:node_modules/@firebase/firestore-compat Completed in 2565ms
+809 http fetch GET 200 https://registry.npmjs.org/@firebase/app/-/app-0.15.0.tgz 2430ms (cache miss)
+810 http fetch GET 200 https://registry.npmjs.org/@firebase/messaging/-/messaging-0.13.0.tgz 2446ms (cache miss)
+811 timing reifyNode:node_modules/@firebase/app Completed in 2582ms
+812 timing reifyNode:node_modules/@firebase/messaging Completed in 2592ms
+813 http fetch GET 200 https://registry.npmjs.org/postcss 2238ms (cache miss)
+814 timing metavuln:packument:postcss Completed in 2244ms
+815 timing metavuln:load:security-advisory:postcss:1117015 Completed in 9ms
+816 http fetch GET 200 https://registry.npmjs.org/@firebase/app-check/-/app-check-0.12.0.tgz 2515ms (cache miss)
+817 timing reifyNode:node_modules/@firebase/app-check Completed in 2655ms
+818 http fetch GET 200 https://registry.npmjs.org/@firebase/analytics/-/analytics-0.10.22.tgz 2547ms (cache miss)
+819 timing reifyNode:node_modules/@firebase/analytics Completed in 2697ms
+820 timing metavuln:cache:put:security-advisory:postcss:685RVq5xScaqegAXk2BRJrsMaZmsz1d/volUoA67iVw3AvHhUlX03u+VPRrmo8iuObcSDvuZF+fuiOnLC9L1uA== Completed in 83ms
+821 timing metavuln:calculate:security-advisory:postcss:1117015 Completed in 2337ms
+822 timing metavuln:cache:get:security-advisory:next:++TMQRwRMuAg5JaA57A8kadT8SbeBIqrzl+otPGsE46Z5PGnGvwSbtrHMqHSzpH6UEwsYqk9mYjoPnnsNBcW7Q== Completed in 8ms
+823 http fetch GET 200 https://registry.npmjs.org/@emnapi/runtime/-/runtime-1.10.0.tgz 2628ms (cache miss)
+824 timing reifyNode:node_modules/@unrs/resolver-binding-wasm32-wasi/node_modules/@emnapi/runtime Completed in 2779ms
+825 http fetch GET 200 https://registry.npmjs.org/@firebase/installations/-/installations-0.6.22.tgz 2832ms (cache miss)
+826 timing reifyNode:node_modules/@firebase/installations Completed in 3016ms
+827 http fetch GET 200 https://registry.npmjs.org/@firebase/database-compat/-/database-compat-2.1.4.tgz 2904ms (cache miss)
+828 timing reifyNode:node_modules/@firebase/database-compat Completed in 3040ms
+829 http fetch GET 200 https://registry.npmjs.org/@firebase/data-connect/-/data-connect-0.7.1.tgz 2908ms (cache miss)
+830 timing reifyNode:node_modules/@firebase/data-connect Completed in 3041ms
+831 http fetch GET 200 https://registry.npmjs.org/@firebase/storage/-/storage-0.14.3.tgz 2956ms (cache miss)
+832 timing reifyNode:node_modules/@firebase/storage Completed in 3143ms
+833 http fetch GET 200 https://registry.npmjs.org/@firebase/auth-compat/-/auth-compat-0.6.8.tgz 3342ms (cache miss)
+834 timing reifyNode:node_modules/@firebase/auth-compat Completed in 3491ms
+835 http fetch GET 200 https://registry.npmjs.org/@grpc/grpc-js/-/grpc-js-1.9.16.tgz 3499ms (cache miss)
+836 timing reifyNode:node_modules/@grpc/grpc-js Completed in 3629ms
+837 http fetch GET 200 https://registry.npmjs.org/@firebase/ai/-/ai-2.13.1.tgz 3493ms (cache miss)
+838 timing reifyNode:node_modules/@firebase/ai Completed in 3635ms
+839 http fetch GET 200 https://registry.npmjs.org/daisyui/-/daisyui-5.6.3.tgz 3988ms (cache miss)
+840 timing reifyNode:node_modules/daisyui Completed in 4132ms
+841 http fetch GET 200 https://registry.npmjs.org/@firebase/database/-/database-1.1.3.tgz 5702ms (cache miss)
+842 timing reifyNode:node_modules/@firebase/database Completed in 5843ms
+843 http fetch GET 200 https://registry.npmjs.org/next 3218ms (cache miss)
+844 timing metavuln:packument:next Completed in 4045ms
+845 timing metavuln:load:security-advisory:next:685RVq5xScaqegAXk2BRJrsMaZmsz1d/volUoA67iVw3AvHhUlX03u+VPRrmo8iuObcSDvuZF+fuiOnLC9L1uA== Completed in 432ms
+846 timing metavuln:cache:put:security-advisory:next:++TMQRwRMuAg5JaA57A8kadT8SbeBIqrzl+otPGsE46Z5PGnGvwSbtrHMqHSzpH6UEwsYqk9mYjoPnnsNBcW7Q== Completed in 83ms
+847 timing metavuln:calculate:security-advisory:next:685RVq5xScaqegAXk2BRJrsMaZmsz1d/volUoA67iVw3AvHhUlX03u+VPRrmo8iuObcSDvuZF+fuiOnLC9L1uA== Completed in 4561ms
+848 timing auditReport:init Completed in 7010ms
+849 timing reify:audit Completed in 7452ms
+850 http fetch GET 200 https://registry.npmjs.org/@firebase/auth/-/auth-1.13.3.tgz 7860ms (cache miss)
+851 timing reifyNode:node_modules/@firebase/auth Completed in 8000ms
+852 http fetch GET 200 https://registry.npmjs.org/lucide-react/-/lucide-react-1.21.0.tgz 8332ms (cache miss)
+853 timing reifyNode:node_modules/lucide-react Completed in 8474ms
+854 http fetch GET 200 https://registry.npmjs.org/@firebase/firestore/-/firestore-4.16.0.tgz 9418ms (cache miss)
+855 timing reifyNode:node_modules/@firebase/firestore Completed in 9551ms
+856 http fetch GET 200 https://registry.npmjs.org/firebase/-/firebase-12.15.0.tgz 11907ms (cache miss)
+857 timing reifyNode:node_modules/firebase Completed in 12050ms
+858 timing reify:unpack Completed in 12070ms
+859 timing reify:unretire Completed in 0ms
+860 timing build:queue Completed in 6ms
+861 timing build:link:node_modules/@grpc/proto-loader Completed in 4ms
+862 timing build:link Completed in 4ms
+863 info run @firebase/util@1.15.1 postinstall node_modules/@firebase/util node ./postinstall.js
+864 info run protobufjs@7.6.4 postinstall node_modules/protobufjs node scripts/postinstall
+865 info run @firebase/util@1.15.1 postinstall { code: 0, signal: null }
+866 timing build:run:postinstall:node_modules/@firebase/util Completed in 1103ms
+867 info run protobufjs@7.6.4 postinstall { code: 0, signal: null }
+868 timing build:run:postinstall:node_modules/protobufjs Completed in 1089ms
+869 timing build:run:postinstall Completed in 1110ms
+870 timing build:deps Completed in 1121ms
+871 timing build Completed in 1121ms
+872 timing reify:build Completed in 1123ms
+873 timing reify:trash Completed in 11ms
+874 timing reify:save Completed in 179ms
+875 timing reify Completed in 36678ms
+876 silly ADD node_modules/ansi-regex
+877 silly ADD node_modules/is-fullwidth-code-point
+878 silly ADD node_modules/wrap-ansi
+879 silly ADD node_modules/strip-ansi
+880 silly ADD node_modules/yargs-parser
+881 silly ADD node_modules/y18n
+882 silly ADD node_modules/string-width
+883 silly ADD node_modules/string-width/node_modules/emoji-regex
+884 silly ADD node_modules/require-directory
+885 silly ADD node_modules/get-caller-file
+886 silly ADD node_modules/cliui
+887 silly ADD node_modules/websocket-extensions
+888 silly ADD node_modules/safe-buffer
+889 silly ADD node_modules/http-parser-js
+890 silly ADD node_modules/@protobufjs/utf8
+891 silly ADD node_modules/@protobufjs/pool
+892 silly ADD node_modules/@protobufjs/path
+893 silly ADD node_modules/@protobufjs/float
+894 silly ADD node_modules/@protobufjs/fetch
+895 silly ADD node_modules/@protobufjs/eventemitter
+896 silly ADD node_modules/@protobufjs/codegen
+897 silly ADD node_modules/@protobufjs/base64
+898 silly ADD node_modules/@protobufjs/aspromise
+899 silly ADD node_modules/websocket-driver
+900 silly ADD node_modules/yargs
+901 silly ADD node_modules/protobufjs
+902 silly ADD node_modules/long
+903 silly ADD node_modules/lodash.camelcase
+904 silly ADD node_modules/@firebase/storage-types
+905 silly ADD node_modules/@firebase/remote-config-types
+906 silly ADD node_modules/@firebase/performance-types
+907 silly ADD node_modules/web-vitals
+908 silly ADD node_modules/@firebase/installations-types
+909 silly ADD node_modules/@firebase/functions-types
+910 silly ADD node_modules/@firebase/messaging-interop-types
+911 silly ADD node_modules/@firebase/firestore-types
+912 silly ADD node_modules/re2js
+913 silly ADD node_modules/@grpc/proto-loader
+914 silly ADD node_modules/@grpc/grpc-js
+915 silly ADD node_modules/@firebase/webchannel-wrapper
+916 silly ADD node_modules/@firebase/database-types
+917 silly ADD node_modules/faye-websocket
+918 silly ADD node_modules/@firebase/auth-interop-types
+919 silly ADD node_modules/@firebase/auth-types
+920 silly ADD node_modules/@firebase/app-check-types
+921 silly ADD node_modules/idb
+922 silly ADD node_modules/@firebase/analytics-types
+923 silly ADD node_modules/@firebase/logger
+924 silly ADD node_modules/@firebase/component
+925 silly ADD node_modules/@firebase/app-check-interop-types
+926 silly ADD node_modules/@firebase/util
+927 silly ADD node_modules/@firebase/storage-compat
+928 silly ADD node_modules/@firebase/storage
+929 silly ADD node_modules/@firebase/remote-config-compat
+930 silly ADD node_modules/@firebase/remote-config
+931 silly ADD node_modules/@firebase/performance-compat
+932 silly ADD node_modules/@firebase/performance
+933 silly ADD node_modules/@firebase/messaging-compat
+934 silly ADD node_modules/@firebase/messaging
+935 silly ADD node_modules/@firebase/installations-compat
+936 silly ADD node_modules/@firebase/installations
+937 silly ADD node_modules/@firebase/functions-compat
+938 silly ADD node_modules/@firebase/functions
+939 silly ADD node_modules/@firebase/firestore-compat
+940 silly ADD node_modules/@firebase/firestore
+941 silly ADD node_modules/@firebase/database-compat
+942 silly ADD node_modules/@firebase/database
+943 silly ADD node_modules/@firebase/data-connect
+944 silly ADD node_modules/@firebase/auth-compat
+945 silly ADD node_modules/@firebase/auth
+946 silly ADD node_modules/@firebase/app-types
+947 silly ADD node_modules/@firebase/app-compat
+948 silly ADD node_modules/@firebase/app-check-compat
+949 silly ADD node_modules/@firebase/app-check
+950 silly ADD node_modules/@firebase/app
+951 silly ADD node_modules/@firebase/analytics-compat
+952 silly ADD node_modules/@firebase/analytics
+953 silly ADD node_modules/@firebase/ai
+954 silly ADD node_modules/lucide-react
+955 silly ADD node_modules/firebase
+956 silly ADD node_modules/daisyui
+957 silly ADD
+958 silly ADD
+959 silly ADD
+960 silly ADD
+961 silly ADD
+962 silly ADD
+963 silly ADD
+964 silly ADD
+965 silly ADD
+966 silly ADD
+967 silly ADD
+968 silly ADD
+969 silly ADD
+970 silly ADD
+971 silly ADD node_modules/@emnapi/runtime
+972 silly ADD
+973 silly ADD
+974 silly ADD
+975 silly ADD
+976 silly ADD
+977 silly ADD
+978 silly ADD
+979 silly ADD
+980 silly ADD
+981 silly ADD
+982 silly ADD
+983 silly ADD
+984 silly ADD
+985 silly ADD
+986 silly ADD
+987 silly ADD
+988 silly ADD
+989 silly ADD
+990 silly ADD
+991 silly ADD
+992 silly ADD
+993 silly ADD
+994 silly ADD
+995 silly ADD
+996 silly ADD
+997 silly ADD
+998 silly ADD
+999 silly ADD
+1000 silly ADD
+1001 silly ADD
+1002 silly ADD
+1003 silly ADD
+1004 silly ADD
+1005 silly ADD
+1006 silly ADD
+1007 silly ADD
+1008 silly ADD
+1009 silly ADD
+1010 silly ADD
+1011 silly ADD
+1012 silly ADD
+1013 silly ADD
+1014 silly ADD
+1015 silly ADD
+1016 silly ADD
+1017 silly ADD
+1018 silly ADD
+1019 silly ADD
+1020 silly ADD
+1021 silly ADD
+1022 silly ADD
+1023 silly ADD
+1024 silly ADD
+1025 silly ADD
+1026 silly ADD
+1027 silly ADD
+1028 silly ADD
+1029 timing command:install Completed in 36738ms
+1030 notice
+1030 notice New major version of npm available! 10.2.4 -> 11.17.0
+1030 notice Changelog: <https://github.com/npm/cli/releases/tag/v11.17.0>
+1030 notice Run `npm install -g npm@11.17.0` to update!
+1030 notice
+1031 verbose exit 0
+1032 timing npm Completed in 36966ms
+1033 info ok
