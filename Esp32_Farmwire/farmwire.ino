@@ -16,7 +16,7 @@
 // OTA Configuration
 const char* firmwareUrl = "https://github.com/shohidmax/bmda_camera/releases/download/maxit/bmdacamera.ino.bin";
 const char* versionUrl = "https://raw.githubusercontent.com/shohidmax/bmda_camera/refs/heads/main/Esp32_Farmwire/vesion.txt";
-const char* currentFirmwareVersion = "1.0.0";
+const char* currentFirmwareVersion = "1.0.2";
 const unsigned long updateCheckInterval = 5 * 60 * 1000;  // 5 minutes in milliseconds
 unsigned long lastUpdateCheck = 0;
 
@@ -24,7 +24,7 @@ unsigned long lastUpdateCheck = 0;
 String expectedSHA256 = "";
 
 // Backend API URL - Update with your server IP and port
-const char* serverUrl = "http://YOUR_SERVER_IP:5000/api/trigger";
+const char* serverUrl = "https://transformer-camera-api.maxapi.esp32.site/api/trigger";
 
 // Zone Code Configuration
 const char* zoneCode = "ZONE_01";
@@ -125,6 +125,7 @@ void setup() {
   };
   esp_task_wdt_reconfigure(&wdt_config);
 #else
+  esp_task_wdt_deinit();
   esp_task_wdt_init(30, true); // 30 seconds timeout, panic on timeout
 #endif
   esp_task_wdt_add(NULL); // Add loop task to WDT
