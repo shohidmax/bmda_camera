@@ -24,6 +24,32 @@ const DeviceSchema = new mongoose.Schema({
     type: String,
     default: 'ZONE_01'
   },
+  institution: {
+    type: String,
+    default: ''
+  },
+  location: {
+    type: String,
+    default: ''
+  },
+  latitude: {
+    type: String,
+    default: ''
+  },
+  longitude: {
+    type: String,
+    default: ''
+  },
+  phoneNumbers: {
+    type: [String],
+    default: [],
+    validate: {
+      validator: function(val) {
+        return val.length <= 5;
+      },
+      message: 'A device can have at most 5 phone numbers.'
+    }
+  },
   createdAt: {
     type: Date,
     default: Date.now

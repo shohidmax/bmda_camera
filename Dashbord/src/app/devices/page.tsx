@@ -18,6 +18,11 @@ export default function DevicesPage() {
   const [deviceName, setDeviceName] = useState('');
   const [cameraUrl, setCameraUrl] = useState('https://picsum.photos/800/600');
   const [zoneCode, setZoneCode] = useState('ZONE_01');
+  const [phoneNumbers, setPhoneNumbers] = useState('');
+  const [institution, setInstitution] = useState('');
+  const [location, setLocation] = useState('');
+  const [latitude, setLatitude] = useState('');
+  const [longitude, setLongitude] = useState('');
   const [registering, setRegistering] = useState(false);
   const [editingDeviceId, setEditingDeviceId] = useState<string | null>(null);
 
@@ -48,6 +53,11 @@ export default function DevicesPage() {
     setDeviceName(device.deviceName);
     setCameraUrl(device.cameraUrl);
     setZoneCode(device.zoneCode);
+    setPhoneNumbers(device.phoneNumbers ? device.phoneNumbers.join(', ') : '');
+    setInstitution(device.institution || '');
+    setLocation(device.location || '');
+    setLatitude(device.latitude || '');
+    setLongitude(device.longitude || '');
     (document.getElementById('add_device_modal') as any)?.showModal();
   };
 
@@ -73,6 +83,11 @@ export default function DevicesPage() {
     setDeviceName('');
     setCameraUrl('https://picsum.photos/800/600');
     setZoneCode('ZONE_01');
+    setPhoneNumbers('');
+    setInstitution('');
+    setLocation('');
+    setLatitude('');
+    setLongitude('');
     setEditingDeviceId(null);
     (document.getElementById('add_device_modal') as any)?.close();
   };
@@ -85,6 +100,12 @@ export default function DevicesPage() {
     }
     setError('');
     setRegistering(true);
+
+    const numbersArray = phoneNumbers.split(',')
+      .map(num => num.trim())
+      .filter(num => num !== '')
+      .slice(0, 5);
+
     try {
       let response;
       if (editingDeviceId) {
@@ -96,7 +117,12 @@ export default function DevicesPage() {
             uid,
             deviceName,
             cameraUrl,
-            zoneCode
+            zoneCode,
+            phoneNumbers: numbersArray,
+            institution,
+            location,
+            latitude,
+            longitude
           })
         });
       } else {
@@ -109,7 +135,12 @@ export default function DevicesPage() {
             deviceName,
             cameraUrl,
             zoneCode,
-            userId: user.uid
+            userId: user.uid,
+            phoneNumbers: numbersArray,
+            institution,
+            location,
+            latitude,
+            longitude
           })
         });
       }
@@ -146,6 +177,11 @@ export default function DevicesPage() {
               setDeviceName('');
               setCameraUrl('https://picsum.photos/800/600');
               setZoneCode('ZONE_01');
+              setPhoneNumbers('');
+              setInstitution('');
+              setLocation('');
+              setLatitude('');
+              setLongitude('');
               (document.getElementById('add_device_modal') as any)?.showModal();
             }}
             className="btn btn-primary gap-2 shadow-lg shadow-primary/20"
@@ -181,6 +217,11 @@ export default function DevicesPage() {
                   setDeviceName('');
                   setCameraUrl('https://picsum.photos/800/600');
                   setZoneCode('ZONE_01');
+                  setPhoneNumbers('');
+                  setInstitution('');
+                  setLocation('');
+                  setLatitude('');
+                  setLongitude('');
                   (document.getElementById('add_device_modal') as any)?.showModal();
                 }}
                 className="btn btn-primary gap-2 mt-4"
@@ -211,14 +252,38 @@ export default function DevicesPage() {
                   </div>
 
                   <div className="space-y-2 border-y border-base-100/50 py-4 my-2 text-sm">
+                    {device.institution && (
+                      <div className="flex justify-between">
+                        <span className="text-base-content/40">Institution:</span>
+                        <span className="font-semibold text-right max-w-[200px] truncate" title={device.institution}>{device.institution}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between">
                       <span className="text-base-content/40">Zone Location:</span>
                       <span className="font-semibold">{device.zoneCode}</span>
                     </div>
+                    {device.location && (
+                      <div className="flex justify-between">
+                        <span className="text-base-content/40">Address Location:</span>
+                        <span className="font-semibold text-right max-w-[200px] truncate" title={device.location}>{device.location}</span>
+                      </div>
+                    )}
+                    {device.latitude && device.longitude && (
+                      <div className="flex justify-between">
+                        <span className="text-base-content/40">Coordinates:</span>
+                        <span className="font-mono text-xs">{device.latitude}, {device.longitude}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between items-center">
                       <span className="text-base-content/40 shrink-0">Snapshot Source:</span>
                       <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70" title={device.cameraUrl}>
                         {device.cameraUrl}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-base-content/40 shrink-0">Voice Call Alerts:</span>
+                      <span className="font-semibold text-xs truncate max-w-[200px] text-base-content/70" title={device.phoneNumbers ? device.phoneNumbers.join(', ') : 'None'}>
+                        {device.phoneNumbers && device.phoneNumbers.length > 0 ? device.phoneNumbers.join(', ') : 'None'}
                       </span>
                     </div>
                   </div>
@@ -269,16 +334,69 @@ export default function DevicesPage() {
 
               <div className="form-control w-full">
                 <label className="label">
-                  <span className="label-text font-semibold text-base-content/70">Custom Friendly Name</span>
+                  <span className="label-text font-semibold text-base-content/70">Institution</span>
+                </label>
+                <input 
+                  type="text" 
+                  value={institution}
+                  onChange={(e) => setInstitution(e.target.value)}
+                  placeholder="e.g. Barind Multipurpose Development Authority" 
+                  className="input input-bordered w-full rounded-xl text-sm"
+                />
+              </div>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-semibold text-base-content/70">Name</span>
                 </label>
                 <input 
                   type="text" 
                   value={deviceName}
                   onChange={(e) => setDeviceName(e.target.value)}
-                  placeholder="e.g. Backyard Gate" 
+                  placeholder="e.g. Manda" 
                   className="input input-bordered w-full rounded-xl"
                   required
                 />
+              </div>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-semibold text-base-content/70">Location</span>
+                </label>
+                <input 
+                  type="text" 
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  placeholder="e.g. Godagari, Rajshahi" 
+                  className="input input-bordered w-full rounded-xl text-sm"
+                />
+              </div>
+
+              <div className="form-control w-full grid grid-cols-2 gap-4">
+                <div>
+                  <label className="label">
+                    <span className="label-text font-semibold text-base-content/70">Latitude</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    value={latitude}
+                    onChange={(e) => setLatitude(e.target.value)}
+                    placeholder="e.g. 24.74872" 
+                    className="input input-bordered w-full rounded-xl text-sm"
+                  />
+                </div>
+                <div>
+                  <label className="label">
+                    <span className="label-text font-semibold text-base-content/70">Longitude</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    value={longitude}
+                    onChange={(e) => setLongitude(e.target.value)}
+                    placeholder="e.g. 88.684272" 
+                    className="input input-bordered w-full rounded-xl text-sm"
+                  />
+                </div>
               </div>
 
               <div className="form-control w-full">
@@ -290,7 +408,7 @@ export default function DevicesPage() {
                   value={zoneCode}
                   onChange={(e) => setZoneCode(e.target.value)}
                   placeholder="e.g. ZONE_02" 
-                  className="input input-bordered w-full rounded-xl"
+                  className="input input-bordered w-full rounded-xl text-sm"
                   required
                 />
               </div>
@@ -308,6 +426,20 @@ export default function DevicesPage() {
                   required
                 />
                 <span className="label-text-alt text-base-content/40 mt-1">We grab frames from this stream when D4 transitions to high.</span>
+              </div>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-semibold text-base-content/70">Phone Call Alert Numbers (Max 5)</span>
+                </label>
+                <input 
+                  type="text" 
+                  value={phoneNumbers}
+                  onChange={(e) => setPhoneNumbers(e.target.value)}
+                  placeholder="e.g. +8801711111111, +8801922222222" 
+                  className="input input-bordered w-full rounded-xl text-sm"
+                />
+                <span className="label-text-alt text-base-content/40 mt-1">Comma-separated list of numbers for auto-voice calls when threat score is &gt; 90%.</span>
               </div>
 
               <div className="modal-action flex justify-end gap-2 mt-8">

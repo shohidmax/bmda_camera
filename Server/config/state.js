@@ -7,6 +7,11 @@ const memDevices = [
     deviceName: 'Simulated Entryway Camera',
     cameraUrl: 'https://picsum.photos/800/600',
     zoneCode: 'ZONE_01',
+    institution: 'Barind Multipurpose Development Authority(BMDA)',
+    location: 'Godagari, Rajshahi',
+    latitude: '24.4712',
+    longitude: '88.3308',
+    phoneNumbers: [],
     userId: 'mock-user-123',
     createdAt: new Date()
   }

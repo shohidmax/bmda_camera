@@ -26,6 +26,11 @@ export default function AccessControlPage() {
   const [newRole, setNewRole] = useState('operator');
   const [creatingUser, setCreatingUser] = useState(false);
 
+  // Share Device Form State
+  const [shareEmail, setShareEmail] = useState('');
+  const [shareDeviceUid, setShareDeviceUid] = useState('');
+  const [sharingDevice, setSharingDevice] = useState(false);
+
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newEmail || !newDisplayName) {
@@ -80,6 +85,64 @@ export default function AccessControlPage() {
       setError(err.message || 'Error occurred during user creation.');
     } finally {
       setCreatingUser(false);
+    }
+  };
+
+  const handleShareDevice = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!shareEmail || !shareDeviceUid) {
+      setError('Please provide Email and select a Device.');
+      return;
+    }
+    setError('');
+    setSuccessMsg('');
+    setSharingDevice(true);
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/devices/share`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.uid,
+          email: shareEmail,
+          deviceUid: shareDeviceUid
+        })
+      });
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to share device.');
+      }
+      setSuccessMsg(`Successfully shared device ${shareDeviceUid} with ${shareEmail}.`);
+      setShareEmail('');
+      setShareDeviceUid('');
+      (document.getElementById('share_device_modal') as any)?.close();
+      fetchUsersAndDevices();
+    } catch (err: any) {
+      setError(err.message || 'Error occurred during device sharing.');
+    } finally {
+      setSharingDevice(false);
+    }
+  };
+
+  const handleDeleteUser = async (targetUid: string) => {
+    if (!confirm('Are you sure you want to delete this user profile?')) return;
+    setActionLoading(`delete_${targetUid}`);
+    setError('');
+    setSuccessMsg('');
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/users/${targetUid}?userId=${user?.uid}`, {
+        method: 'DELETE'
+      });
+      const data = await response.json();
+      if (data.success) {
+        setSuccessMsg('User profile deleted successfully.');
+        fetchUsersAndDevices();
+      } else {
+        setError(data.error || 'Failed to delete user.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error occurred during user deletion.');
+    } finally {
+      setActionLoading(null);
     }
   };
 
@@ -229,6 +292,13 @@ export default function AccessControlPage() {
               Create Operator
             </button>
             <button 
+              onClick={() => (document.getElementById('share_device_modal') as any)?.showModal()}
+              className="btn btn-accent gap-2 shadow-lg shadow-accent/20 text-accent-content font-bold"
+            >
+              <Key className="w-5 h-5" />
+              Share Device
+            </button>
+            <button 
               onClick={fetchUsersAndDevices}
               className={`btn btn-circle btn-outline btn-neutral ${loading ? 'loading' : ''}`}
               title="Refresh Users"
@@ -278,7 +348,7 @@ export default function AccessControlPage() {
                   </thead>
                   <tbody>
                     {users.map((u) => (
-                      <tr key={u.uid} className="border-b border-base-300/20 hover:bg-base-300/20 transition-all">
+                      <tr key={u._id} className="border-b border-base-300/20 hover:bg-base-300/20 transition-all">
                         <td className="py-4">
                           <div className="font-bold text-base-content">{u.displayName || 'No Display Name'}</div>
                           <div className="text-xs text-base-content/50 font-mono mt-0.5">{u.email}</div>
@@ -323,7 +393,7 @@ export default function AccessControlPage() {
                           )}
                         </td>
 
-                        <td className="py-4 text-right">
+                        <td className="py-4 text-right flex justify-end gap-2 items-center">
                           <button
                             disabled={u.role === 'admin' || actionLoading === `devices_${u.uid}`}
                             onClick={() => openDeviceAccessModal(u)}
@@ -332,6 +402,15 @@ export default function AccessControlPage() {
                             <Key className="w-4 h-4" />
                             Configure Access
                           </button>
+                          {u.uid !== user.uid && (
+                            <button
+                              disabled={actionLoading === `delete_${u.uid}`}
+                              onClick={() => handleDeleteUser(u.uid)}
+                              className="btn btn-outline btn-error btn-sm rounded-xl font-bold"
+                            >
+                              Delete User
+                            </button>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -486,6 +565,73 @@ export default function AccessControlPage() {
           </div>
           <form method="dialog" className="modal-backdrop">
             <button onClick={() => setSelectedUser(null)}>close</button>
+          </form>
+        </dialog>
+
+        {/* Share Device Dialog Modal */}
+        <dialog id="share_device_modal" className="modal">
+          <div className="modal-box bg-base-200 border border-base-100 rounded-3xl max-w-md p-8">
+            <h3 className="font-extrabold text-xl mb-4">Share Device via Email</h3>
+            
+            <form onSubmit={handleShareDevice} className="space-y-4">
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-semibold text-base-content/70">User Email Address</span>
+                </label>
+                <input 
+                  type="email" 
+                  value={shareEmail}
+                  onChange={(e) => setShareEmail(e.target.value)}
+                  placeholder="operator@company.com" 
+                  className="input input-bordered w-full rounded-xl"
+                  required
+                />
+              </div>
+
+              <div className="form-control w-full">
+                <label className="label">
+                  <span className="label-text font-semibold text-base-content/70">Select Device Node</span>
+                </label>
+                <select 
+                  value={shareDeviceUid}
+                  onChange={(e) => setShareDeviceUid(e.target.value)}
+                  className="select select-bordered w-full rounded-xl font-semibold"
+                  required
+                >
+                  <option value="">-- Select a Device --</option>
+                  {devices.map(d => (
+                    <option key={d.uid} value={d.uid}>{d.deviceName} ({d.uid})</option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="modal-action flex justify-end gap-2 mt-8">
+                <button 
+                  type="button" 
+                  onClick={() => {
+                    setShareEmail('');
+                    setShareDeviceUid('');
+                    (document.getElementById('share_device_modal') as any)?.close();
+                  }} 
+                  className="btn btn-neutral rounded-xl btn-sm"
+                >
+                  Cancel
+                </button>
+                <button 
+                  type="submit" 
+                  disabled={sharingDevice}
+                  className="btn btn-primary rounded-xl btn-sm"
+                >
+                  {sharingDevice ? 'Sharing...' : 'Share Access'}
+                </button>
+              </div>
+            </form>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => {
+              setShareEmail('');
+              setShareDeviceUid('');
+            }}>close</button>
           </form>
         </dialog>
       </main>

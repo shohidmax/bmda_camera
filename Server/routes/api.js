@@ -19,14 +19,34 @@ router.post('/trigger', async (req, res) => {
     const uppercaseUid = uid.toUpperCase();
     console.log(`[API] Received trigger from ESP32 (MAC: ${uppercaseUid})`);
     
+    // Lookup registered device configuration
+    let resolvedZoneCode = zone_code || 'ZONE_01';
+    let deviceName = 'ESP32 Security Node';
+    
+    if (global.dbConnected) {
+      const device = await Device.findOne({ uid: uppercaseUid });
+      if (device) {
+        resolvedZoneCode = device.zoneCode || resolvedZoneCode;
+        deviceName = device.deviceName || deviceName;
+      }
+    } else {
+      const device = memDevices.find(d => d.uid === uppercaseUid);
+      if (device) {
+        resolvedZoneCode = device.zoneCode || resolvedZoneCode;
+        deviceName = device.deviceName || deviceName;
+      }
+    }
+    
+    const customMessage = message || `Security alert: Pin D4 is LOW on ${deviceName}!`;
+    
     let event;
     if (global.dbConnected) {
       event = new Event({
         uid: uppercaseUid,
         time: time || new Date().toISOString(),
         action,
-        message: message || 'ESP32 D4 physical trigger active',
-        zoneCode: zone_code || 'ZONE_01',
+        message: customMessage,
+        zoneCode: resolvedZoneCode,
         status: 'pending'
       });
       await event.save();
@@ -37,8 +57,8 @@ router.post('/trigger', async (req, res) => {
         uid: uppercaseUid,
         time: time || new Date().toISOString(),
         action,
-        message: message || 'ESP32 D4 physical trigger active (Simulated)',
-        zoneCode: zone_code || 'ZONE_01',
+        message: customMessage + ' (Simulated)',
+        zoneCode: resolvedZoneCode,
         capturedImages: [],
         threatScore: 0,
         aiReport: 'Analysis pending',
@@ -67,7 +87,7 @@ router.post('/trigger', async (req, res) => {
 // @desc    Register or update a device
 router.post('/devices', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode, userId } = req.body;
+    const { uid, deviceName, cameraUrl, zoneCode, userId, phoneNumbers, institution, location, latitude, longitude } = req.body;
     
     if (!uid || !userId) {
       return res.status(400).json({ success: false, error: 'uid and userId are required.' });
@@ -83,6 +103,11 @@ router.post('/devices', async (req, res) => {
         device.cameraUrl = cameraUrl || device.cameraUrl;
         device.zoneCode = zoneCode || device.zoneCode;
         device.userId = userId;
+        if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
+        if (institution !== undefined) device.institution = institution;
+        if (location !== undefined) device.location = location;
+        if (latitude !== undefined) device.latitude = latitude;
+        if (longitude !== undefined) device.longitude = longitude;
         await device.save();
         console.log(`[API] Updated device in DB: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully.', device });
@@ -92,7 +117,12 @@ router.post('/devices', async (req, res) => {
           deviceName: deviceName || 'ESP32 Security Node',
           cameraUrl: cameraUrl || 'https://picsum.photos/800/600',
           zoneCode: zoneCode || 'ZONE_01',
-          userId
+          userId,
+          phoneNumbers: phoneNumbers || [],
+          institution: institution || '',
+          location: location || '',
+          latitude: latitude || '',
+          longitude: longitude || ''
         });
         await device.save();
         console.log(`[API] Registered new device in DB: ${uppercaseUid}`);
@@ -106,6 +136,11 @@ router.post('/devices', async (req, res) => {
         device.cameraUrl = cameraUrl || device.cameraUrl;
         device.zoneCode = zoneCode || device.zoneCode;
         device.userId = userId;
+        if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
+        if (institution !== undefined) device.institution = institution;
+        if (location !== undefined) device.location = location;
+        if (latitude !== undefined) device.latitude = latitude;
+        if (longitude !== undefined) device.longitude = longitude;
         console.log(`[API] Updated simulated device: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
       } else {
@@ -116,6 +151,11 @@ router.post('/devices', async (req, res) => {
           cameraUrl: cameraUrl || 'https://picsum.photos/800/600',
           zoneCode: zoneCode || 'ZONE_01',
           userId,
+          phoneNumbers: phoneNumbers || [],
+          institution: institution || '',
+          location: location || '',
+          latitude: latitude || '',
+          longitude: longitude || '',
           createdAt: new Date()
         };
         memDevices.push(device);
@@ -244,7 +284,7 @@ router.get('/events/device/:uid', async (req, res) => {
 // @desc    Update a device by ID
 router.put('/devices/:id', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode } = req.body;
+    const { uid, deviceName, cameraUrl, zoneCode, phoneNumbers, institution, location, latitude, longitude } = req.body;
     const deviceId = req.params.id;
     
     if (global.dbConnected) {
@@ -257,6 +297,11 @@ router.put('/devices/:id', async (req, res) => {
       if (deviceName) device.deviceName = deviceName;
       if (cameraUrl) device.cameraUrl = cameraUrl;
       if (zoneCode) device.zoneCode = zoneCode;
+      if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
+      if (institution !== undefined) device.institution = institution;
+      if (location !== undefined) device.location = location;
+      if (latitude !== undefined) device.latitude = latitude;
+      if (longitude !== undefined) device.longitude = longitude;
       
       await device.save();
       console.log(`[API] Updated device in DB by ID: ${deviceId}`);
@@ -272,6 +317,11 @@ router.put('/devices/:id', async (req, res) => {
       if (deviceName) device.deviceName = deviceName;
       if (cameraUrl) device.cameraUrl = cameraUrl;
       if (zoneCode) device.zoneCode = zoneCode;
+      if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
+      if (institution !== undefined) device.institution = institution;
+      if (location !== undefined) device.location = location;
+      if (latitude !== undefined) device.latitude = latitude;
+      if (longitude !== undefined) device.longitude = longitude;
       
       console.log(`[API] Updated simulated device by ID: ${deviceId}`);
       return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
@@ -476,18 +526,161 @@ router.put('/users/:uid/devices', async (req, res) => {
     if (global.dbConnected) {
       const user = await User.findOne({ uid: targetUid });
       if (!user) return res.status(404).json({ success: false, error: 'User not found.' });
+
+      // Enforce 5-user limit per device
+      for (const devUid of accessibleDevices) {
+        if (user.accessibleDevices.includes(devUid)) continue;
+        const count = await User.countDocuments({ accessibleDevices: devUid });
+        if (count >= 5) {
+          const device = await Device.findOne({ uid: devUid });
+          return res.status(400).json({ 
+            success: false, 
+            error: `Device "${device ? device.deviceName : devUid}" is already shared with the maximum limit of 5 users.` 
+          });
+        }
+      }
+
       user.accessibleDevices = accessibleDevices;
       await user.save();
       return res.json({ success: true, message: 'User device access updated successfully.', user });
     } else {
       const user = memUsers.find(u => u.uid === targetUid);
       if (!user) return res.status(404).json({ success: false, error: 'User not found.' });
+      if (!user.accessibleDevices) user.accessibleDevices = [];
+
+      // Enforce 5-user limit per device
+      for (const devUid of accessibleDevices) {
+        if (user.accessibleDevices.includes(devUid)) continue;
+        const count = memUsers.filter(u => u.accessibleDevices && u.accessibleDevices.includes(devUid)).length;
+        if (count >= 5) {
+          const device = memDevices.find(d => d.uid === devUid);
+          return res.status(400).json({ 
+            success: false, 
+            error: `Device "${device ? device.deviceName : devUid}" is already shared with the maximum limit of 5 users.` 
+          });
+        }
+      }
+
       user.accessibleDevices = accessibleDevices;
       return res.json({ success: true, message: 'User device access updated successfully (Simulated).', user });
     }
   } catch (error) {
     console.error('[API] Error updating user device access:', error);
     return res.status(500).json({ success: false, error: 'Server error updating device access.' });
+  }
+});
+
+// @route   DELETE /api/users/:uid
+// @desc    Delete a user profile (Admin only)
+router.delete('/users/:uid', async (req, res) => {
+  try {
+    const { userId } = req.query;
+    const targetUid = req.params.uid;
+    
+    if (!userId) {
+      return res.status(400).json({ success: false, error: 'userId query parameter is required for authorization.' });
+    }
+    
+    if (userId === targetUid) {
+      return res.status(400).json({ success: false, error: 'You cannot delete your own admin account.' });
+    }
+    
+    let isAuthorized = false;
+    if (global.dbConnected) {
+      const requester = await User.findOne({ uid: userId });
+      isAuthorized = requester && requester.role === 'admin';
+    } else {
+      const requester = memUsers.find(u => u.uid === userId);
+      isAuthorized = requester && requester.role === 'admin';
+    }
+    
+    if (!isAuthorized) {
+      return res.status(403).json({ success: false, error: 'Forbidden. Admin access required.' });
+    }
+    
+    if (global.dbConnected) {
+      const user = await User.findOneAndDelete({ uid: targetUid });
+      if (!user) return res.status(404).json({ success: false, error: 'User not found.' });
+      return res.json({ success: true, message: 'User profile deleted successfully.' });
+    } else {
+      const idx = memUsers.findIndex(u => u.uid === targetUid);
+      if (idx === -1) return res.status(404).json({ success: false, error: 'User not found.' });
+      memUsers.splice(idx, 1);
+      return res.json({ success: true, message: 'User profile deleted successfully (Simulated).' });
+    }
+  } catch (error) {
+    console.error('[API] Error deleting user:', error);
+    return res.status(500).json({ success: false, error: 'Server error deleting user.' });
+  }
+});
+
+// @route   POST /api/devices/share
+// @desc    Share a device access with a user via email (Admin only)
+router.post('/devices/share', async (req, res) => {
+  try {
+    const { userId, email, deviceUid } = req.body;
+    
+    if (!userId || !email || !deviceUid) {
+      return res.status(400).json({ success: false, error: 'userId, email, and deviceUid are required.' });
+    }
+    
+    let isAuthorized = false;
+    if (global.dbConnected) {
+      const requester = await User.findOne({ uid: userId });
+      isAuthorized = requester && requester.role === 'admin';
+    } else {
+      const requester = memUsers.find(u => u.uid === userId);
+      isAuthorized = requester && requester.role === 'admin';
+    }
+    
+    if (!isAuthorized) {
+      return res.status(403).json({ success: false, error: 'Forbidden. Admin access required.' });
+    }
+    
+    const uppercaseDeviceUid = deviceUid.toUpperCase();
+    
+    if (global.dbConnected) {
+      const targetUser = await User.findOne({ email: email.toLowerCase() });
+      if (!targetUser) {
+        return res.status(404).json({ success: false, error: 'User with this email not found.' });
+      }
+      
+      if (targetUser.accessibleDevices.includes(uppercaseDeviceUid)) {
+        return res.status(400).json({ success: false, error: 'User already has access to this device.' });
+      }
+      
+      // Enforce limit of 5 users per device
+      const count = await User.countDocuments({ accessibleDevices: uppercaseDeviceUid });
+      if (count >= 5) {
+        return res.status(400).json({ success: false, error: 'This device is already shared with the maximum limit of 5 users.' });
+      }
+      
+      targetUser.accessibleDevices.push(uppercaseDeviceUid);
+      await targetUser.save();
+      return res.json({ success: true, message: 'Device access shared successfully.', user: targetUser });
+    } else {
+      const targetUser = memUsers.find(u => u.email.toLowerCase() === email.toLowerCase());
+      if (!targetUser) {
+        return res.status(404).json({ success: false, error: 'User with this email not found.' });
+      }
+      
+      if (!targetUser.accessibleDevices) targetUser.accessibleDevices = [];
+      
+      if (targetUser.accessibleDevices.includes(uppercaseDeviceUid)) {
+        return res.status(400).json({ success: false, error: 'User already has access to this device.' });
+      }
+      
+      const count = memUsers.filter(u => u.accessibleDevices && u.accessibleDevices.includes(uppercaseDeviceUid)).length;
+      if (count >= 5) {
+        return res.status(400).json({ success: false, error: 'This device is already shared with the maximum limit of 5 users.' });
+      }
+      
+      targetUser.accessibleDevices.push(uppercaseDeviceUid);
+      return res.json({ success: true, message: 'Device access shared successfully (Simulated).', user: targetUser });
+    }
+  } catch (error) {
+    console.error('[API] Error sharing device:', error);
+    return res.status(500).json({ success: false, error: 'Server error sharing device.' });
   }
 });
 

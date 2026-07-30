@@ -1,15 +1,17 @@
 const axios = require('axios');
+const Device = require('../models/Device');
 
 /**
  * Central_Commandar: Evaluates the analyzed event.
  * If score is 80-95%, calls a third-party API webhook and sends admin notifications.
+ * If score is > 90%, initiates an automated voice call broadcast to device-configured numbers.
  */
 const evaluateThreat = async (event) => {
   try {
     const score = event.threatScore;
     console.log(`[Central Commander] Evaluating threat score: ${score}%`);
     
-    // Check if score is in the critical 80% - 95% range
+    // 1. Existing webhook trigger for 80-95% range
     if (score >= 80 && score <= 95) {
       console.log(`[Central Commander] ALERT! Threat score (${score}%) is within critical threshold (80-95%). Triggering Central Commander actions...`);
       
@@ -46,6 +48,69 @@ const evaluateThreat = async (event) => {
       }
     } else {
       console.log(`[Central Commander] Threat score (${score}%) is outside the 80-95% command trigger range. Normal logging active.`);
+    }
+
+    // 2. Automated Voice Call Broadcast for score > 90%
+    if (score > 90) {
+      console.log(`[Central Commander] ALERT! Threat score (${score}%) exceeds 90%. Initiating automated voice call broadcast...`);
+      
+      let device;
+      if (global.dbConnected) {
+        device = await Device.findOne({ uid: event.uid.toUpperCase() });
+      } else {
+        const { memDevices } = require('../config/state');
+        device = memDevices.find(d => d.uid === event.uid.toUpperCase());
+      }
+      
+      if (device && device.phoneNumbers && device.phoneNumbers.length > 0) {
+        const broadcastPayload = {
+          user_id: device.userId || 'system',
+          mac: device.uid,
+          phone: device.deviceName || 'ESP32 Camera Node',
+          phone_call_list: device.phoneNumbers,
+          payload: {
+            address: device.zoneCode || 'ZONE_01',
+            message: `[ from AI Threat Analysis: ${event.aiReport || 'Theft alarm'} ]`,
+            audio: '0001'
+          },
+          response: []
+        };
+        
+        const MAIN_HOST = 'https://800lcall.espserver.site';
+        const BACKUP_HOST = 'https://sim800l.maxapi.esp32.site';
+        
+        let success = false;
+        
+        // Attempt Main Host
+        try {
+          console.log(`[Central Commander] Dispatching voice call broadcast to Main Host: ${MAIN_HOST}/api/broadcast`);
+          const res = await axios.post(`${MAIN_HOST}/api/broadcast`, broadcastPayload, { timeout: 8000 });
+          console.log(`[Central Commander] Voice broadcast success (Main Host)! Status: ${res.status}`);
+          success = true;
+        } catch (err) {
+          console.warn(`[Central Commander] Main Host voice broadcast failed: ${err.message}. Retrying via Backup Host...`);
+        }
+        
+        // Attempt Backup Host if Main failed
+        if (!success) {
+          try {
+            console.log(`[Central Commander] Dispatching voice call broadcast to Backup Host: ${BACKUP_HOST}/api/broadcast`);
+            const res = await axios.post(`${BACKUP_HOST}/api/broadcast`, broadcastPayload, { timeout: 8000 });
+            console.log(`[Central Commander] Voice broadcast success (Backup Host)! Status: ${res.status}`);
+            success = true;
+          } catch (err) {
+            console.error(`[Central Commander] Backup Host voice broadcast failed: ${err.message}`);
+          }
+        }
+        
+        // Update event record status
+        event.status = 'alerted';
+        if (global.dbConnected && typeof event.save === 'function') {
+          await event.save();
+        }
+      } else {
+        console.log(`[Central Commander] No configured phone numbers found for device [${event.uid}]. Skipping voice call broadcast.`);
+      }
     }
   } catch (error) {
     console.error(`[Central Commander] Error in threat evaluation:`, error);

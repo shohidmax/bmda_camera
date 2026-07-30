@@ -14,7 +14,8 @@ import {
   AlertCircle, 
   LogOut,
   User,
-  Users
+  Users,
+  Radio
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -25,6 +26,7 @@ export default function Sidebar() {
     { name: 'Dashboard', path: '/', icon: Shield },
     { name: 'Devices & Control', path: '/devices', icon: Video },
     { name: 'Threat History', path: '/history', icon: History },
+    { name: 'ESP Signals', path: '/esp-data', icon: Radio },
     { name: 'Alert Center', path: '/notifications', icon: Bell },
     ...(user && user.role === 'admin' ? [{ name: 'Manage Access', path: '/access', icon: Users }] : []),
     { name: 'File Complaint', path: '/complain', icon: AlertCircle },
