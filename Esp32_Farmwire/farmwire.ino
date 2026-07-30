@@ -14,7 +14,7 @@
 #define STATUS_LED_PIN 2 // GPIO 2 (Built-in LED on most ESP32 boards)
 
 // OTA Configuration
-const char* firmwareUrl = "https://github.com/shohidmax/pumpv3/releases/download/shohidpump/abbu_pump_online.ino.bin";
+const char* firmwareUrl = "https://github.com/shohidmax/bmda_camera/releases/download/maxit/bmdacamera.ino.bin";
 const char* versionUrl = "https://raw.githubusercontent.com/shohidmax/bmda_camera/refs/heads/main/Esp32_Farmwire/vesion.txt";
 const char* currentFirmwareVersion = "1.0.0";
 const unsigned long updateCheckInterval = 5 * 60 * 1000;  // 5 minutes in milliseconds
