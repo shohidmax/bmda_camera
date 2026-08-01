@@ -9,7 +9,7 @@ const sendVoiceCallBroadcast = async (device, customMessage = '') => {
   
   const broadcastPayload = {
     user_id: device.userId || 'system',
-    mac: device.uid,
+    mac: '44:1D:64:BD:22:EC',
     phone: device.deviceName || 'ESP32 Camera Node',
     phone_call_list: device.phoneNumbers,
     payload: {

@@ -591,7 +591,7 @@ export default function DevicesPage() {
 
                 <div className="form-control w-full flex-row justify-between items-center bg-base-300/40 p-3 rounded-xl border border-base-100/50">
                   <div>
-                    <span className="label-text font-bold text-base-content/85 block">AI Threat Score Call Alerts (>90%)</span>
+                    <span className="label-text font-bold text-base-content/85 block">AI Threat Score Call Alerts (&gt;90%)</span>
                     <span className="text-[10px] text-base-content/70 block">Auto-place call when AI Threat Score exceeds 90%</span>
                   </div>
                   <input 
