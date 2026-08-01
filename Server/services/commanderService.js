@@ -10,11 +10,11 @@ const sendVoiceCallBroadcast = async (device, customMessage = '') => {
   const broadcastPayload = {
     user_id: device.userId || 'system',
     mac: '44:1D:64:BD:22:EC',
-    phone: device.deviceName || 'ESP32 Camera Node',
+    phone: device.deviceName || 'Main Office',
     phone_call_list: device.phoneNumbers,
     payload: {
-      address: device.zoneCode || 'ZONE_01',
-      message: customMessage || `[ Security alert: Signal detected on ${device.deviceName} ]`,
+      address: device.location || device.institution || device.zoneCode || 'ZONE_01',
+      message: customMessage || 'Theft alarm',
       audio: '0001'
     },
     response: []
