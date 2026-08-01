@@ -841,4 +841,104 @@ router.put('/settings', async (req, res) => {
   }
 });
 
+// @route   POST /api/upload-burst-frames
+// @desc    Process live video stream frames captured 2 seconds apart by the frontend
+router.post('/upload-burst-frames', async (req, res) => {
+  try {
+    const { uid, frames, message, zoneCode } = req.body;
+    console.log(`[API] Received ${frames?.length || 0} live stream burst frames for device: ${uid}`);
+    
+    if (!frames || !Array.isArray(frames) || frames.length === 0) {
+      return res.status(400).json({ success: false, error: 'No frame images provided.' });
+    }
+    
+    const fs = require('fs');
+    const path = require('path');
+    const Event = require('../models/Event');
+    const Device = require('../models/Device');
+    const aiService = require('../services/aiService');
+    
+    let device = null;
+    if (global.dbConnected) {
+      device = await Device.findOne({ uid });
+    }
+    if (!device) {
+      device = (global.devicesMemory || []).find(d => d.uid === uid);
+    }
+    
+    const now = new Date();
+    const dateStr = now.toISOString().replace('T', ' ').substring(0, 19);
+    
+    const newEventData = {
+      uid,
+      time: dateStr,
+      action: 'LIVE_BURST_CAPTURE',
+      message: message || `Live Stream 2-Second Burst Capture for ${device ? device.deviceName : uid}`,
+      zoneCode: zoneCode || (device ? device.zoneCode : 'ZONE_01'),
+      capturedImages: [],
+      threatScore: 0,
+      aiReport: 'Analyzing live video stream frames...',
+      status: 'processing',
+      createdAt: now
+    };
+    
+    let event = null;
+    if (global.dbConnected) {
+      event = await Event.create(newEventData);
+    } else {
+      event = { _id: Date.now().toString(36) + Math.random().toString(36).substring(2, 6), ...newEventData };
+      if (!global.eventsMemory) global.eventsMemory = [];
+      global.eventsMemory.unshift(event);
+    }
+    
+    const uploadDir = path.join(__dirname, '../public/uploads');
+    if (!fs.existsSync(uploadDir)) {
+      fs.mkdirSync(uploadDir, { recursive: true });
+    }
+    
+    const imageUrls = [];
+    const port = process.env.PORT || 5050;
+    
+    for (let i = 0; i < frames.length; i++) {
+      const base64Data = frames[i].replace(/^data:image\/\w+;base64,/, '');
+      const buffer = Buffer.from(base64Data, 'base64');
+      const filename = `${event._id}_live_frame_${i + 1}_${Date.now()}.jpg`;
+      const localPath = path.join(uploadDir, filename);
+      fs.writeFileSync(localPath, buffer);
+      
+      let imageUrl = `http://localhost:${port}/uploads/${filename}`;
+      
+      if (process.env.IMGBB_API_KEY && process.env.IMGBB_API_KEY !== 'your_imgbb_api_key_here') {
+        try {
+          const formData = new URLSearchParams();
+          formData.append('image', base64Data);
+          const imgbbResponse = await axios.post(
+            `https://api.imgbb.com/1/upload?key=${process.env.IMGBB_API_KEY}`,
+            formData,
+            { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
+          );
+          if (imgbbResponse.data?.data?.url) {
+            imageUrl = imgbbResponse.data.data.url;
+          }
+        } catch (uploadErr) {
+          console.warn(`[Burst Proxy] ImgBB upload fallback to local URL: ${uploadErr.message}`);
+        }
+      }
+      imageUrls.push(imageUrl);
+    }
+    
+    event.capturedImages = imageUrls;
+    await aiService.analyzeImages(event);
+    
+    return res.json({
+      success: true,
+      message: 'Live stream burst frames captured and analyzed successfully.',
+      event
+    });
+  } catch (err) {
+    console.error('[API] Error in upload-burst-frames:', err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 module.exports = router;

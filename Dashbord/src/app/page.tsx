@@ -73,12 +73,24 @@ export default function DashboardHome() {
 
   const handleCaptureBurstSnapshots = async (device: any) => {
     try {
-      console.log(`Starting 1-second burst capture (3 frames) for ${device.deviceName}...`);
+      console.log(`Starting 2-second burst capture (3 frames) for ${device.deviceName}...`);
+      const capturedBase64Frames: string[] = [];
+      
       for (let i = 1; i <= 3; i++) {
         const snapshotUrl = `${BACKEND_URL}/api/snapshot?uid=${encodeURIComponent(device.uid)}&t=${Date.now()}_${i}`;
         const response = await fetch(snapshotUrl);
         if (response.ok) {
           const blob = await response.blob();
+          
+          // Convert blob to base64 for API submission
+          const reader = new FileReader();
+          const base64Promise = new Promise<string>((resolve) => {
+            reader.onloadend = () => resolve(reader.result as string);
+          });
+          reader.readAsDataURL(blob);
+          const base64Str = await base64Promise;
+          capturedBase64Frames.push(base64Str);
+          
           const blobUrl = window.URL.createObjectURL(blob);
           const link = document.createElement('a');
           link.href = blobUrl;
@@ -89,8 +101,23 @@ export default function DashboardHome() {
           window.URL.revokeObjectURL(blobUrl);
         }
         if (i < 3) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+          await new Promise(resolve => setTimeout(resolve, 2000));
         }
+      }
+
+      // Send 3 captured frames to backend AI Analysis pipeline
+      if (capturedBase64Frames.length > 0) {
+        await fetch(`${BACKEND_URL}/api/upload-burst-frames`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            uid: device.uid,
+            frames: capturedBase64Frames,
+            message: `Manual Live Stream 2-Second Burst Capture for ${device.deviceName}`,
+            zoneCode: device.zoneCode
+          })
+        });
+        fetchDashboardData();
       }
     } catch (err: any) {
       console.error('Failed burst snapshot capture:', err);
