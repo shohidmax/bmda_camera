@@ -47,14 +47,14 @@ export default function DashboardHome() {
 
   const handleCaptureSnapshot = async (device: any) => {
     try {
-      let cameraUrl = device.cameraUrl;
-      // Convert go2rtc HTML stream player URLs to snapshot endpoint
-      if (cameraUrl.includes('/stream.html') || cameraUrl.includes('/webrtc.html') || cameraUrl.includes('/mse.html')) {
-        cameraUrl = cameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
+      const snapshotUrl = `${BACKEND_URL}/api/snapshot?uid=${encodeURIComponent(device.uid)}&t=${Date.now()}`;
+      console.log(`Fetching live snapshot blob from: ${snapshotUrl}`);
+      
+      const response = await fetch(snapshotUrl);
+      if (!response.ok) {
+        throw new Error(`Server returned status ${response.status}`);
       }
-
-      console.log(`Capturing snapshot from: ${cameraUrl}`);
-      const response = await fetch(cameraUrl);
+      
       const blob = await response.blob();
       const blobUrl = window.URL.createObjectURL(blob);
       
@@ -67,38 +67,33 @@ export default function DashboardHome() {
       window.URL.revokeObjectURL(blobUrl);
     } catch (err: any) {
       console.error('Failed to capture snapshot:', err);
-      alert('Snapshot fetch failed (CORS restriction or offline). Downloading mock canvas frame instead...');
-      // Fallback: create mock security frame using canvas
-      const canvas = document.createElement('canvas');
-      canvas.width = 800;
-      canvas.height = 600;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.fillStyle = '#0f172a';
-        ctx.fillRect(0, 0, 800, 600);
-        ctx.fillStyle = '#38bdf8';
-        ctx.font = '24px monospace';
-        ctx.fillText(`DEVICE: ${device.deviceName}`, 50, 100);
-        ctx.fillText(`MAC: ${device.uid}`, 50, 140);
-        ctx.fillText(`ZONE: ${device.zoneCode}`, 50, 180);
-        ctx.fillText(`TIME: ${new Date().toLocaleString()}`, 50, 220);
-        ctx.strokeStyle = '#ef4444';
-        ctx.lineWidth = 4;
-        ctx.strokeRect(40, 40, 720, 520);
-        
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const blobUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            link.download = `${device.deviceName.replace(/\s+/g, '_')}_snapshot_${Date.now()}.jpg`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(blobUrl);
-          }
-        }, 'image/jpeg');
+      window.open(`${BACKEND_URL}/api/snapshot?uid=${encodeURIComponent(device.uid)}`, '_blank');
+    }
+  };
+
+  const handleCaptureBurstSnapshots = async (device: any) => {
+    try {
+      console.log(`Starting 1-second burst capture (3 frames) for ${device.deviceName}...`);
+      for (let i = 1; i <= 3; i++) {
+        const snapshotUrl = `${BACKEND_URL}/api/snapshot?uid=${encodeURIComponent(device.uid)}&t=${Date.now()}_${i}`;
+        const response = await fetch(snapshotUrl);
+        if (response.ok) {
+          const blob = await response.blob();
+          const blobUrl = window.URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = blobUrl;
+          link.download = `${device.deviceName.replace(/\s+/g, '_')}_burst_frame_${i}_${Date.now()}.jpg`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          window.URL.revokeObjectURL(blobUrl);
+        }
+        if (i < 3) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
+    } catch (err: any) {
+      console.error('Failed burst snapshot capture:', err);
     }
   };
 
@@ -414,7 +409,7 @@ export default function DashboardHome() {
                               handleCaptureSnapshot(dev);
                             }}
                             className="btn btn-xs rounded-lg font-bold gap-1 shadow-md bg-black/60 hover:bg-primary text-white border-0 py-1.5 px-2.5 h-auto min-h-0"
-                            title="Capture Snapshot"
+                            title="Capture Instant Live Snapshot"
                           >
                             <Camera className="w-3.5 h-3.5 text-sky-400" />
                             Snap
@@ -422,10 +417,21 @@ export default function DashboardHome() {
                           <button 
                             onClick={(e) => {
                               e.stopPropagation();
+                              handleCaptureBurstSnapshots(dev);
+                            }}
+                            className="btn btn-xs rounded-lg font-bold gap-1 shadow-md bg-black/60 hover:bg-amber-600 text-white border-0 py-1.5 px-2.5 h-auto min-h-0"
+                            title="Capture 3 sequential 1-second burst snapshots from live stream"
+                          >
+                            <Camera className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                            Burst 3x
+                          </button>
+                          <button 
+                            onClick={(e) => {
+                              e.stopPropagation();
                               handleRecordStream(dev);
                             }}
                             className="btn btn-xs rounded-lg font-bold gap-1 shadow-md bg-black/60 hover:bg-error text-white border-0 py-1.5 px-2.5 h-auto min-h-0"
-                            title="Record 10s MP4"
+                            title="Record 10s MP4 Video"
                           >
                             <Video className="w-3.5 h-3.5 text-rose-400 fill-rose-400 animate-pulse" />
                             Rec 10s

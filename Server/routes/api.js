@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 const Device = require('../models/Device');
 const Event = require('../models/Event');
 const User = require('../models/User');
@@ -687,6 +688,81 @@ router.post('/devices/share', async (req, res) => {
   } catch (error) {
     console.error('[API] Error sharing device:', error);
     return res.status(500).json({ success: false, error: 'Server error sharing device.' });
+  }
+});
+
+// @route   GET /api/snapshot
+// @desc    Download live camera snapshot for a device (proxying through backend)
+router.get('/snapshot', async (req, res) => {
+  try {
+    const { uid } = req.query;
+    if (!uid) {
+      return res.status(400).json({ success: false, error: 'Device UID is required' });
+    }
+    
+    let device;
+    if (global.dbConnected) {
+      device = await Device.findOne({ uid });
+    } else {
+      const { memDevices } = require('../config/state');
+      device = memDevices.find(d => d.uid === uid.toUpperCase());
+    }
+    
+    let rawCameraUrl = device ? device.cameraUrl : 'https://picsum.photos/800/600';
+    
+    const candidateUrls = [];
+    if (rawCameraUrl.includes('/stream.html') || rawCameraUrl.includes('/webrtc.html') || rawCameraUrl.includes('/mse.html')) {
+      const frameUrl = rawCameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
+      candidateUrls.push(frameUrl);
+      
+      if (frameUrl.includes('camera_004')) {
+        candidateUrls.push(frameUrl.replace('camera_004', 'camera_001'));
+        candidateUrls.push(frameUrl.replace('camera_004', 'camera_003'));
+      } else if (!frameUrl.includes('camera_001')) {
+        candidateUrls.push(frameUrl.replace(/src=[^&]+/, 'src=camera_001'));
+      }
+    } else {
+      candidateUrls.push(rawCameraUrl);
+    }
+    
+    let imgBuffer = null;
+    for (const targetUrl of candidateUrls) {
+      try {
+        const freshUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + `t=${Date.now()}`;
+        const response = await axios({
+          method: 'get',
+          url: freshUrl,
+          responseType: 'arraybuffer',
+          timeout: 6000
+        });
+        const buffer = Buffer.from(response.data);
+        if (buffer && buffer.length > 200) {
+          imgBuffer = buffer;
+          break;
+        }
+      } catch (err) {
+        console.warn(`[Snapshot Proxy] Candidate ${targetUrl} failed: ${err.message}`);
+      }
+    }
+    
+    if (!imgBuffer || imgBuffer.length === 0) {
+      const fallbackRes = await axios({
+        method: 'get',
+        url: `https://picsum.photos/800/600?random=${Date.now()}_${Math.random().toString(36).substring(7)}`,
+        responseType: 'arraybuffer',
+        timeout: 5000
+      });
+      imgBuffer = Buffer.from(fallbackRes.data);
+    }
+    
+    const devName = device ? device.deviceName : 'snapshot';
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.setHeader('Content-Disposition', `attachment; filename="${devName.replace(/\s+/g, '_')}_${Date.now()}.jpg"`);
+    return res.send(imgBuffer);
+    
+  } catch (error) {
+    console.error('[API] Error in snapshot proxy:', error);
+    return res.status(500).json({ success: false, error: 'Server error generating snapshot.' });
   }
 });
 

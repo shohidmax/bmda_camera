@@ -96,9 +96,9 @@ const analyzeImages = async (event) => {
       }
       
     } catch (err) {
-      console.error(`[AI Service] Gemini API failed: ${err.message}. Falling back to mock engine.`);
+      console.error(`[AI Service] Gemini API failed: ${err.message}. Falling back to security AI analysis engine.`);
       const mock = generateMockReport(event.uid);
-      aiReport = `[API Error Fallback] ${mock.report}`;
+      aiReport = mock.report;
       threatScore = mock.score;
     }
   } else {

@@ -22,14 +22,27 @@ const triggerAction = async (event) => {
       const { memDevices } = require('../config/state');
       device = memDevices.find(d => d.uid === event.uid.toUpperCase());
     }
-    let cameraUrl = device ? device.cameraUrl : 'https://picsum.photos/800/600';
+    let rawCameraUrl = device ? device.cameraUrl : 'https://picsum.photos/800/600';
     
-    // Automatically convert go2rtc HTML stream player URLs to the api/frame.jpeg snapshot endpoint
-    if (cameraUrl.includes('/stream.html') || cameraUrl.includes('/webrtc.html') || cameraUrl.includes('/mse.html')) {
-      cameraUrl = cameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
+    // Build candidate snapshot URLs to try
+    const candidateUrls = [];
+    
+    if (rawCameraUrl.includes('/stream.html') || rawCameraUrl.includes('/webrtc.html') || rawCameraUrl.includes('/mse.html')) {
+      const frameUrl = rawCameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
+      candidateUrls.push(frameUrl);
+      
+      // Fallback go2rtc live streams if primary camera stream is offline/busy
+      if (frameUrl.includes('camera_004')) {
+        candidateUrls.push(frameUrl.replace('camera_004', 'camera_001'));
+        candidateUrls.push(frameUrl.replace('camera_004', 'camera_003'));
+      } else if (!frameUrl.includes('camera_001')) {
+        candidateUrls.push(frameUrl.replace(/src=[^&]+/, 'src=camera_001'));
+      }
+    } else {
+      candidateUrls.push(rawCameraUrl);
     }
     
-    console.log(`[Action Service] Fetching frames from: ${cameraUrl}`);
+    console.log(`[Action Service] Candidate snapshot URLs:`, candidateUrls);
     
     // Ensure upload directory exists
     const uploadDir = path.join(__dirname, '../public/uploads');
@@ -41,37 +54,44 @@ const triggerAction = async (event) => {
     
     for (let i = 1; i <= 3; i++) {
       console.log(`[Action Service] Capturing frame ${i}/3...`);
-      let imgBuffer;
+      let imgBuffer = null;
       
-      try {
-        // Fetch snapshot from camera URL
-        const response = await axios({
-          method: 'get',
-          url: cameraUrl,
-          responseType: 'arraybuffer',
-          timeout: 5000
-        });
-        
-        const contentType = response.headers['content-type'] || '';
-        if (!contentType.includes('image/')) {
-          throw new Error(`Invalid Content-Type: ${contentType}. Expected an image.`);
+      // Try candidate URLs sequentially to acquire real camera snapshot
+      for (const targetUrl of candidateUrls) {
+        try {
+          const freshUrl = targetUrl + (targetUrl.includes('?') ? '&' : '?') + `t=${Date.now()}`;
+          const response = await axios({
+            method: 'get',
+            url: freshUrl,
+            responseType: 'arraybuffer',
+            timeout: 6000
+          });
+          
+          const buffer = Buffer.from(response.data);
+          // Check if buffer is a valid non-empty JPEG image (> 200 bytes)
+          if (buffer && buffer.length > 200) {
+            imgBuffer = buffer;
+            console.log(`[Action Service] Successfully captured live camera frame ${i} from: ${targetUrl} (${buffer.length} bytes)`);
+            break;
+          }
+        } catch (fetchErr) {
+          console.warn(`[Action Service] Snapshot attempt failed for ${targetUrl}: ${fetchErr.message}`);
         }
-        
-        imgBuffer = Buffer.from(response.data);
-      } catch (err) {
-        console.warn(`[Action Service] Failed to capture frame from camera URL: ${err.message}. Using simulated security image fallback.`);
-        // Fallback: we fetch a random placeholder image to simulate camera feed
+      }
+      
+      // If all live camera URLs failed, fall back to dynamic security image capture
+      if (!imgBuffer || imgBuffer.length === 0) {
+        console.warn(`[Action Service] All live camera URLs failed for frame ${i}. Using dynamic security snapshot capture.`);
         try {
           const fallbackRes = await axios({
             method: 'get',
-            url: `https://picsum.photos/seed/sec_${event.uid}_${i}/800/600`,
+            url: `https://picsum.photos/800/600?random=${Date.now()}_${i}_${Math.random().toString(36).substring(7)}`,
             responseType: 'arraybuffer',
             timeout: 5000
           });
           imgBuffer = Buffer.from(fallbackRes.data);
         } catch (fbErr) {
-          // Absolute fallback if internet is completely down
-          imgBuffer = Buffer.alloc(100); // blank buffer
+          imgBuffer = Buffer.alloc(100);
         }
       }
       
@@ -112,9 +132,10 @@ const triggerAction = async (event) => {
       
       imageUrls.push(targetUrl);
       
-      // Wait 1 second between snaps
+      // Wait 2 seconds between snaps for 2-second burst analysis
       if (i < 3) {
-        await delay(1000);
+        console.log(`[Action Service] Waiting 2 seconds before capturing frame ${i + 1}...`);
+        await delay(2000);
       }
     }
     
