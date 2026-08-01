@@ -99,13 +99,15 @@ const triggerAction = async (event) => {
         imgBuffer = Buffer.from(svgString);
       }
       
-      // Save locally first
-      const filename = `${event._id}_frame_${i}_${Date.now()}.jpg`;
+      // Save locally first with correct extension
+      const isSvg = imgBuffer.toString('utf8').includes('<svg');
+      const ext = isSvg ? 'svg' : 'jpg';
+      const filename = `${event._id}_frame_${i}_${Date.now()}.${ext}`;
       const localPath = path.join(uploadDir, filename);
       fs.writeFileSync(localPath, imgBuffer);
       
       // Build local fallback URL
-      const port = process.env.PORT || 5000;
+      const port = process.env.PORT || 5050;
       let targetUrl = `http://localhost:${port}/uploads/${filename}`;
       
       // Try uploading to ImgBB if key exists

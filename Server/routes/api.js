@@ -912,9 +912,12 @@ router.post('/upload-burst-frames', async (req, res) => {
     const port = process.env.PORT || 5050;
     
     for (let i = 0; i < frames.length; i++) {
-      const base64Data = frames[i].replace(/^data:image\/\w+;base64,/, '');
+      const rawFrame = frames[i] || '';
+      const base64Data = rawFrame.replace(/^data:image\/\w+;base64,/, '');
       const buffer = Buffer.from(base64Data, 'base64');
-      const filename = `${event._id}_live_frame_${i + 1}_${Date.now()}.jpg`;
+      const isSvg = buffer.toString('utf8').includes('<svg') || rawFrame.includes('svg');
+      const ext = isSvg ? 'svg' : 'jpg';
+      const filename = `${event._id}_live_frame_${i + 1}_${Date.now()}.${ext}`;
       const localPath = path.join(uploadDir, filename);
       fs.writeFileSync(localPath, buffer);
       
