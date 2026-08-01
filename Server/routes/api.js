@@ -88,7 +88,7 @@ router.post('/trigger', async (req, res) => {
 // @desc    Register or update a device
 router.post('/devices', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode, userId, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled } = req.body;
+    const { uid, deviceName, cameraUrl, snapshotUrl, zoneCode, userId, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled, instantCallOnTrigger } = req.body;
     
     if (!uid || !userId) {
       return res.status(400).json({ success: false, error: 'uid and userId are required.' });
@@ -102,6 +102,7 @@ router.post('/devices', async (req, res) => {
       if (device) {
         device.deviceName = deviceName || device.deviceName;
         device.cameraUrl = cameraUrl || device.cameraUrl;
+        if (snapshotUrl) device.snapshotUrl = snapshotUrl;
         device.zoneCode = zoneCode || device.zoneCode;
         device.userId = userId;
         if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
@@ -110,6 +111,7 @@ router.post('/devices', async (req, res) => {
         if (latitude !== undefined) device.latitude = latitude;
         if (longitude !== undefined) device.longitude = longitude;
         if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
+        if (instantCallOnTrigger !== undefined) device.instantCallOnTrigger = instantCallOnTrigger;
         await device.save();
         console.log(`[API] Updated device in DB: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully.', device });
@@ -117,7 +119,8 @@ router.post('/devices', async (req, res) => {
         device = new Device({
           uid: uppercaseUid,
           deviceName: deviceName || 'ESP32 Security Node',
-          cameraUrl: cameraUrl || 'https://picsum.photos/800/600',
+          cameraUrl: cameraUrl || 'http://161.248.205.218:1984/stream.html?src=camera_004',
+          snapshotUrl: snapshotUrl || 'http://161.248.205.218:1984/api/frame.jpeg?src=camera_004',
           zoneCode: zoneCode || 'ZONE_01',
           userId,
           phoneNumbers: phoneNumbers || [],
@@ -125,7 +128,8 @@ router.post('/devices', async (req, res) => {
           location: location || '',
           latitude: latitude || '',
           longitude: longitude || '',
-          callAlertsEnabled: callAlertsEnabled !== undefined ? callAlertsEnabled : true
+          callAlertsEnabled: callAlertsEnabled !== undefined ? callAlertsEnabled : true,
+          instantCallOnTrigger: instantCallOnTrigger !== undefined ? instantCallOnTrigger : true
         });
         await device.save();
         console.log(`[API] Registered new device in DB: ${uppercaseUid}`);
@@ -137,6 +141,7 @@ router.post('/devices', async (req, res) => {
       if (device) {
         device.deviceName = deviceName || device.deviceName;
         device.cameraUrl = cameraUrl || device.cameraUrl;
+        if (snapshotUrl) device.snapshotUrl = snapshotUrl;
         device.zoneCode = zoneCode || device.zoneCode;
         device.userId = userId;
         if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
@@ -145,6 +150,7 @@ router.post('/devices', async (req, res) => {
         if (latitude !== undefined) device.latitude = latitude;
         if (longitude !== undefined) device.longitude = longitude;
         if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
+        if (instantCallOnTrigger !== undefined) device.instantCallOnTrigger = instantCallOnTrigger;
         console.log(`[API] Updated simulated device: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
       } else {
@@ -152,7 +158,8 @@ router.post('/devices', async (req, res) => {
           _id: 'mock-dev-' + Math.random().toString(36).substr(2, 9),
           uid: uppercaseUid,
           deviceName: deviceName || 'ESP32 Security Node',
-          cameraUrl: cameraUrl || 'https://picsum.photos/800/600',
+          cameraUrl: cameraUrl || 'http://161.248.205.218:1984/stream.html?src=camera_004',
+          snapshotUrl: snapshotUrl || 'http://161.248.205.218:1984/api/frame.jpeg?src=camera_004',
           zoneCode: zoneCode || 'ZONE_01',
           userId,
           phoneNumbers: phoneNumbers || [],
@@ -161,6 +168,7 @@ router.post('/devices', async (req, res) => {
           latitude: latitude || '',
           longitude: longitude || '',
           callAlertsEnabled: callAlertsEnabled !== undefined ? callAlertsEnabled : true,
+          instantCallOnTrigger: instantCallOnTrigger !== undefined ? instantCallOnTrigger : true,
           createdAt: new Date()
         };
         memDevices.push(device);
@@ -289,7 +297,7 @@ router.get('/events/device/:uid', async (req, res) => {
 // @desc    Update a device by ID
 router.put('/devices/:id', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled } = req.body;
+    const { uid, deviceName, cameraUrl, snapshotUrl, zoneCode, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled, instantCallOnTrigger } = req.body;
     const deviceId = req.params.id;
     
     if (global.dbConnected) {
@@ -301,6 +309,7 @@ router.put('/devices/:id', async (req, res) => {
       if (uid) device.uid = uid.toUpperCase();
       if (deviceName) device.deviceName = deviceName;
       if (cameraUrl) device.cameraUrl = cameraUrl;
+      if (snapshotUrl) device.snapshotUrl = snapshotUrl;
       if (zoneCode) device.zoneCode = zoneCode;
       if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
       if (institution !== undefined) device.institution = institution;
@@ -308,6 +317,7 @@ router.put('/devices/:id', async (req, res) => {
       if (latitude !== undefined) device.latitude = latitude;
       if (longitude !== undefined) device.longitude = longitude;
       if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
+      if (instantCallOnTrigger !== undefined) device.instantCallOnTrigger = instantCallOnTrigger;
       
       await device.save();
       console.log(`[API] Updated device in DB by ID: ${deviceId}`);
@@ -322,6 +332,7 @@ router.put('/devices/:id', async (req, res) => {
       if (uid) device.uid = uid.toUpperCase();
       if (deviceName) device.deviceName = deviceName;
       if (cameraUrl) device.cameraUrl = cameraUrl;
+      if (snapshotUrl) device.snapshotUrl = snapshotUrl;
       if (zoneCode) device.zoneCode = zoneCode;
       if (phoneNumbers !== undefined) device.phoneNumbers = phoneNumbers;
       if (institution !== undefined) device.institution = institution;
@@ -329,6 +340,7 @@ router.put('/devices/:id', async (req, res) => {
       if (latitude !== undefined) device.latitude = latitude;
       if (longitude !== undefined) device.longitude = longitude;
       if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
+      if (instantCallOnTrigger !== undefined) device.instantCallOnTrigger = instantCallOnTrigger;
       
       console.log(`[API] Updated simulated device by ID: ${deviceId}`);
       return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
@@ -708,22 +720,22 @@ router.get('/snapshot', async (req, res) => {
       device = memDevices.find(d => d.uid === uid.toUpperCase());
     }
     
-    let rawCameraUrl = device ? device.cameraUrl : 'https://picsum.photos/800/600';
-    
     const candidateUrls = [];
+    if (device && device.snapshotUrl) {
+      candidateUrls.push(device.snapshotUrl);
+    }
+    
+    let rawCameraUrl = (device && device.cameraUrl && !device.cameraUrl.includes('picsum.photos'))
+      ? device.cameraUrl
+      : 'http://161.248.205.218:1984/stream.html?src=camera_004';
+    
     if (rawCameraUrl.includes('/stream.html') || rawCameraUrl.includes('/webrtc.html') || rawCameraUrl.includes('/mse.html')) {
       const frameUrl = rawCameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
-      candidateUrls.push(frameUrl);
-      
-      if (frameUrl.includes('camera_004')) {
-        candidateUrls.push(frameUrl.replace('camera_004', 'camera_001'));
-        candidateUrls.push(frameUrl.replace('camera_004', 'camera_003'));
-      } else if (!frameUrl.includes('camera_001')) {
-        candidateUrls.push(frameUrl.replace(/src=[^&]+/, 'src=camera_001'));
-      }
-    } else {
+      if (!candidateUrls.includes(frameUrl)) candidateUrls.push(frameUrl);
+    } else if (!candidateUrls.includes(rawCameraUrl)) {
       candidateUrls.push(rawCameraUrl);
     }
+    candidateUrls.push('http://161.248.205.218:1984/api/frame.jpeg?src=camera_004');
     
     let imgBuffer = null;
     for (const targetUrl of candidateUrls) {
@@ -913,7 +925,7 @@ router.post('/upload-burst-frames', async (req, res) => {
     
     for (let i = 0; i < frames.length; i++) {
       const rawFrame = frames[i] || '';
-      const base64Data = rawFrame.replace(/^data:image\/\w+;base64,/, '');
+      const base64Data = rawFrame.replace(/^data:[^;]+;base64,/, '');
       const buffer = Buffer.from(base64Data, 'base64');
       const isSvg = buffer.toString('utf8').includes('<svg') || rawFrame.includes('svg');
       const ext = isSvg ? 'svg' : 'jpg';

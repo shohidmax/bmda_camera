@@ -3,6 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const Device = require('../models/Device');
 const aiService = require('./aiService');
+const commanderService = require('./commanderService');
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -22,24 +23,35 @@ const triggerAction = async (event) => {
       const { memDevices } = require('../config/state');
       device = memDevices.find(d => d.uid === event.uid.toUpperCase());
     }
-    let rawCameraUrl = device ? device.cameraUrl : 'https://picsum.photos/800/600';
-    
-    // Build candidate snapshot URLs to try
+
+    // INSTANT PHONE CALL ON TRIGGER FEATURE
+    if (device && device.phoneNumbers && device.phoneNumbers.length > 0) {
+      const isCallEnabled = device.instantCallOnTrigger !== undefined ? device.instantCallOnTrigger : (device.callAlertsEnabled !== undefined ? device.callAlertsEnabled : true);
+      if (isCallEnabled) {
+        console.log(`[Action Service] INSTANT CALL TOGGLE ACTIVE for ${device.deviceName}. Placing immediate phone call to ${device.phoneNumbers.join(', ')}...`);
+        commanderService.sendVoiceCallBroadcast(device, `[ INSTANT SIGNAL ALERT: Hardware trigger detected on ${device.deviceName} ]`).catch(err => {
+          console.error(`[Action Service] Instant voice call dispatch failed:`, err.message);
+        });
+      }
+    }
     const candidateUrls = [];
+    if (device && device.snapshotUrl) {
+      candidateUrls.push(device.snapshotUrl);
+    }
+    
+    let rawCameraUrl = (device && device.cameraUrl && !device.cameraUrl.includes('picsum.photos')) 
+      ? device.cameraUrl 
+      : 'http://161.248.205.218:1984/stream.html?src=camera_004';
     
     if (rawCameraUrl.includes('/stream.html') || rawCameraUrl.includes('/webrtc.html') || rawCameraUrl.includes('/mse.html')) {
       const frameUrl = rawCameraUrl.replace(/\/(stream|webrtc|mse)\.html\?/, '/api/frame.jpeg?');
-      candidateUrls.push(frameUrl);
-      
-      // Fallback go2rtc live streams if primary camera stream is offline/busy
-      if (frameUrl.includes('camera_004')) {
-        candidateUrls.push(frameUrl.replace('camera_004', 'camera_001'));
-        candidateUrls.push(frameUrl.replace('camera_004', 'camera_003'));
-      } else if (!frameUrl.includes('camera_001')) {
-        candidateUrls.push(frameUrl.replace(/src=[^&]+/, 'src=camera_001'));
-      }
-    } else {
+      if (!candidateUrls.includes(frameUrl)) candidateUrls.push(frameUrl);
+    } else if (!candidateUrls.includes(rawCameraUrl)) {
       candidateUrls.push(rawCameraUrl);
+    }
+    
+    if (!candidateUrls.includes('http://161.248.205.218:1984/api/frame.jpeg?src=camera_004')) {
+      candidateUrls.push('http://161.248.205.218:1984/api/frame.jpeg?src=camera_004');
     }
     
     console.log(`[Action Service] Candidate snapshot URLs:`, candidateUrls);

@@ -16,7 +16,8 @@ export default function DevicesPage() {
   // Form State
   const [uid, setUid] = useState('');
   const [deviceName, setDeviceName] = useState('');
-  const [cameraUrl, setCameraUrl] = useState('http://161.248.205.218:1984/stream.html?src=camera_001');
+  const [cameraUrl, setCameraUrl] = useState('http://161.248.205.218:1984/stream.html?src=camera_004');
+  const [snapshotUrl, setSnapshotUrl] = useState('http://161.248.205.218:1984/api/frame.jpeg?src=camera_004');
   const [zoneCode, setZoneCode] = useState('ZONE_01');
   const [phoneNumbers, setPhoneNumbers] = useState('');
   const [institution, setInstitution] = useState('');
@@ -26,6 +27,7 @@ export default function DevicesPage() {
   const [registering, setRegistering] = useState(false);
   const [editingDeviceId, setEditingDeviceId] = useState<string | null>(null);
   const [callAlertsEnabled, setCallAlertsEnabled] = useState(true);
+  const [instantCallOnTrigger, setInstantCallOnTrigger] = useState(true);
 
   // Sharing & Authorized Users State
   const [shareEmail, setShareEmail] = useState('');
@@ -136,7 +138,8 @@ export default function DevicesPage() {
     setEditingDeviceId(device._id);
     setUid(device.uid);
     setDeviceName(device.deviceName);
-    setCameraUrl(device.cameraUrl);
+    setCameraUrl(device.cameraUrl || '');
+    setSnapshotUrl(device.snapshotUrl || '');
     setZoneCode(device.zoneCode);
     setPhoneNumbers(device.phoneNumbers ? device.phoneNumbers.join(', ') : '');
     setInstitution(device.institution || '');
@@ -144,6 +147,7 @@ export default function DevicesPage() {
     setLatitude(device.latitude || '');
     setLongitude(device.longitude || '');
     setCallAlertsEnabled(device.callAlertsEnabled !== undefined ? device.callAlertsEnabled : true);
+    setInstantCallOnTrigger(device.instantCallOnTrigger !== undefined ? device.instantCallOnTrigger : true);
     
     setShareEmail('');
     setShareError('');
@@ -173,7 +177,8 @@ export default function DevicesPage() {
   const handleCloseModal = () => {
     setUid('');
     setDeviceName('');
-    setCameraUrl('https://picsum.photos/800/600');
+    setCameraUrl('http://161.248.205.218:1984/stream.html?src=camera_004');
+    setSnapshotUrl('http://161.248.205.218:1984/api/frame.jpeg?src=camera_004');
     setZoneCode('ZONE_01');
     setPhoneNumbers('');
     setInstitution('');
@@ -182,6 +187,7 @@ export default function DevicesPage() {
     setLongitude('');
     setEditingDeviceId(null);
     setCallAlertsEnabled(true);
+    setInstantCallOnTrigger(true);
     setShareEmail('');
     setShareError('');
     setShareSuccess('');
@@ -214,13 +220,15 @@ export default function DevicesPage() {
             uid,
             deviceName,
             cameraUrl,
+            snapshotUrl,
             zoneCode,
             phoneNumbers: numbersArray,
             institution,
             location,
             latitude,
             longitude,
-            callAlertsEnabled
+            callAlertsEnabled,
+            instantCallOnTrigger
           })
         });
       } else {
@@ -232,6 +240,7 @@ export default function DevicesPage() {
             uid,
             deviceName,
             cameraUrl,
+            snapshotUrl,
             zoneCode,
             userId: user.uid,
             phoneNumbers: numbersArray,
@@ -239,7 +248,8 @@ export default function DevicesPage() {
             location,
             latitude,
             longitude,
-            callAlertsEnabled
+            callAlertsEnabled,
+            instantCallOnTrigger
           })
         });
       }
@@ -383,9 +393,15 @@ export default function DevicesPage() {
                       </div>
                     )}
                     <div className="flex justify-between items-center">
-                      <span className="text-base-content/70 shrink-0">Snapshot Source:</span>
+                      <span className="text-base-content/70 shrink-0">Live Stream URL:</span>
                       <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70" title={device.cameraUrl}>
                         {device.cameraUrl}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-base-content/70 shrink-0">JPG Snapshot URL:</span>
+                      <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70" title={device.snapshotUrl || device.cameraUrl}>
+                        {device.snapshotUrl || device.cameraUrl}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
@@ -518,17 +534,32 @@ export default function DevicesPage() {
 
                 <div className="form-control w-full">
                   <label className="label">
-                    <span className="label-text font-semibold text-base-content/70">Live Stream / JPG Snapshot URL</span>
+                    <span className="label-text font-semibold text-base-content/70">Live Stream Video URL (Web Playback)</span>
                   </label>
                   <input 
                     type="text" 
                     value={cameraUrl}
                     onChange={(e) => setCameraUrl(e.target.value)}
-                    placeholder="e.g. http://192.168.1.50/mjpeg" 
+                    placeholder="e.g. http://161.248.205.218:1984/stream.html?src=camera_004" 
                     className="input input-bordered w-full rounded-xl text-sm text-base-content"
                     required
                   />
-                  <span className="label-text-alt text-base-content/70 mt-1">We grab frames from this stream when D4 transitions to high.</span>
+                  <span className="label-text-alt text-base-content/70 mt-1">Used exclusively for live video player streaming on dashboard.</span>
+                </div>
+
+                <div className="form-control w-full">
+                  <label className="label">
+                    <span className="label-text font-semibold text-base-content/70">JPG Snapshot URL (AI Threat Analysis)</span>
+                  </label>
+                  <input 
+                    type="text" 
+                    value={snapshotUrl}
+                    onChange={(e) => setSnapshotUrl(e.target.value)}
+                    placeholder="e.g. http://161.248.205.218:1984/api/frame.jpeg?src=camera_004" 
+                    className="input input-bordered w-full rounded-xl text-sm text-base-content"
+                    required
+                  />
+                  <span className="label-text-alt text-base-content/70 mt-1">Direct JPEG endpoint used to capture photos 1s apart for AI Threat Analysis.</span>
                 </div>
 
                 <div className="form-control w-full">
@@ -547,8 +578,21 @@ export default function DevicesPage() {
 
                 <div className="form-control w-full flex-row justify-between items-center bg-base-300/40 p-3 rounded-xl border border-base-100/50 mt-2">
                   <div>
-                    <span className="label-text font-bold text-base-content/85 block">Automated Call Alerts</span>
-                    <span className="text-[10px] text-base-content/70 block">Trigger voice call alert notifications for this device</span>
+                    <span className="label-text font-bold text-base-content/85 block">Instant Phone Call on Signal</span>
+                    <span className="text-[10px] text-base-content/70 block">Immediately call registered phone numbers as soon as hardware signal/trigger arrives</span>
+                  </div>
+                  <input 
+                    type="checkbox" 
+                    className="toggle toggle-success toggle-sm"
+                    checked={instantCallOnTrigger}
+                    onChange={(e) => setInstantCallOnTrigger(e.target.checked)}
+                  />
+                </div>
+
+                <div className="form-control w-full flex-row justify-between items-center bg-base-300/40 p-3 rounded-xl border border-base-100/50">
+                  <div>
+                    <span className="label-text font-bold text-base-content/85 block">AI Threat Score Call Alerts (>90%)</span>
+                    <span className="text-[10px] text-base-content/70 block">Auto-place call when AI Threat Score exceeds 90%</span>
                   </div>
                   <input 
                     type="checkbox" 

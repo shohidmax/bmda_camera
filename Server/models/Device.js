@@ -18,7 +18,11 @@ const DeviceSchema = new mongoose.Schema({
   },
   cameraUrl: {
     type: String,
-    default: 'http://161.248.205.218:1984/stream.html?src=camera_001'
+    default: 'http://161.248.205.218:1984/stream.html?src=camera_004'
+  },
+  snapshotUrl: {
+    type: String,
+    default: 'http://161.248.205.218:1984/api/frame.jpeg?src=camera_004'
   },
   zoneCode: {
     type: String,
@@ -49,6 +53,10 @@ const DeviceSchema = new mongoose.Schema({
       },
       message: 'A device can have at most 5 phone numbers.'
     }
+  },
+  instantCallOnTrigger: {
+    type: Boolean,
+    default: true
   },
   createdAt: {
     type: Date,
