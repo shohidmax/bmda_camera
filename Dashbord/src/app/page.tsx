@@ -73,7 +73,7 @@ export default function DashboardHome() {
 
   const handleCaptureBurstSnapshots = async (device: any) => {
     try {
-      console.log(`Starting 2-second burst capture (3 frames) for ${device.deviceName}...`);
+      console.log(`Starting 1-second burst capture (3 frames) for ${device.deviceName}...`);
       const capturedBase64Frames: string[] = [];
       
       for (let i = 1; i <= 3; i++) {
@@ -82,7 +82,6 @@ export default function DashboardHome() {
         if (response.ok) {
           const blob = await response.blob();
           
-          // Convert blob to base64 for API submission
           const reader = new FileReader();
           const base64Promise = new Promise<string>((resolve) => {
             reader.onloadend = () => resolve(reader.result as string);
@@ -101,7 +100,7 @@ export default function DashboardHome() {
           window.URL.revokeObjectURL(blobUrl);
         }
         if (i < 3) {
-          await new Promise(resolve => setTimeout(resolve, 2000));
+          await new Promise(resolve => setTimeout(resolve, 1000));
         }
       }
 
@@ -113,7 +112,7 @@ export default function DashboardHome() {
           body: JSON.stringify({
             uid: device.uid,
             frames: capturedBase64Frames,
-            message: `Manual Live Stream 2-Second Burst Capture for ${device.deviceName}`,
+            message: `Live Stream 1-Second Burst Capture for ${device.deviceName}`,
             zoneCode: device.zoneCode
           })
         });
@@ -209,29 +208,14 @@ export default function DashboardHome() {
     setSimulating(true);
     
     try {
-      const response = await fetch(`${BACKEND_URL}/api/trigger`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          uid: targetDevice.uid,
-          time: new Date().toISOString().replace('T', ' ').substring(0, 19),
-          action: 'PIN_HIGH',
-          message: `Simulation: Trigger detected on D4 for ${targetDevice.deviceName}`,
-          zone_code: targetDevice.zoneCode
-        })
-      });
+      // 1. Immediately start playing the camera live stream on screen
+      setPlayingDevices(prev => ({ ...prev, [targetDevice._id]: true }));
+      console.log(`[Trigger Action] Auto-started go2rtc live stream for ${targetDevice.deviceName}. Waiting for feed playback...`);
       
-      const resData = await response.json();
-      if (resData.success) {
-        // Poll for changes 3 seconds later (give time for snapshots/AI to run)
-        setTimeout(async () => {
-          await fetchDashboardData();
-          setSimulating(false);
-        }, 4000);
-      } else {
-        alert('Simulation failed: ' + resData.error);
-        setSimulating(false);
-      }
+      // 2. Wait 2.5 seconds for go2rtc live stream to PLAY on screen, then capture 3 pictures 1 second apart
+      await new Promise(resolve => setTimeout(resolve, 2500));
+      await handleCaptureBurstSnapshots(targetDevice);
+      setSimulating(false);
     } catch (err: any) {
       alert('Error triggering simulation: ' + err.message);
       setSimulating(false);

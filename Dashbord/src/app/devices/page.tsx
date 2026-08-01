@@ -16,7 +16,7 @@ export default function DevicesPage() {
   // Form State
   const [uid, setUid] = useState('');
   const [deviceName, setDeviceName] = useState('');
-  const [cameraUrl, setCameraUrl] = useState('https://picsum.photos/800/600');
+  const [cameraUrl, setCameraUrl] = useState('http://161.248.205.218:1984/stream.html?src=camera_001');
   const [zoneCode, setZoneCode] = useState('ZONE_01');
   const [phoneNumbers, setPhoneNumbers] = useState('');
   const [institution, setInstitution] = useState('');

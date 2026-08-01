@@ -18,7 +18,7 @@ const DeviceSchema = new mongoose.Schema({
   },
   cameraUrl: {
     type: String,
-    default: 'https://picsum.photos/800/600' // Default placeholder for grabbing mock frames
+    default: 'http://161.248.205.218:1984/stream.html?src=camera_001'
   },
   zoneCode: {
     type: String,
