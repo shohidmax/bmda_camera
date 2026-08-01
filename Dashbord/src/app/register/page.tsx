@@ -46,7 +46,7 @@ export default function RegisterPage() {
             <Shield className="w-8 h-8 animate-pulse" />
           </div>
           <h2 className="text-2xl font-black text-base-content tracking-tight">AEGIS EYE</h2>
-          <p className="text-xs text-base-content/50 uppercase tracking-widest font-semibold mb-8">
+          <p className="text-xs text-base-content/75 uppercase tracking-widest font-semibold mb-8">
             Create Security Operator Profile
           </p>
 
@@ -63,7 +63,7 @@ export default function RegisterPage() {
                 <span className="label-text font-semibold text-base-content/70">Email Address</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                   <Mail className="w-5 h-5" />
                 </div>
                 <input 
@@ -71,7 +71,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com" 
-                  className="input input-bordered w-full pl-10 rounded-xl"
+                  className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                 <span className="label-text font-semibold text-base-content/70">Password</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                   <Lock className="w-5 h-5" />
                 </div>
                 <input 
@@ -91,7 +91,7 @@ export default function RegisterPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••" 
-                  className="input input-bordered w-full pl-10 rounded-xl"
+                  className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -103,7 +103,7 @@ export default function RegisterPage() {
                 <span className="label-text font-semibold text-base-content/70">Confirm Password</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                   <Lock className="w-5 h-5" />
                 </div>
                 <input 
@@ -111,7 +111,7 @@ export default function RegisterPage() {
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="••••••••" 
-                  className="input input-bordered w-full pl-10 rounded-xl"
+                  className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -128,7 +128,7 @@ export default function RegisterPage() {
           </form>
 
           {/* Login Link */}
-          <p className="text-sm text-base-content/50 mt-8">
+          <p className="text-sm text-base-content/75 mt-8">
             Already have an operator profile?{' '}
             <Link href="/login" className="link link-primary font-semibold">
               Sign In

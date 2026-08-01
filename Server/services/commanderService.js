@@ -52,6 +52,27 @@ const evaluateThreat = async (event) => {
 
     // 2. Automated Voice Call Broadcast for score > 90%
     if (score > 90) {
+      // Check Global Settings first
+      const fs = require('fs');
+      const path = require('path');
+      let globalCallAlertsEnabled = true;
+      try {
+        const settingsFile = path.join(__dirname, '../config/settings.json');
+        if (fs.existsSync(settingsFile)) {
+          const settings = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
+          if (settings.globalCallAlertsEnabled !== undefined) {
+            globalCallAlertsEnabled = settings.globalCallAlertsEnabled;
+          }
+        }
+      } catch (settingsErr) {
+        console.warn(`[Central Commander] Failed to read global call settings:`, settingsErr.message);
+      }
+
+      if (!globalCallAlertsEnabled) {
+        console.log(`[Central Commander] Global Voice Call alerts are DISABLED. Skipping voice call broadcast.`);
+        return;
+      }
+
       console.log(`[Central Commander] ALERT! Threat score (${score}%) exceeds 90%. Initiating automated voice call broadcast...`);
       
       let device;
@@ -62,7 +83,13 @@ const evaluateThreat = async (event) => {
         device = memDevices.find(d => d.uid === event.uid.toUpperCase());
       }
       
-      if (device && device.phoneNumbers && device.phoneNumbers.length > 0) {
+      if (device) {
+        if (device.callAlertsEnabled === false) {
+          console.log(`[Central Commander] Voice Call alerts are DISABLED for this device [${device.deviceName}]. Skipping broadcast.`);
+          return;
+        }
+
+        if (device.phoneNumbers && device.phoneNumbers.length > 0) {
         const broadcastPayload = {
           user_id: device.userId || 'system',
           mac: device.uid,
@@ -112,6 +139,7 @@ const evaluateThreat = async (event) => {
         console.log(`[Central Commander] No configured phone numbers found for device [${event.uid}]. Skipping voice call broadcast.`);
       }
     }
+  }
   } catch (error) {
     console.error(`[Central Commander] Error in threat evaluation:`, error);
   }

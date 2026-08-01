@@ -19,14 +19,14 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-        <div className="flex justify-between items-center mb-8">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">Contact Us</h2>
-            <p className="text-sm text-base-content/60">Connect with Aegis Eye support, security advisors, or system coordinators.</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Contact Us</h2>
+            <p className="text-sm text-base-content/80">Connect with Aegis Eye support, security advisors, or system coordinators.</p>
           </div>
         </div>
 
@@ -34,14 +34,14 @@ export default function ContactPage() {
           {/* Direct contact form */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-2">
             <div className="card-body p-6">
-              <h3 className="card-title text-lg font-bold mb-4">Send a Message</h3>
+              <h3 className="card-title text-lg font-bold mb-4 text-base-content">Send a Message</h3>
 
               {submitted ? (
                 <div className="text-center py-12 space-y-3">
                   <div className="alert alert-success rounded-xl justify-center font-medium max-w-sm mx-auto">
                     Message Dispatched!
                   </div>
-                  <p className="text-sm text-base-content/60">
+                  <p className="text-sm text-base-content/80">
                     Thank you. We have received your query and will reply via email shortly.
                   </p>
                   <button 
@@ -63,7 +63,7 @@ export default function ContactPage() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="John Doe" 
-                        className="input input-bordered w-full rounded-xl"
+                        className="input input-bordered w-full rounded-xl text-base-content"
                         required
                       />
                     </div>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="john@example.com" 
-                        className="input input-bordered w-full rounded-xl"
+                        className="input input-bordered w-full rounded-xl text-base-content"
                         required
                       />
                     </div>
@@ -91,7 +91,7 @@ export default function ContactPage() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Write your query here..." 
-                      className="textarea textarea-bordered w-full h-32 rounded-xl"
+                      className="textarea textarea-bordered w-full h-32 rounded-xl text-base-content"
                       required
                     />
                   </div>
@@ -108,7 +108,7 @@ export default function ContactPage() {
           {/* Contact Details */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-1">
             <div className="card-body p-6 space-y-6">
-              <h3 className="card-title text-lg font-bold">Contact Details</h3>
+              <h3 className="card-title text-lg font-bold text-base-content">Contact Details</h3>
 
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -117,7 +117,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-sm">Security Operations</h4>
-                    <p className="text-xs text-base-content/60">ops@aegiseye.com</p>
+                    <p className="text-xs text-base-content/80">ops@aegiseye.com</p>
                   </div>
                 </div>
 
@@ -127,7 +127,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-sm">Emergency Desk</h4>
-                    <p className="text-xs text-base-content/60">+1 (800) 555-EYES</p>
+                    <p className="text-xs text-base-content/80">+1 (800) 555-EYES</p>
                   </div>
                 </div>
 
@@ -137,7 +137,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h4 className="font-bold text-sm">Headquarters</h4>
-                    <p className="text-xs text-base-content/60">
+                    <p className="text-xs text-base-content/80">
                       100 Surveillance Parkway<br />
                       Suite 400, Security Valley, CA
                     </p>

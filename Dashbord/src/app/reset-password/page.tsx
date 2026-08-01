@@ -38,7 +38,7 @@ export default function ResetPasswordPage() {
             <Shield className="w-8 h-8" />
           </div>
           <h2 className="text-2xl font-black text-base-content tracking-tight">AEGIS EYE</h2>
-          <p className="text-xs text-base-content/50 uppercase tracking-widest font-semibold mb-8">
+          <p className="text-xs text-base-content/75 uppercase tracking-widest font-semibold mb-8">
             Recover Operator Profile
           </p>
 
@@ -69,7 +69,7 @@ export default function ResetPasswordPage() {
                     <span className="label-text font-semibold text-base-content/70">Registered Email</span>
                   </label>
                   <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                       <Mail className="w-5 h-5" />
                     </div>
                     <input 
@@ -77,7 +77,7 @@ export default function ResetPasswordPage() {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="name@company.com" 
-                      className="input input-bordered w-full pl-10 rounded-xl"
+                      className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                       required
                     />
                   </div>

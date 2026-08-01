@@ -39,14 +39,14 @@ export default function NotificationsPage() {
   }, [user]);
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-        <div className="flex justify-between items-center mb-8">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">Alert Center</h2>
-            <p className="text-sm text-base-content/60">Configure real-time push alerts and review recent high-threat incidents.</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Alert Center</h2>
+            <p className="text-sm text-base-content/80">Configure real-time push alerts and review recent high-threat incidents.</p>
           </div>
         </div>
 
@@ -54,19 +54,19 @@ export default function NotificationsPage() {
           {/* Settings Column */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-1">
             <div className="card-body p-6">
-              <h3 className="card-title text-lg font-bold mb-4">Alert Preferences</h3>
+              <h3 className="card-title text-lg font-bold mb-4 text-base-content">Alert Preferences</h3>
               
               <div className="space-y-5">
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-sm">Push Notifications</h4>
-                    <p className="text-2xs text-base-content/50">Immediate alerts in the browser.</p>
+                    <p className="text-2xs text-base-content/75">Immediate alerts in the browser.</p>
                   </div>
                   <button onClick={() => setPushAlerts(!pushAlerts)}>
                     {pushAlerts ? (
                       <ToggleRight className="w-10 h-10 text-primary cursor-pointer" />
                     ) : (
-                      <ToggleLeft className="w-10 h-10 text-base-content/30 cursor-pointer" />
+                      <ToggleLeft className="w-10 h-10 text-base-content/65 cursor-pointer" />
                     )}
                   </button>
                 </div>
@@ -74,13 +74,13 @@ export default function NotificationsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-sm">Email Reports</h4>
-                    <p className="text-2xs text-base-content/50">Hourly reports of camera activities.</p>
+                    <p className="text-2xs text-base-content/75">Hourly reports of camera activities.</p>
                   </div>
                   <button onClick={() => setEmailAlerts(!emailAlerts)}>
                     {emailAlerts ? (
                       <ToggleRight className="w-10 h-10 text-primary cursor-pointer" />
                     ) : (
-                      <ToggleLeft className="w-10 h-10 text-base-content/30 cursor-pointer" />
+                      <ToggleLeft className="w-10 h-10 text-base-content/65 cursor-pointer" />
                     )}
                   </button>
                 </div>
@@ -88,13 +88,13 @@ export default function NotificationsPage() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h4 className="font-bold text-sm">Central Webhook Siren</h4>
-                    <p className="text-2xs text-base-content/50">Auto-execute sirens on critical triggers.</p>
+                    <p className="text-2xs text-base-content/75">Auto-execute sirens on critical triggers.</p>
                   </div>
                   <button onClick={() => setSirenAlerts(!sirenAlerts)}>
                     {sirenAlerts ? (
                       <ToggleRight className="w-10 h-10 text-primary cursor-pointer" />
                     ) : (
-                      <ToggleLeft className="w-10 h-10 text-base-content/30 cursor-pointer" />
+                      <ToggleLeft className="w-10 h-10 text-base-content/65 cursor-pointer" />
                     )}
                   </button>
                 </div>
@@ -105,14 +105,14 @@ export default function NotificationsPage() {
           {/* Critical Warnings Log */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-2">
             <div className="card-body p-6">
-              <h3 className="card-title text-lg font-bold mb-4">High Threat Triggers Log</h3>
+              <h3 className="card-title text-lg font-bold mb-4 text-base-content">High Threat Triggers Log</h3>
 
               {loading ? (
                 <div className="flex justify-center py-12">
                   <span className="loading loading-spinner loading-md text-primary"></span>
                 </div>
               ) : criticalAlerts.length === 0 ? (
-                <div className="text-center py-16 text-base-content/40 space-y-2">
+                <div className="text-center py-16 text-base-content/70 space-y-2">
                   <Bell className="w-12 h-12 mx-auto opacity-45" />
                   <p className="font-bold text-sm">No Critical Incidents Flagged</p>
                   <p className="text-xs max-w-xs mx-auto">There are no logged threats with score &ge; 80% on your camera nodes.</p>
@@ -130,10 +130,10 @@ export default function NotificationsPage() {
                         </div>
                         <div>
                           <h4 className="font-bold text-sm text-base-content">{alert.message}</h4>
-                          <p className="text-xs text-base-content/60 mt-0.5">
+                          <p className="text-xs text-base-content/80 mt-0.5">
                             AI Report: {alert.aiReport.length > 80 ? alert.aiReport.substring(0, 80) + '...' : alert.aiReport}
                           </p>
-                          <span className="text-2xs font-mono text-base-content/40 block mt-1">
+                          <span className="text-2xs font-mono text-base-content/70 block mt-1">
                             {alert.time} | Device MAC: {alert.uid}
                           </span>
                         </div>

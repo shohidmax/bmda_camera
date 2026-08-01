@@ -23,14 +23,14 @@ export default function SupportPage() {
   ];
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-        <div className="flex justify-between items-center mb-8">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">Support Desk</h2>
-            <p className="text-sm text-base-content/60">Resolve operational problems or open support requests with the tech team.</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Support Desk</h2>
+            <p className="text-sm text-base-content/80">Resolve operational problems or open support requests with the tech team.</p>
           </div>
         </div>
 
@@ -38,14 +38,14 @@ export default function SupportPage() {
           {/* Support Ticket Form */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-2">
             <div className="card-body p-6">
-              <h3 className="card-title text-lg font-bold mb-4">Open Support Ticket</h3>
+              <h3 className="card-title text-lg font-bold mb-4 text-base-content">Open Support Ticket</h3>
 
               {submitted ? (
                 <div className="text-center py-12 space-y-3">
                   <div className="alert alert-success rounded-xl justify-center font-medium max-w-sm mx-auto">
                     Ticket Submitted Successfully!
                   </div>
-                  <p className="text-sm text-base-content/60">
+                  <p className="text-sm text-base-content/80">
                     A technical specialist will review your request and follow up within 24 hours.
                   </p>
                   <button 
@@ -66,7 +66,7 @@ export default function SupportPage() {
                       value={subject}
                       onChange={(e) => setSubject(e.target.value)}
                       placeholder="e.g. ESP32 failing to connect to NTP server" 
-                      className="input input-bordered w-full rounded-xl"
+                      className="input input-bordered w-full rounded-xl text-base-content"
                       required
                     />
                   </div>
@@ -79,7 +79,7 @@ export default function SupportPage() {
                       value={message}
                       onChange={(e) => setMessage(e.target.value)}
                       placeholder="Describe the issue in detail..." 
-                      className="textarea textarea-bordered w-full h-32 rounded-xl"
+                      className="textarea textarea-bordered w-full h-32 rounded-xl text-base-content"
                       required
                     />
                   </div>
@@ -96,7 +96,7 @@ export default function SupportPage() {
           {/* Quick FAQ */}
           <div className="card bg-base-200 border border-base-100 shadow-xl lg:col-span-1">
             <div className="card-body p-6">
-              <h3 className="card-title text-lg font-bold mb-4 flex items-center gap-2">
+              <h3 className="card-title text-lg font-bold mb-4 flex items-center gap-2 text-base-content">
                 <MessageSquare className="w-5 h-5 text-primary" />
                 Frequently Asked
               </h3>
@@ -105,7 +105,7 @@ export default function SupportPage() {
                 {faqs.map((faq, idx) => (
                   <div key={idx} className="space-y-1 border-b border-base-100 pb-3 last:border-b-0">
                     <h4 className="font-bold text-sm text-base-content">{faq.q}</h4>
-                    <p className="text-xs text-base-content/60 leading-relaxed">{faq.a}</p>
+                    <p className="text-xs text-base-content/80 leading-relaxed">{faq.a}</p>
                   </div>
                 ))}
               </div>

@@ -87,7 +87,7 @@ router.post('/trigger', async (req, res) => {
 // @desc    Register or update a device
 router.post('/devices', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode, userId, phoneNumbers, institution, location, latitude, longitude } = req.body;
+    const { uid, deviceName, cameraUrl, zoneCode, userId, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled } = req.body;
     
     if (!uid || !userId) {
       return res.status(400).json({ success: false, error: 'uid and userId are required.' });
@@ -108,6 +108,7 @@ router.post('/devices', async (req, res) => {
         if (location !== undefined) device.location = location;
         if (latitude !== undefined) device.latitude = latitude;
         if (longitude !== undefined) device.longitude = longitude;
+        if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
         await device.save();
         console.log(`[API] Updated device in DB: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully.', device });
@@ -122,7 +123,8 @@ router.post('/devices', async (req, res) => {
           institution: institution || '',
           location: location || '',
           latitude: latitude || '',
-          longitude: longitude || ''
+          longitude: longitude || '',
+          callAlertsEnabled: callAlertsEnabled !== undefined ? callAlertsEnabled : true
         });
         await device.save();
         console.log(`[API] Registered new device in DB: ${uppercaseUid}`);
@@ -141,6 +143,7 @@ router.post('/devices', async (req, res) => {
         if (location !== undefined) device.location = location;
         if (latitude !== undefined) device.latitude = latitude;
         if (longitude !== undefined) device.longitude = longitude;
+        if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
         console.log(`[API] Updated simulated device: ${uppercaseUid}`);
         return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
       } else {
@@ -156,6 +159,7 @@ router.post('/devices', async (req, res) => {
           location: location || '',
           latitude: latitude || '',
           longitude: longitude || '',
+          callAlertsEnabled: callAlertsEnabled !== undefined ? callAlertsEnabled : true,
           createdAt: new Date()
         };
         memDevices.push(device);
@@ -284,7 +288,7 @@ router.get('/events/device/:uid', async (req, res) => {
 // @desc    Update a device by ID
 router.put('/devices/:id', async (req, res) => {
   try {
-    const { uid, deviceName, cameraUrl, zoneCode, phoneNumbers, institution, location, latitude, longitude } = req.body;
+    const { uid, deviceName, cameraUrl, zoneCode, phoneNumbers, institution, location, latitude, longitude, callAlertsEnabled } = req.body;
     const deviceId = req.params.id;
     
     if (global.dbConnected) {
@@ -302,6 +306,7 @@ router.put('/devices/:id', async (req, res) => {
       if (location !== undefined) device.location = location;
       if (latitude !== undefined) device.latitude = latitude;
       if (longitude !== undefined) device.longitude = longitude;
+      if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
       
       await device.save();
       console.log(`[API] Updated device in DB by ID: ${deviceId}`);
@@ -322,6 +327,7 @@ router.put('/devices/:id', async (req, res) => {
       if (location !== undefined) device.location = location;
       if (latitude !== undefined) device.latitude = latitude;
       if (longitude !== undefined) device.longitude = longitude;
+      if (callAlertsEnabled !== undefined) device.callAlertsEnabled = callAlertsEnabled;
       
       console.log(`[API] Updated simulated device by ID: ${deviceId}`);
       return res.json({ success: true, message: 'Device updated successfully (Simulated).', device });
@@ -681,6 +687,81 @@ router.post('/devices/share', async (req, res) => {
   } catch (error) {
     console.error('[API] Error sharing device:', error);
     return res.status(500).json({ success: false, error: 'Server error sharing device.' });
+  }
+});
+
+// @route   GET /api/record-fallback
+// @desc    Download a simulated MP4 recording of the camera feed
+router.get('/record-fallback', async (req, res) => {
+  try {
+    const { uid, duration } = req.query;
+    console.log(`[API] fallback video record request received for device: ${uid} (duration: ${duration}s)`);
+    
+    // Redirect to a sample public MP4 file to trigger browser download
+    return res.redirect('https://www.w3schools.com/html/mov_bbb.mp4');
+  } catch (error) {
+    console.error('[API] Error in record-fallback:', error);
+    return res.status(500).json({ success: false, error: 'Server error generating record.' });
+  }
+});
+
+// @route   GET /api/settings
+// @desc    Get global settings configuration
+router.get('/settings', async (req, res) => {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const settingsFile = path.join(__dirname, '../config/settings.json');
+    let globalCallAlertsEnabled = true;
+    
+    if (fs.existsSync(settingsFile)) {
+      const settings = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
+      if (settings.globalCallAlertsEnabled !== undefined) {
+        globalCallAlertsEnabled = settings.globalCallAlertsEnabled;
+      }
+    }
+    return res.json({ success: true, settings: { globalCallAlertsEnabled } });
+  } catch (error) {
+    console.error('[API] Error getting settings:', error);
+    return res.status(500).json({ success: false, error: 'Server error getting settings.' });
+  }
+});
+
+// @route   PUT /api/settings
+// @desc    Update global settings configuration (Admin only)
+router.put('/settings', async (req, res) => {
+  try {
+    const { userId, globalCallAlertsEnabled } = req.body;
+    
+    if (!userId || globalCallAlertsEnabled === undefined) {
+      return res.status(400).json({ success: false, error: 'userId and globalCallAlertsEnabled parameters are required.' });
+    }
+    
+    // Authorization check
+    let isAuthorized = false;
+    if (global.dbConnected) {
+      const requester = await User.findOne({ uid: userId });
+      isAuthorized = requester && requester.role === 'admin';
+    } else {
+      const requester = memUsers.find(u => u.uid === userId);
+      isAuthorized = requester && requester.role === 'admin';
+    }
+    
+    if (!isAuthorized) {
+      return res.status(403).json({ success: false, error: 'Forbidden. Admin access required.' });
+    }
+    
+    const fs = require('fs');
+    const path = require('path');
+    const settingsFile = path.join(__dirname, '../config/settings.json');
+    
+    const settings = { globalCallAlertsEnabled };
+    fs.writeFileSync(settingsFile, JSON.stringify(settings, null, 2), 'utf8');
+    
+    return res.json({ success: true, message: 'Global settings updated successfully.', settings });
+  } catch (error) {
+    console.error('[API] Error updating settings:', error);
+    return res.status(500).json({ success: false, error: 'Server error updating settings.' });
   }
 });
 

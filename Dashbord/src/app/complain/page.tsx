@@ -18,20 +18,20 @@ export default function ComplainPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-        <div className="flex justify-between items-center mb-8">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">Complain Department</h2>
-            <p className="text-sm text-base-content/60">Log security failures, unauthorized access audits, or hardware errors.</p>
+            <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Complain Department</h2>
+            <p className="text-sm text-base-content/80">Log security failures, unauthorized access audits, or hardware errors.</p>
           </div>
         </div>
 
         <div className="card bg-base-200 border border-base-100 shadow-xl max-w-2xl">
           <div className="card-body p-6">
-            <h3 className="card-title text-lg font-bold mb-4 flex items-center gap-2 text-warning">
+            <h3 className="card-title text-lg font-bold mb-4 flex items-center gap-2 text-warning text-base-content">
               <AlertTriangle className="w-5 h-5" />
               File Security Complain
             </h3>
@@ -41,7 +41,7 @@ export default function ComplainPage() {
                 <div className="alert alert-success rounded-xl justify-center font-medium max-w-md mx-auto">
                   Complain Lodged Successfully
                 </div>
-                <p className="text-sm text-base-content/60 max-w-sm mx-auto leading-relaxed">
+                <p className="text-sm text-base-content/80 max-w-sm mx-auto leading-relaxed">
                   Your formal complaint has been filed in the secure ledger. Our compliance and operations leads will audit logs within 12 hours.
                 </p>
                 <button 
@@ -62,7 +62,7 @@ export default function ComplainPage() {
                     value={complaintTitle}
                     onChange={(e) => setComplaintTitle(e.target.value)}
                     placeholder="e.g. Unflagged intruder entrance at East Fence" 
-                    className="input input-bordered w-full rounded-xl"
+                    className="input input-bordered w-full rounded-xl text-base-content"
                     required
                   />
                 </div>
@@ -74,7 +74,7 @@ export default function ComplainPage() {
                   <select 
                     value={severity}
                     onChange={(e) => setSeverity(e.target.value)}
-                    className="select select-bordered w-full rounded-xl font-medium"
+                    className="select select-bordered w-full rounded-xl font-medium text-base-content"
                   >
                     <option value="low">Low (Hardware Glitch)</option>
                     <option value="medium">Medium (AI False Alarm)</option>
@@ -90,7 +90,7 @@ export default function ComplainPage() {
                     value={complaintBody}
                     onChange={(e) => setComplaintBody(e.target.value)}
                     placeholder="Provide timestamps, affected camera nodes, and specific details..." 
-                    className="textarea textarea-bordered w-full h-32 rounded-xl"
+                    className="textarea textarea-bordered w-full h-32 rounded-xl text-base-content"
                     required
                   />
                 </div>

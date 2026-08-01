@@ -55,7 +55,7 @@ export default function LoginPage() {
             <Shield className="w-8 h-8 animate-pulse" />
           </div>
           <h2 className="text-2xl font-black text-base-content tracking-tight">AEGIS EYE</h2>
-          <p className="text-xs text-base-content/50 uppercase tracking-widest font-semibold mb-8">
+          <p className="text-xs text-base-content/75 uppercase tracking-widest font-semibold mb-8">
             Access Command Center
           </p>
 
@@ -72,7 +72,7 @@ export default function LoginPage() {
                 <span className="label-text font-semibold text-base-content/70">Email Address</span>
               </label>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                   <Mail className="w-5 h-5" />
                 </div>
                 <input 
@@ -80,7 +80,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="name@company.com" 
-                  className="input input-bordered w-full pl-10 rounded-xl"
+                  className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -90,12 +90,12 @@ export default function LoginPage() {
             <div className="form-control w-full">
               <div className="flex justify-between items-center label">
                 <span className="label-text font-semibold text-base-content/70">Password</span>
-                <Link href="/reset-password" className="label-text-alt link link-primary font-medium">
+                <Link href="/reset-password" className="label-text-alt link link-primary font-medium text-base-content">
                   Forgot?
                 </Link>
               </div>
               <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/40">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-base-content/70">
                   <Lock className="w-5 h-5" />
                 </div>
                 <input 
@@ -103,7 +103,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••" 
-                  className="input input-bordered w-full pl-10 rounded-xl"
+                  className="input input-bordered w-full pl-10 rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -120,7 +120,7 @@ export default function LoginPage() {
           </form>
 
           {/* Divider */}
-          <div className="divider text-xs text-base-content/30 w-full my-6">OR CONTINUE WITH</div>
+          <div className="divider text-xs text-base-content/65 w-full my-6">OR CONTINUE WITH</div>
 
           {/* Google Button */}
           <button 
@@ -138,7 +138,7 @@ export default function LoginPage() {
           </button>
 
           {/* Register Link */}
-          <p className="text-sm text-base-content/50 mt-8">
+          <p className="text-sm text-base-content/75 mt-8">
             Don't have an operator profile?{' '}
             <Link href="/register" className="link link-primary font-semibold">
               Create account

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { useAuth } from '../../context/AuthContext';
-import { Users, Shield, ShieldCheck, Key, CheckSquare, Square, RefreshCw, AlertCircle } from 'lucide-react';
+import { Users, Shield, ShieldCheck, Key, CheckSquare, Square, RefreshCw, AlertCircle, PhoneCall } from 'lucide-react';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
 
@@ -30,6 +30,47 @@ export default function AccessControlPage() {
   const [shareEmail, setShareEmail] = useState('');
   const [shareDeviceUid, setShareDeviceUid] = useState('');
   const [sharingDevice, setSharingDevice] = useState(false);
+
+  // Global Settings Toggle State
+  const [globalCallAlertsEnabled, setGlobalCallAlertsEnabled] = useState(true);
+
+  const fetchSettings = async () => {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/settings`);
+      const data = await res.json();
+      if (data.success && data.settings) {
+        setGlobalCallAlertsEnabled(data.settings.globalCallAlertsEnabled);
+      }
+    } catch (err) {
+      console.error('Error fetching global settings:', err);
+    }
+  };
+
+  const handleToggleGlobalCall = async () => {
+    if (!user) return;
+    setError('');
+    setSuccessMsg('');
+    const newValue = !globalCallAlertsEnabled;
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/settings`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.uid,
+          globalCallAlertsEnabled: newValue
+        })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setGlobalCallAlertsEnabled(newValue);
+        setSuccessMsg(`Global Voice Call Alert service has been ${newValue ? 'ENABLED' : 'DISABLED'}.`);
+      } else {
+        setError(data.error || 'Failed to update settings.');
+      }
+    } catch (err: any) {
+      setError(err.message || 'Error occurred during settings toggle.');
+    }
+  };
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -174,6 +215,7 @@ export default function AccessControlPage() {
   useEffect(() => {
     if (user) {
       fetchUsersAndDevices();
+      fetchSettings();
     }
   }, [user]);
 
@@ -255,13 +297,13 @@ export default function AccessControlPage() {
 
   if (user?.role !== 'admin') {
     return (
-      <div className="flex min-h-screen bg-base-300">
+      <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
         <Sidebar />
-        <main className="flex-1 p-8 flex items-center justify-center">
+        <main className="flex-1 p-4 lg:p-8 flex items-center justify-center w-full">
           <div className="card bg-base-200 border border-base-100 p-8 text-center rounded-3xl max-w-md shadow-xl">
             <AlertCircle className="w-16 h-16 text-error mx-auto mb-4" />
             <h3 className="text-2xl font-bold mb-2">Access Denied</h3>
-            <p className="text-sm text-base-content/60">
+            <p className="text-sm text-base-content/80">
               Only system administrators have permission to access the User Roles and Access Management portal.
             </p>
           </div>
@@ -271,19 +313,33 @@ export default function AccessControlPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
-        <div className="flex justify-between items-center mb-8">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
-            <h2 className="text-3xl font-extrabold tracking-tight">Access Control &amp; Roles</h2>
-            <p className="text-sm text-base-content/60">
+            <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Access Control &amp; Roles</h2>
+            <p className="text-sm text-base-content/80">
               Change operator status (Admin / Manager) and grant access to specific hardware nodes.
             </p>
           </div>
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 items-center">
+            {/* Global Voice Alert Toggle Switch */}
+            <div className="flex items-center gap-2 bg-base-200 border border-base-100 rounded-2xl py-2.5 px-4 shadow-sm">
+              <span className="text-xs font-bold text-base-content/75 flex items-center gap-1.5">
+                <PhoneCall className={`w-4 h-4 ${globalCallAlertsEnabled ? 'text-success animate-pulse' : 'text-base-content/70'}`} />
+                Global Call Service:
+              </span>
+              <input 
+                type="checkbox" 
+                className="toggle toggle-success toggle-sm"
+                checked={globalCallAlertsEnabled}
+                onChange={handleToggleGlobalCall}
+              />
+            </div>
+
             <button 
               onClick={() => (document.getElementById('create_user_modal') as any)?.showModal()}
               className="btn btn-primary gap-2 shadow-lg shadow-primary/20"
@@ -333,13 +389,13 @@ export default function AccessControlPage() {
                 <div className="bg-primary/10 text-primary p-2.5 rounded-xl">
                   <Users className="w-6 h-6" />
                 </div>
-                <h3 className="card-title text-xl font-bold">Registered Users &amp; Permissions</h3>
+                <h3 className="card-title text-xl font-bold text-base-content">Registered Users &amp; Permissions</h3>
               </div>
 
               <div className="overflow-x-auto">
                 <table className="table w-full">
                   <thead>
-                    <tr className="border-b border-base-300/40 text-base-content/60">
+                    <tr className="border-b border-base-300/40 text-base-content/80">
                       <th>Name / Email</th>
                       <th>Account Role</th>
                       <th>Device Access Status</th>
@@ -351,8 +407,8 @@ export default function AccessControlPage() {
                       <tr key={u._id} className="border-b border-base-300/20 hover:bg-base-300/20 transition-all">
                         <td className="py-4">
                           <div className="font-bold text-base-content">{u.displayName || 'No Display Name'}</div>
-                          <div className="text-xs text-base-content/50 font-mono mt-0.5">{u.email}</div>
-                          <div className="text-[10px] text-base-content/30 font-mono mt-0.5">UID: {u.uid}</div>
+                          <div className="text-xs text-base-content/75 font-mono mt-0.5">{u.email}</div>
+                          <div className="text-[10px] text-base-content/65 font-mono mt-0.5">UID: {u.uid}</div>
                         </td>
                         
                         <td className="py-4">
@@ -361,7 +417,7 @@ export default function AccessControlPage() {
                               value={u.role || 'operator'}
                               disabled={actionLoading === `role_${u.uid}` || u.uid === user.uid}
                               onChange={(e) => handleRoleChange(u.uid, e.target.value)}
-                              className="select select-bordered select-sm rounded-xl font-semibold bg-base-100 border-base-300/60"
+                              className="select select-bordered select-sm rounded-xl font-semibold bg-base-100 border-base-300/60 text-base-content"
                             >
                               <option value="operator">Operator</option>
                               <option value="manager">Manager</option>
@@ -385,7 +441,7 @@ export default function AccessControlPage() {
                                 {u.accessibleDevices?.length || 0} Devices Allowed
                               </span>
                               {u.accessibleDevices?.length > 0 && (
-                                <div className="text-[10px] text-base-content/40 truncate max-w-[200px]">
+                                <div className="text-[10px] text-base-content/70 truncate max-w-[200px]">
                                   {u.accessibleDevices.join(', ')}
                                 </div>
                               )}
@@ -436,7 +492,7 @@ export default function AccessControlPage() {
                   value={newEmail}
                   onChange={(e) => setNewEmail(e.target.value)}
                   placeholder="operator@company.com" 
-                  className="input input-bordered w-full rounded-xl"
+                  className="input input-bordered w-full rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -450,7 +506,7 @@ export default function AccessControlPage() {
                   value={newDisplayName}
                   onChange={(e) => setNewDisplayName(e.target.value)}
                   placeholder="e.g. John Doe" 
-                  className="input input-bordered w-full rounded-xl"
+                  className="input input-bordered w-full rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -462,7 +518,7 @@ export default function AccessControlPage() {
                 <select 
                   value={newRole}
                   onChange={(e) => setNewRole(e.target.value)}
-                  className="select select-bordered w-full rounded-xl font-semibold"
+                  className="select select-bordered w-full rounded-xl font-semibold text-base-content"
                 >
                   <option value="operator">Operator</option>
                   <option value="manager">Manager</option>
@@ -506,13 +562,13 @@ export default function AccessControlPage() {
         <dialog id="device_access_modal" className="modal">
           <div className="modal-box bg-base-200 border border-base-100 rounded-3xl max-w-md p-8">
             <h3 className="font-extrabold text-xl mb-2">Configure Device Permissions</h3>
-            <p className="text-xs text-base-content/50 mb-6">
+            <p className="text-xs text-base-content/75 mb-6">
               Toggle access authorization for <span className="font-semibold text-base-content">{selectedUser?.email}</span>.
             </p>
             
             <div className="space-y-3 max-h-72 overflow-y-auto mb-6 pr-2">
               {devices.length === 0 ? (
-                <p className="text-sm text-base-content/40 text-center py-4">No registered hardware devices found.</p>
+                <p className="text-sm text-base-content/70 text-center py-4">No registered hardware devices found.</p>
               ) : (
                 devices.map((device) => {
                   const isChecked = tempAccessibleDevices.includes(device.uid);
@@ -528,7 +584,7 @@ export default function AccessControlPage() {
                     >
                       <div>
                         <div className="font-bold text-sm text-base-content">{device.deviceName}</div>
-                        <div className="text-xs text-base-content/40 font-mono mt-0.5">MAC: {device.uid} | Zone: {device.zoneCode}</div>
+                        <div className="text-xs text-base-content/70 font-mono mt-0.5">MAC: {device.uid} | Zone: {device.zoneCode}</div>
                       </div>
                       <div className="text-primary shrink-0">
                         {isChecked ? <CheckSquare className="w-5 h-5" /> : <Square className="w-5 h-5 opacity-45" />}
@@ -583,7 +639,7 @@ export default function AccessControlPage() {
                   value={shareEmail}
                   onChange={(e) => setShareEmail(e.target.value)}
                   placeholder="operator@company.com" 
-                  className="input input-bordered w-full rounded-xl"
+                  className="input input-bordered w-full rounded-xl text-base-content"
                   required
                 />
               </div>
@@ -595,7 +651,7 @@ export default function AccessControlPage() {
                 <select 
                   value={shareDeviceUid}
                   onChange={(e) => setShareDeviceUid(e.target.value)}
-                  className="select select-bordered w-full rounded-xl font-semibold"
+                  className="select select-bordered w-full rounded-xl font-semibold text-base-content"
                   required
                 >
                   <option value="">-- Select a Device --</option>

@@ -111,18 +111,18 @@ export default function EspDataPage() {
   };
 
   return (
-    <div className="flex min-h-screen bg-base-300">
+    <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
 
-      <main className="flex-1 p-8 overflow-y-auto max-h-screen">
+      <main className="flex-1 p-4 lg:p-8 overflow-y-auto max-h-screen w-full">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight flex items-center gap-3">
               <Radio className="w-8 h-8 text-primary animate-pulse" />
               ESP32 Incoming Signals Console
             </h2>
-            <p className="text-sm text-base-content/60 mt-1">
+            <p className="text-sm text-base-content/80 mt-1">
               Direct telemetry dashboard displaying raw trigger packets, signal properties, and metadata received from nodes.
             </p>
           </div>
@@ -141,7 +141,7 @@ export default function EspDataPage() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="stats shadow bg-base-200 border border-base-100">
             <div className="stat">
-              <div className="stat-title text-base-content/50">Total Signals</div>
+              <div className="stat-title text-base-content/75">Total Signals</div>
               <div className="stat-value text-primary flex items-center gap-2">
                 <Terminal className="w-8 h-8" />
                 {stats.total}
@@ -152,7 +152,7 @@ export default function EspDataPage() {
 
           <div className="stats shadow bg-base-200 border border-base-100">
             <div className="stat">
-              <div className="stat-title text-base-content/50">Alerts (PIN_LOW)</div>
+              <div className="stat-title text-base-content/75">Alerts (PIN_LOW)</div>
               <div className="stat-value text-error flex items-center gap-2">
                 <Activity className="w-8 h-8" />
                 {stats.pinLow}
@@ -163,7 +163,7 @@ export default function EspDataPage() {
 
           <div className="stats shadow bg-base-200 border border-base-100">
             <div className="stat">
-              <div className="stat-title text-base-content/50">Normal (PIN_HIGH)</div>
+              <div className="stat-title text-base-content/75">Normal (PIN_HIGH)</div>
               <div className="stat-value text-success flex items-center gap-2">
                 <ClipboardCheck className="w-8 h-8" />
                 {stats.pinHigh}
@@ -174,7 +174,7 @@ export default function EspDataPage() {
 
           <div className="stats shadow bg-base-200 border border-base-100">
             <div className="stat">
-              <div className="stat-title text-base-content/50">Last Active Signal</div>
+              <div className="stat-title text-base-content/75">Last Active Signal</div>
               <div className="stat-value text-warning text-lg truncate pt-2">
                 {stats.lastSignal}
               </div>
@@ -194,11 +194,11 @@ export default function EspDataPage() {
             <div className="flex flex-wrap gap-3 items-center">
               {/* Device Selector */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-base-content/50 font-semibold">Device:</span>
+                <span className="text-xs text-base-content/75 font-semibold">Device:</span>
                 <select
                   value={selectedDevice}
                   onChange={(e) => setSelectedDevice(e.target.value)}
-                  className="select select-bordered select-sm rounded-xl bg-base-300 text-xs font-semibold border-base-100/50"
+                  className="select select-bordered select-sm rounded-xl bg-base-300 text-xs font-semibold border-base-100/50 text-base-content"
                 >
                   <option value="all">All Registered Nodes</option>
                   {devices.map((d) => (
@@ -209,11 +209,11 @@ export default function EspDataPage() {
 
               {/* Action Selector */}
               <div className="flex items-center gap-2">
-                <span className="text-xs text-base-content/50 font-semibold">Action:</span>
+                <span className="text-xs text-base-content/75 font-semibold">Action:</span>
                 <select
                   value={selectedAction}
                   onChange={(e) => setSelectedAction(e.target.value)}
-                  className="select select-bordered select-sm rounded-xl bg-base-300 text-xs font-semibold border-base-100/50"
+                  className="select select-bordered select-sm rounded-xl bg-base-300 text-xs font-semibold border-base-100/50 text-base-content"
                 >
                   <option value="all">All Actions</option>
                   <option value="PIN_LOW">PIN_LOW (Alert)</option>
@@ -232,10 +232,10 @@ export default function EspDataPage() {
                 <span className="loading loading-spinner loading-lg text-primary"></span>
               </div>
             ) : filteredEvents.length === 0 ? (
-              <div className="text-center py-20 text-base-content/40">
+              <div className="text-center py-20 text-base-content/70">
                 <Radio className="w-12 h-12 mx-auto mb-3 opacity-30 animate-bounce" />
                 <p className="font-semibold text-base">No Telemetry Signal Logs Found</p>
-                <p className="text-xs text-base-content/50 mt-1">Ensure your hardware nodes are online and transmitting events.</p>
+                <p className="text-xs text-base-content/75 mt-1">Ensure your hardware nodes are online and transmitting events.</p>
               </div>
             ) : (
               <table className="table w-full text-sm">
@@ -276,7 +276,7 @@ export default function EspDataPage() {
                         {/* Time */}
                         <td className="font-mono text-xs text-base-content/70">
                           <span className="flex items-center gap-1.5">
-                            <Calendar className="w-3.5 h-3.5 text-base-content/40" />
+                            <Calendar className="w-3.5 h-3.5 text-base-content/70" />
                             {evt.time}
                           </span>
                         </td>
@@ -288,7 +288,7 @@ export default function EspDataPage() {
                               <Cpu className="w-3.5 h-3.5 text-primary" />
                               {devInfo.name}
                             </span>
-                            <span className="text-xs text-base-content/40 font-mono mt-0.5">{evt.uid}</span>
+                            <span className="text-xs text-base-content/70 font-mono mt-0.5">{evt.uid}</span>
                           </div>
                         </td>
 
@@ -358,19 +358,19 @@ export default function EspDataPage() {
                 {/* Meta details */}
                 <div className="grid grid-cols-2 gap-3 text-xs bg-base-300 p-3 rounded-xl border border-base-100/50">
                   <div>
-                    <span className="text-base-content/40 block">Origin MAC:</span>
+                    <span className="text-base-content/70 block">Origin MAC:</span>
                     <span className="font-mono font-bold text-base-content">{selectedJson.uid}</span>
                   </div>
                   <div>
-                    <span className="text-base-content/40 block">Resolved Zone:</span>
+                    <span className="text-base-content/70 block">Resolved Zone:</span>
                     <span className="font-bold text-base-content">{selectedJson.zoneCode}</span>
                   </div>
                   <div>
-                    <span className="text-base-content/40 block">Received At:</span>
+                    <span className="text-base-content/70 block">Received At:</span>
                     <span className="font-mono text-base-content">{selectedJson.time}</span>
                   </div>
                   <div>
-                    <span className="text-base-content/40 block">Event ID:</span>
+                    <span className="text-base-content/70 block">Event ID:</span>
                     <span className="font-mono text-base-content text-3xs truncate block" title={selectedJson._id}>
                       {selectedJson._id}
                     </span>
@@ -383,7 +383,7 @@ export default function EspDataPage() {
                 </pre>
               </div>
             ) : (
-              <p className="text-sm text-base-content/50">No payload selected.</p>
+              <p className="text-sm text-base-content/75">No payload selected.</p>
             )}
 
             <div className="modal-action mt-6">
