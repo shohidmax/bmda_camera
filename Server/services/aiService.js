@@ -64,16 +64,27 @@ const analyzeImages = async (event) => {
       }
       
       const prompt = `
-        You are a security camera AI engine. Analyze these 3 sequential frames taken 1 second apart.
-        Review them for suspicious activities, security breaches, or human activity.
-        Respond with a JSON object containing two fields:
-        - "report": A brief 1-2 sentence description explaining what is happening. Keep it natural and concise.
-        - "score": A threat score between 10 and 100 (where 10 is perfectly safe, 30 is normal human activity, 60 is suspicious activity, and 90+ is a confirmed intruder or active theft).
+        You are an Electric Pole & Substation Security Surveillance AI engine.
+        Analyze these 3 sequential frames taken 1 second apart around an electric pole / transformer station.
+        
+        Tasks:
+        1. Detect if any humans are present around the electric pole or transformer area.
+        2. Describe precisely what the humans are doing.
+        
+        CRITICAL THREAT EVALUATION RULE (Score > 90%):
+        - If 2-3 or more individuals are standing around the base of the electric pole, climbing the pole, handling tools, or attempting/loitering to steal transformer parts or copper cables:
+          You MUST assign a Threat Score GREATER THAN 90 (e.g. 92, 95, 98) and describe the theft/intrusion attempt clearly.
+        - If 1 authorized worker with safety gear is performing routine daytime maintenance during regular hours, score 20-30.
+        - If no humans are present or only animals/shadows/vehicles passing by, score 10-15.
+        
+        Respond with a JSON object containing:
+        - "report": A brief 1-2 sentence description explaining human presence and their exact actions.
+        - "score": A threat score between 10 and 100.
         
         Example JSON output:
         {
-          "report": "A delivery courier is placing a package at the front door.",
-          "score": 25
+          "report": "2 suspicious individuals standing under the electric pole using tools attempting to disconnect transformer cables.",
+          "score": 95
         }
       `;
       
@@ -126,43 +137,36 @@ const analyzeImages = async (event) => {
  * Generates realistic security camera event reports for demo/fallback purposes.
  */
 function generateMockReport(uid) {
-  // Let's create an 20% chance of threat (score 80-95), and 80% chance of standard activities
   const roll = Math.random();
   
-  if (roll < 0.20) {
-    // Threat / Intruder event (Score 80 - 95 as required by server plan)
+  if (roll < 0.45) {
+    // High Threat: 2-3 unauthorized persons under pole / climbing / attempting transformer theft (Score > 90%)
     const threats = [
       {
-        report: 'Suspicious individual wearing a dark hoodie attempting to open the side window window latch.',
-        score: 88
+        report: '3 unauthorized individuals standing under the electric pole using metal cutters attempting to sever transformer grounding wires.',
+        score: 95
       },
       {
-        report: 'An unrecognized person trespassing in the backyard courtyard holding tools near the storage shed.',
-        score: 92
-      },
-      {
-        report: 'Forced entry attempt detected at the front entryway lock by a masked individual.',
+        report: '2 suspicious persons detected climbing the electric pole near the high-voltage transformer after midnight.',
         score: 94
+      },
+      {
+        report: '2 individuals loitering directly below the pole carrying heavy tools and attempting to dismantle transformer brackets.',
+        score: 92
       }
     ];
     return threats[Math.floor(Math.random() * threats.length)];
-  } else if (roll < 0.50) {
-    // Normal activity (low scores)
+  } else if (roll < 0.70) {
+    // Normal / Authorized Maintenance (Score 20 - 30)
     return {
-      report: 'A mail carrier wearing a standard uniform is dropping off a parcel on the porch.',
-      score: 20
-    };
-  } else if (roll < 0.75) {
-    // Wildlife / Pets
-    return {
-      report: 'Neighborhood stray cat walking across the driveway. No human presence detected.',
-      score: 12
+      report: '1 authorized utility technician in high-visibility safety vest carrying out standard daytime maintenance near the pole.',
+      score: 25
     };
   } else {
-    // Wind / Shadows / Empty
+    // No Threat / Empty / Vegetation (Score 10 - 15)
     return {
-      report: 'No movement detected. Brief glare from sunlight reflections or tree shadows moving.',
-      score: 10
+      report: 'No human presence detected near the electric pole. Minor movement from wind-blown tree branches.',
+      score: 12
     };
   }
 }
