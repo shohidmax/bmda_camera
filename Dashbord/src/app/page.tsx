@@ -38,15 +38,23 @@ export default function DashboardHome() {
   const [selectedSimDevice, setSelectedSimDevice] = useState<string>('');
   const [selectedFilterDevice, setSelectedFilterDevice] = useState<string>('all');
   const [showPermissionModal, setShowPermissionModal] = useState<boolean>(false);
+  const [pendingDeviceId, setPendingDeviceId] = useState<string | null>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const granted = localStorage.getItem('cctv_autoplay_granted');
       if (!granted) {
         setShowPermissionModal(true);
+      } else if (devices.length > 0) {
+        // Auto play all devices if permission was already granted
+        const autoPlayState: Record<string, boolean> = {};
+        devices.forEach(d => {
+          autoPlayState[d._id] = true;
+        });
+        setPlayingDevices(autoPlayState);
       }
     }
-  }, []);
+  }, [devices]);
 
   const handleGrantStreamPermission = () => {
     if (typeof window !== 'undefined') {
@@ -54,14 +62,17 @@ export default function DashboardHome() {
     }
     setShowPermissionModal(false);
     
-    // Auto start feed for all devices upon user gesture
-    if (devices.length > 0) {
-      const newPlayState: Record<string, boolean> = {};
+    // Auto start feed for pending device or all devices upon user gesture
+    const newPlayState: Record<string, boolean> = { ...playingDevices };
+    if (pendingDeviceId) {
+      newPlayState[pendingDeviceId] = true;
+    } else if (devices.length > 0) {
       devices.forEach(d => {
         newPlayState[d._id] = true;
       });
-      setPlayingDevices(newPlayState);
     }
+    setPlayingDevices(newPlayState);
+    setPendingDeviceId(null);
   };
 
   const deviceMap = React.useMemo(() => {
@@ -176,6 +187,15 @@ export default function DashboardHome() {
   };
 
   const togglePlay = (deviceId: string) => {
+    if (typeof window !== 'undefined') {
+      const granted = localStorage.getItem('cctv_autoplay_granted');
+      if (!granted) {
+        setPendingDeviceId(deviceId);
+        setShowPermissionModal(true);
+        return;
+      }
+    }
+
     setPlayingDevices((prev) => ({
       ...prev,
       [deviceId]: !prev[deviceId],
@@ -404,10 +424,10 @@ export default function DashboardHome() {
                       {isPlaying ? (
                         <>
                           <iframe 
-                            src={dev.cameraUrl}
+                            src={dev.cameraUrl.includes('?') ? `${dev.cameraUrl}&autoplay=1&media=video` : `${dev.cameraUrl}?autoplay=1&media=video`}
                             title={dev.deviceName}
                             className="w-full h-full border-0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; camera; microphone"
                             allowFullScreen
                           />
                           {typeof window !== 'undefined' && window.location.protocol === 'https:' && dev.cameraUrl.startsWith('http://') && (
