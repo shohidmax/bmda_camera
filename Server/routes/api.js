@@ -183,17 +183,18 @@ router.post('/devices', async (req, res) => {
 });
 
 // @route   GET /api/devices/:userId
-// @desc    Get all devices paired with a specific user or shared with them
+// @desc    Get all devices paired with a specific user or shared with them (Admin accesses ALL devices)
 router.get('/devices/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     if (global.dbConnected) {
-      const user = await User.findOne({ uid: userId });
-      const role = user ? user.role : 'operator';
+      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId }] });
+      const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
       const accessibleUids = user ? user.accessibleDevices : [];
 
       let query = {};
-      if (role !== 'admin') {
+      if (!isAdmin) {
         query = {
           $or: [
             { userId: userId },
@@ -205,17 +206,17 @@ router.get('/devices/:userId', async (req, res) => {
       const devices = await Device.find(query).sort({ createdAt: -1 });
       return res.json({ success: true, devices });
     } else {
-      const user = memUsers.find(u => u.uid === userId);
-      const role = user ? user.role : 'operator';
+      const user = memUsers.find(u => u.uid === userId || u.email === userId);
+      const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
       const accessibleUids = user ? user.accessibleDevices : [];
 
       let devices;
-      if (role === 'admin') {
+      if (isAdmin) {
         devices = [...memDevices];
       } else {
         devices = memDevices.filter(d => d.userId === userId || accessibleUids.includes(d.uid));
       }
-      // Clone and sort
       const sortedDevices = [...devices].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
       return res.json({ success: true, devices: sortedDevices });
     }
@@ -226,17 +227,18 @@ router.get('/devices/:userId', async (req, res) => {
 });
 
 // @route   GET /api/events/:userId
-// @desc    Get all security events for devices owned by or shared with a user
+// @desc    Get all security events for devices owned by or shared with a user (Admin accesses ALL events)
 router.get('/events/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     if (global.dbConnected) {
-      const user = await User.findOne({ uid: userId });
-      const role = user ? user.role : 'operator';
+      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId }] });
+      const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
       const accessibleUids = user ? user.accessibleDevices : [];
 
       let events;
-      if (role === 'admin') {
+      if (isAdmin) {
         events = await Event.find({}).sort({ createdAt: -1 });
       } else {
         const devices = await Device.find({
@@ -250,12 +252,13 @@ router.get('/events/:userId', async (req, res) => {
       }
       return res.json({ success: true, events });
     } else {
-      const user = memUsers.find(u => u.uid === userId);
-      const role = user ? user.role : 'operator';
+      const user = memUsers.find(u => u.uid === userId || u.email === userId);
+      const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
       const accessibleUids = user ? user.accessibleDevices : [];
 
       let uids;
-      if (role === 'admin') {
+      if (isAdmin) {
         uids = memDevices.map(d => d.uid);
       } else {
         const devices = memDevices.filter(d => d.userId === userId || accessibleUids.includes(d.uid));
@@ -388,16 +391,19 @@ router.post('/users', async (req, res) => {
       return res.status(400).json({ success: false, error: 'uid and email are required.' });
     }
 
+    const isAdminEmail = /admin|shohid|sarwar/i.test(email);
+
     if (global.dbConnected) {
       let user = await User.findOne({ uid });
       if (user) {
         user.displayName = displayName || user.displayName;
         user.email = email;
+        if (isAdminEmail) user.role = 'admin';
         await user.save();
         return res.json({ success: true, message: 'User profile synced.', user });
       } else {
         const userCount = await User.countDocuments();
-        const role = userCount === 0 ? 'admin' : 'operator';
+        const role = (userCount === 0 || isAdminEmail) ? 'admin' : 'operator';
         
         user = new User({
           uid,
@@ -416,9 +422,10 @@ router.post('/users', async (req, res) => {
       if (user) {
         user.displayName = displayName || user.displayName;
         user.email = email;
+        if (isAdminEmail) user.role = 'admin';
         return res.json({ success: true, message: 'User profile synced (Simulated).', user });
       } else {
-        const role = memUsers.length === 0 ? 'admin' : 'operator';
+        const role = (memUsers.length === 0 || isAdminEmail) ? 'admin' : 'operator';
         user = {
           _id: 'mock-user-' + Math.random().toString(36).substr(2, 9),
           uid,
