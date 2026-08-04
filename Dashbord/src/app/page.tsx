@@ -14,7 +14,8 @@ import {
   Play,
   ArrowRight,
   Video,
-  Camera
+  Camera,
+  ExternalLink
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -36,6 +37,32 @@ export default function DashboardHome() {
   const [playingDevices, setPlayingDevices] = useState<Record<string, boolean>>({});
   const [selectedSimDevice, setSelectedSimDevice] = useState<string>('');
   const [selectedFilterDevice, setSelectedFilterDevice] = useState<string>('all');
+  const [showPermissionModal, setShowPermissionModal] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const granted = localStorage.getItem('cctv_autoplay_granted');
+      if (!granted) {
+        setShowPermissionModal(true);
+      }
+    }
+  }, []);
+
+  const handleGrantStreamPermission = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cctv_autoplay_granted', 'true');
+    }
+    setShowPermissionModal(false);
+    
+    // Auto start feed for all devices upon user gesture
+    if (devices.length > 0) {
+      const newPlayState: Record<string, boolean> = {};
+      devices.forEach(d => {
+        newPlayState[d._id] = true;
+      });
+      setPlayingDevices(newPlayState);
+    }
+  };
 
   const deviceMap = React.useMemo(() => {
     const map: Record<string, string> = {};
@@ -375,13 +402,30 @@ export default function DashboardHome() {
                       className="relative aspect-video bg-black flex items-center justify-center cursor-pointer group"
                     >
                       {isPlaying ? (
-                        <iframe 
-                          src={dev.cameraUrl}
-                          title={dev.deviceName}
-                          className="w-full h-full border-0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                          allowFullScreen
-                        />
+                        <>
+                          <iframe 
+                            src={dev.cameraUrl}
+                            title={dev.deviceName}
+                            className="w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                          />
+                          {typeof window !== 'undefined' && window.location.protocol === 'https:' && dev.cameraUrl.startsWith('http://') && (
+                            <div className="absolute top-4 right-4 z-20">
+                              <a
+                                href={dev.cameraUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                onClick={(e) => e.stopPropagation()}
+                                className="btn btn-xs btn-warning rounded-lg gap-1 font-bold shadow-lg"
+                                title="Click to open stream in a new tab if browser blocks HTTP iframe on HTTPS"
+                              >
+                                <ExternalLink className="w-3.5 h-3.5" />
+                                Open Stream ↗
+                              </a>
+                            </div>
+                          )}
+                        </>
                       ) : (
                         <>
                           {!isHtmlStream ? (
@@ -627,6 +671,48 @@ export default function DashboardHome() {
             </div>
           </div>
         </div>
+
+        {/* BROWSER STREAM AUTOPLAY PERMISSION MODAL POPUP */}
+        {showPermissionModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+            <div className="card w-full max-w-md bg-base-200 border border-primary/40 shadow-2xl shadow-primary/20 overflow-hidden">
+              <div className="card-body p-6 text-center items-center">
+                <div className="w-16 h-16 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center mb-2 animate-pulse">
+                  <Video className="w-8 h-8 text-primary" />
+                </div>
+                
+                <h3 className="card-title text-2xl font-extrabold text-base-content">
+                  Enable Live Stream Autoplay
+                </h3>
+                
+                <p className="text-sm text-base-content/80 mt-2 leading-relaxed">
+                  Web browser security policy requires user permission to automatically play live CCTV video feeds on <span className="font-mono text-primary font-bold">transformerguard.m4xit.com</span>.
+                </p>
+
+                <div className="alert alert-info bg-primary/10 border-primary/20 text-xs text-left mt-3 p-3 rounded-xl">
+                  <span>💡 Granting permission enables zero-delay live CCTV camera monitoring upon opening the dashboard.</span>
+                </div>
+
+                <div className="card-actions w-full flex-col gap-2 mt-6">
+                  <button 
+                    onClick={handleGrantStreamPermission}
+                    className="btn btn-primary w-full gap-2 rounded-xl text-base font-bold shadow-lg shadow-primary/30 py-3 h-auto"
+                  >
+                    <Play className="w-5 h-5 fill-current" />
+                    Allow & Play Live Stream
+                  </button>
+
+                  <button 
+                    onClick={() => setShowPermissionModal(false)}
+                    className="btn btn-ghost btn-sm text-base-content/60 hover:text-base-content"
+                  >
+                    Ask Me Later
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
