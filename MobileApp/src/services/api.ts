@@ -78,3 +78,15 @@ export async function syncUserProfile(uid: string, email: string, displayName?: 
     return { success: false };
   }
 }
+
+export async function deleteThreatEvent(eventId: string, userId: string) {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/events/${eventId}?userId=${userId}`, {
+      method: 'DELETE'
+    });
+    return await res.json();
+  } catch (err) {
+    console.error('API Error deleteThreatEvent:', err);
+    return { success: false, error: 'Network error deleting event' };
+  }
+}

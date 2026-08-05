@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Sidebar from '../../components/Sidebar';
 import { useAuth } from '../../context/AuthContext';
-import { History, Activity, AlertTriangle, ShieldCheck, HelpCircle } from 'lucide-react';
+import { History, Activity, AlertTriangle, ShieldCheck, HelpCircle, Trash2 } from 'lucide-react';
 
 const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
 
@@ -14,6 +14,23 @@ export default function HistoryPage() {
   const [selectedFilterDevice, setSelectedFilterDevice] = useState<string>('all');
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState('all');
+
+  const handleDeleteEvent = async (eventId: string) => {
+    if (!confirm('Are you sure you want to delete this threat incident log?')) return;
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/events/${eventId}?userId=${user?.uid}`, {
+        method: 'DELETE'
+      });
+      const data = await res.json();
+      if (data.success) {
+        setEvents(prev => prev.filter(e => e._id !== eventId));
+      } else {
+        alert(data.error || 'Failed to delete event log.');
+      }
+    } catch (err: any) {
+      console.error('Error deleting event log:', err);
+    }
+  };
 
   const deviceMap = React.useMemo(() => {
     const map: Record<string, string> = {};
@@ -168,9 +185,20 @@ export default function HistoryPage() {
                         </div>
                       </div>
                       <div className="flex flex-col items-end gap-1.5">
-                        <span className={`badge ${badgeColor} font-bold text-xs py-2 px-3`}>
-                          Score: {evt.threatScore}%
-                        </span>
+                        <div className="flex items-center gap-2">
+                          <span className={`badge ${badgeColor} font-bold text-xs py-2 px-3`}>
+                            Score: {evt.threatScore}%
+                          </span>
+                          {user?.role === 'admin' && (
+                            <button
+                              onClick={() => handleDeleteEvent(evt._id)}
+                              className="btn btn-xs btn-circle btn-ghost text-error hover:bg-error/20"
+                              title="Delete this incident log (Admin only)"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          )}
+                        </div>
                         <span className="text-xs text-base-content/70 font-semibold uppercase">Zone: {evt.zoneCode}</span>
                       </div>
                     </div>

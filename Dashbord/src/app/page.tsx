@@ -15,7 +15,8 @@ import {
   ArrowRight,
   Video,
   Camera,
-  ExternalLink
+  ExternalLink,
+  Trash2
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -40,21 +41,21 @@ export default function DashboardHome() {
   const [showPermissionModal, setShowPermissionModal] = useState<boolean>(false);
   const [pendingDeviceId, setPendingDeviceId] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const granted = localStorage.getItem('cctv_autoplay_granted');
-      if (!granted) {
-        setShowPermissionModal(true);
-      } else if (devices.length > 0) {
-        // Auto play all devices if permission was already granted
-        const autoPlayState: Record<string, boolean> = {};
-        devices.forEach(d => {
-          autoPlayState[d._id] = true;
-        });
-        setPlayingDevices(autoPlayState);
-      }
-    }
-  }, [devices]);
+  // Confirmation & Loading Modal state
+  const [confirmModal, setConfirmModal] = useState<{
+    open: boolean;
+    title: string;
+    description: string;
+    btnText?: string;
+    onConfirm: () => Promise<void>;
+  }>({
+    open: false,
+    title: '',
+    description: '',
+    onConfirm: async () => {}
+  });
+
+  const [actionProcessingText, setActionProcessingText] = useState<string | null>(null);
 
   const handleGrantStreamPermission = () => {
     if (typeof window !== 'undefined') {
@@ -62,17 +63,14 @@ export default function DashboardHome() {
     }
     setShowPermissionModal(false);
     
-    // Auto start feed for pending device or all devices upon user gesture
-    const newPlayState: Record<string, boolean> = { ...playingDevices };
+    // Play ONLY the target device that the user clicked
     if (pendingDeviceId) {
-      newPlayState[pendingDeviceId] = true;
-    } else if (devices.length > 0) {
-      devices.forEach(d => {
-        newPlayState[d._id] = true;
-      });
+      setPlayingDevices((prev) => ({
+        ...prev,
+        [pendingDeviceId]: true
+      }));
+      setPendingDeviceId(null);
     }
-    setPlayingDevices(newPlayState);
-    setPendingDeviceId(null);
   };
 
   const deviceMap = React.useMemo(() => {
@@ -164,7 +162,6 @@ export default function DashboardHome() {
   const handleRecordStream = async (device: any) => {
     try {
       const cameraUrl = device.cameraUrl;
-      // Match go2rtc stream player url e.g. http://host:port/webrtc.html?src=manda
       const match = cameraUrl.match(/^(https?:\/\/[^\/]+)\/(stream|webrtc|mse)\.html\?src=([^&]+)/);
       
       let recordUrl = '';
@@ -173,17 +170,43 @@ export default function DashboardHome() {
         const src = match[3];
         recordUrl = `${base}/api/stream.mp4?src=${src}&duration=10`;
       } else {
-        // Fallback or generic MP4 recorder
         recordUrl = `${BACKEND_URL}/api/record-fallback?uid=${device.uid}&duration=10`;
       }
 
       console.log(`Downloading stream recording from: ${recordUrl}`);
-      // Open in a new tab to trigger direct download
       window.open(recordUrl, '_blank');
     } catch (err: any) {
       console.error('Failed to trigger stream recording:', err);
       alert('Failed to trigger stream recording.');
     }
+  };
+
+  const handleDeleteEvent = (eventId: string) => {
+    setConfirmModal({
+      open: true,
+      title: 'Delete Threat Incident Log',
+      description: 'Are you sure you want to permanently delete this AI threat incident log entry from the system?',
+      btnText: 'Yes, Delete Incident',
+      onConfirm: async () => {
+        setActionProcessingText('Deleting threat incident log from database...');
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/events/${eventId}?userId=${user?.uid}`, {
+            method: 'DELETE'
+          });
+          const data = await res.json();
+          if (data.success) {
+            setEvents(prev => prev.filter(e => e._id !== eventId));
+          } else {
+            alert(data.error || 'Failed to delete event log.');
+          }
+        } catch (err: any) {
+          console.error('Error deleting event log:', err);
+        } finally {
+          setActionProcessingText(null);
+          setConfirmModal(prev => ({ ...prev, open: false }));
+        }
+      }
+    });
   };
 
   const togglePlay = (deviceId: string) => {
@@ -522,7 +545,7 @@ export default function DashboardHome() {
                     <div className="card-body p-4 flex-row justify-between items-center bg-base-200/50">
                       <div>
                         <h4 className="font-bold text-base-content">{dev.deviceName}</h4>
-                        <p className="text-xs text-base-content/75">Zone: {dev.zoneCode} | {dev.cameraUrl}</p>
+                        <p className="text-xs text-base-content/75">Zone: {dev.zoneCode} | Live CCTV Feed Node</p>
                       </div>
                       <button 
                         onClick={(e) => {
@@ -627,6 +650,18 @@ export default function DashboardHome() {
                             Score: {evt.threatScore}%
                           </div>
                           <span className="badge badge-outline text-xs capitalize">{evt.status}</span>
+                          {user?.role === 'admin' && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeleteEvent(evt._id);
+                              }}
+                              className="btn btn-xs btn-circle btn-ghost text-error hover:bg-error/20 z-10"
+                              title="Delete this incident log (Admin only)"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          )}
                         </div>
                       </div>
                       
@@ -729,6 +764,65 @@ export default function DashboardHome() {
                     Ask Me Later
                   </button>
                 </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* REUSABLE ACTION CONFIRMATION MODAL POPUP */}
+        {confirmModal.open && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
+            <div className="card w-full max-w-md bg-base-200 border border-warning/40 shadow-2xl shadow-warning/10 overflow-hidden">
+              <div className="card-body p-6 text-center items-center">
+                <div className="w-14 h-14 rounded-full bg-warning/20 border border-warning/40 flex items-center justify-center mb-2 animate-bounce">
+                  <ShieldAlert className="w-7 h-7 text-warning" />
+                </div>
+
+                <h3 className="card-title text-2xl font-extrabold text-base-content">
+                  {confirmModal.title}
+                </h3>
+
+                <p className="text-sm text-base-content/80 mt-2 leading-relaxed">
+                  {confirmModal.description}
+                </p>
+
+                <div className="card-actions w-full flex gap-3 mt-6">
+                  <button 
+                    onClick={() => setConfirmModal(prev => ({ ...prev, open: false }))}
+                    className="btn btn-neutral flex-1 rounded-xl font-bold"
+                  >
+                    Cancel
+                  </button>
+
+                  <button 
+                    onClick={() => confirmModal.onConfirm()}
+                    className="btn btn-error flex-1 rounded-xl font-bold shadow-lg shadow-error/20"
+                  >
+                    {confirmModal.btnText || 'Confirm'}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* GLOBAL ACTION LOADING ANIMATION OVERLAY */}
+        {actionProcessingText && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
+            <div className="card w-full max-w-sm bg-base-200 border border-primary/40 shadow-2xl shadow-primary/30 overflow-hidden">
+              <div className="card-body p-8 text-center items-center">
+                <div className="relative w-20 h-20 flex items-center justify-center mb-4">
+                  <span className="loading loading-spinner loading-lg text-primary scale-150 absolute"></span>
+                  <Activity className="w-8 h-8 text-primary animate-pulse relative z-10" />
+                </div>
+
+                <h4 className="text-lg font-bold text-base-content animate-pulse">
+                  {actionProcessingText}
+                </h4>
+                
+                <p className="text-xs text-base-content/70 mt-1 font-mono">
+                  Communicating with Central Commander Engine...
+                </p>
               </div>
             </div>
           </div>

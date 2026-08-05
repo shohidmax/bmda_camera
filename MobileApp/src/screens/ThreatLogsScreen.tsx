@@ -9,9 +9,10 @@ import {
   Modal, 
   ActivityIndicator 
 } from 'react-native';
-import { ShieldAlert, Image as ImageIcon, X, AlertTriangle, Calendar, Clock, MapPin } from 'lucide-react-native';
+import { ShieldAlert, Image as ImageIcon, X, AlertTriangle, Calendar, Clock, MapPin, Trash2 } from 'lucide-react-native';
 import { useAuth } from '../context/AuthContext';
-import { fetchThreatEvents } from '../services/api';
+import { fetchThreatEvents, deleteThreatEvent } from '../services/api';
+import { Alert } from 'react-native';
 
 export default function ThreatLogsScreen() {
   const { user } = useAuth();
@@ -29,6 +30,29 @@ export default function ThreatLogsScreen() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDeleteLog = (eventId: string) => {
+    Alert.alert(
+      'Delete Incident Log',
+      'Are you sure you want to permanently delete this threat incident log?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: async () => {
+            if (!user) return;
+            const res = await deleteThreatEvent(eventId, user.uid);
+            if (res.success) {
+              setEvents(prev => prev.filter(e => e._id !== eventId));
+            } else {
+              Alert.alert('Error', res.error || 'Failed to delete incident log.');
+            }
+          }
+        }
+      ]
+    );
   };
 
   useEffect(() => {
@@ -72,6 +96,11 @@ export default function ThreatLogsScreen() {
                   <Text style={styles.timeText}>
                     {new Date(evt.createdAt || evt.time).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}
                   </Text>
+                  {user?.role === 'admin' ? (
+                    <TouchableOpacity onPress={() => handleDeleteLog(evt._id)} style={{ marginLeft: 8, padding: 4 }}>
+                      <Trash2 size={15} color="#f87171" />
+                    </TouchableOpacity>
+                  ) : null}
                 </View>
               </View>
 

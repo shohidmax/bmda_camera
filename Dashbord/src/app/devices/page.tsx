@@ -268,6 +268,8 @@ export default function DevicesPage() {
     }
   };
 
+  const isAdmin = user?.role === 'admin';
+
   return (
     <div className="flex flex-col lg:flex-row min-h-screen bg-base-300">
       <Sidebar />
@@ -276,28 +278,37 @@ export default function DevicesPage() {
         <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight text-base-content">Devices &amp; Hardware</h2>
-            <p className="text-sm text-base-content/80">Register, manage and configure your physical ESP32 security nodes.</p>
+            <p className="text-sm text-base-content/80">
+              {isAdmin ? 'Register, manage and configure physical ESP32 security nodes.' : 'View active hardware nodes and stream status (Read-Only Mode).'}
+            </p>
           </div>
 
-          <button 
-            onClick={() => {
-              setEditingDeviceId(null);
-              setUid('');
-              setDeviceName('');
-              setCameraUrl('https://picsum.photos/800/600');
-              setZoneCode('ZONE_01');
-              setPhoneNumbers('');
-              setInstitution('');
-              setLocation('');
-              setLatitude('');
-              setLongitude('');
-              (document.getElementById('add_device_modal') as any)?.showModal();
-            }}
-            className="btn btn-primary gap-2 shadow-lg shadow-primary/20"
-          >
-            <Plus className="w-5 h-5" />
-            Pair Device Node
-          </button>
+          {isAdmin ? (
+            <button 
+              onClick={() => {
+                setEditingDeviceId(null);
+                setUid('');
+                setDeviceName('');
+                setCameraUrl('https://picsum.photos/800/600');
+                setZoneCode('ZONE_01');
+                setPhoneNumbers('');
+                setInstitution('');
+                setLocation('');
+                setLatitude('');
+                setLongitude('');
+                (document.getElementById('add_device_modal') as any)?.showModal();
+              }}
+              className="btn btn-primary gap-2 shadow-lg shadow-primary/20"
+            >
+              <Plus className="w-5 h-5" />
+              Pair Device Node
+            </button>
+          ) : (
+            <div className="badge badge-neutral py-3 px-4 font-bold text-xs gap-2 border border-base-100/60">
+              <span className="w-2 h-2 rounded-full bg-info"></span>
+              Read-Only Operator Mode
+            </div>
+          )}
         </div>
 
         {error && (
@@ -359,13 +370,15 @@ export default function DevicesPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${device.callAlertsEnabled !== false ? 'bg-base-100 animate-ping' : 'bg-base-content/40'}`}></span>
                         {device.callAlertsEnabled !== false ? 'Active' : 'Muted'}
                       </span>
-                      <button 
-                        onClick={() => handleEditClick(device)}
-                        className="btn btn-ghost btn-circle btn-sm text-base-content/80 hover:bg-base-300 hover:text-base-content"
-                        title="Configure Settings & Sharing"
-                      >
-                        <Settings className="w-4.5 h-4.5" />
-                      </button>
+                      {isAdmin && (
+                        <button 
+                          onClick={() => handleEditClick(device)}
+                          className="btn btn-ghost btn-circle btn-sm text-base-content/80 hover:bg-base-300 hover:text-base-content"
+                          title="Configure Settings & Sharing"
+                        >
+                          <Settings className="w-4.5 h-4.5" />
+                        </button>
+                      )}
                     </div>
                   </div>
 
@@ -393,34 +406,36 @@ export default function DevicesPage() {
                       </div>
                     )}
                     <div className="flex justify-between items-center">
-                      <span className="text-base-content/70 shrink-0">Live Stream URL:</span>
-                      <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70" title={device.cameraUrl}>
-                        {device.cameraUrl}
+                      <span className="text-base-content/70 shrink-0">Live Stream Feed:</span>
+                      <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70">
+                        {isAdmin ? device.cameraUrl : '•••••••• (Protected Endpoint)'}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-base-content/70 shrink-0">JPG Snapshot URL:</span>
-                      <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70" title={device.snapshotUrl || device.cameraUrl}>
-                        {device.snapshotUrl || device.cameraUrl}
+                      <span className="text-base-content/70 shrink-0">JPG Snapshot Feed:</span>
+                      <span className="font-mono text-xs truncate max-w-[200px] text-base-content/70">
+                        {isAdmin ? (device.snapshotUrl || device.cameraUrl) : '•••••••• (Protected Endpoint)'}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-base-content/70 shrink-0">Voice Call Alerts:</span>
                       <span className="font-semibold text-xs truncate max-w-[200px] text-base-content/70" title={device.phoneNumbers ? device.phoneNumbers.join(', ') : 'None'}>
-                        {device.phoneNumbers && device.phoneNumbers.length > 0 ? device.phoneNumbers.join(', ') : 'None'}
+                        {device.phoneNumbers && device.phoneNumbers.length > 0 ? (isAdmin ? device.phoneNumbers.join(', ') : 'Registered') : 'None'}
                       </span>
                     </div>
                   </div>
 
-                  <div className="card-actions justify-end mt-4">
-                    <button 
-                      onClick={() => handleDeleteClick(device._id)}
-                      className="btn btn-ghost btn-xs text-error hover:bg-error/15 font-bold"
-                    >
-                      <Trash2 className="w-3.5 h-3.5 mr-1" />
-                      Remove Device
-                    </button>
-                  </div>
+                  {isAdmin && (
+                    <div className="card-actions justify-end mt-4">
+                      <button 
+                        onClick={() => handleDeleteClick(device._id)}
+                        className="btn btn-ghost btn-xs text-error hover:bg-error/15 font-bold"
+                      >
+                        <Trash2 className="w-3.5 h-3.5 mr-1" />
+                        Remove Device
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

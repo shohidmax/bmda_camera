@@ -197,7 +197,17 @@ export default function AccessControlPage() {
       const userRes = await fetch(`${BACKEND_URL}/api/users?userId=${user.uid}`);
       const userData = await userRes.json();
       if (!userData.success) throw new Error(userData.error || 'Failed to load users.');
-      setUsers(userData.users || []);
+      
+      // Deduplicate users array by email
+      const rawUsers = userData.users || [];
+      const userMap = new Map();
+      rawUsers.forEach((u: any) => {
+        const key = (u.email || '').toLowerCase().trim();
+        if (key && !userMap.has(key)) {
+          userMap.set(key, u);
+        }
+      });
+      setUsers(Array.from(userMap.values()));
 
       // Fetch all devices (as admin, this will return all devices)
       const devRes = await fetch(`${BACKEND_URL}/api/devices/${user.uid}`);

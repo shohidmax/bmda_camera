@@ -296,6 +296,41 @@ router.get('/events/device/:uid', async (req, res) => {
   }
 });
 
+// @route   DELETE /api/events/:id
+// @desc    Delete a single threat log incident by ID (Admin only)
+router.delete('/events/:id', async (req, res) => {
+  try {
+    const eventId = req.params.id;
+    const { userId } = req.query;
+
+    if (userId && global.dbConnected) {
+      const requester = await User.findOne({ uid: userId });
+      if (requester && requester.role !== 'admin') {
+        return res.status(403).json({ success: false, error: 'Forbidden. Admin authorization required.' });
+      }
+    }
+
+    if (global.dbConnected) {
+      const deletedEvent = await Event.findByIdAndDelete(eventId);
+      if (!deletedEvent) {
+        return res.status(404).json({ success: false, error: 'Event log incident not found.' });
+      }
+      console.log(`[API] Deleted threat log event ${eventId}`);
+      return res.json({ success: true, message: 'Event log incident deleted successfully.' });
+    } else {
+      const index = memEvents.findIndex(e => e._id === eventId || e._id.toString() === eventId);
+      if (index !== -1) {
+        memEvents.splice(index, 1);
+        return res.json({ success: true, message: 'Event log incident deleted successfully (Simulated).' });
+      }
+      return res.status(404).json({ success: false, error: 'Event log incident not found.' });
+    }
+  } catch (error) {
+    console.error('[API] Error deleting event log:', error);
+    return res.status(500).json({ success: false, error: 'Server error deleting threat log event.' });
+  }
+});
+
 // @route   PUT /api/devices/:id
 // @desc    Update a device by ID
 router.put('/devices/:id', async (req, res) => {
@@ -391,13 +426,18 @@ router.post('/users', async (req, res) => {
       return res.status(400).json({ success: false, error: 'uid and email are required.' });
     }
 
-    const isAdminEmail = /admin|shohid|sarwar/i.test(email);
+    const normalizedEmail = email.toLowerCase().trim();
+    const isAdminEmail = /admin|shohid|sarwar/i.test(normalizedEmail);
 
     if (global.dbConnected) {
-      let user = await User.findOne({ uid });
+      let user = await User.findOne({ 
+        $or: [{ uid }, { email: normalizedEmail }] 
+      });
+
       if (user) {
+        user.uid = uid;
         user.displayName = displayName || user.displayName;
-        user.email = email;
+        user.email = normalizedEmail;
         if (isAdminEmail) user.role = 'admin';
         await user.save();
         return res.json({ success: true, message: 'User profile synced.', user });
@@ -407,21 +447,22 @@ router.post('/users', async (req, res) => {
         
         user = new User({
           uid,
-          email,
-          displayName: displayName || email.split('@')[0],
+          email: normalizedEmail,
+          displayName: displayName || normalizedEmail.split('@')[0],
           role,
           accessibleDevices: []
         });
         await user.save();
-        console.log(`[API] Registered new user: ${email} with role: ${role}`);
+        console.log(`[API] Registered new user: ${normalizedEmail} with role: ${role}`);
         return res.status(201).json({ success: true, message: 'User profile registered.', user });
       }
     } else {
       // In-Memory Mode
-      let user = memUsers.find(u => u.uid === uid);
+      let user = memUsers.find(u => u.uid === uid || u.email.toLowerCase().trim() === normalizedEmail);
       if (user) {
+        user.uid = uid;
         user.displayName = displayName || user.displayName;
-        user.email = email;
+        user.email = normalizedEmail;
         if (isAdminEmail) user.role = 'admin';
         return res.json({ success: true, message: 'User profile synced (Simulated).', user });
       } else {
@@ -429,13 +470,13 @@ router.post('/users', async (req, res) => {
         user = {
           _id: 'mock-user-' + Math.random().toString(36).substr(2, 9),
           uid,
-          email,
-          displayName: displayName || email.split('@')[0],
+          email: normalizedEmail,
+          displayName: displayName || normalizedEmail.split('@')[0],
           role,
           accessibleDevices: []
         };
         memUsers.push(user);
-        console.log(`[API] Registered simulated user: ${email} with role: ${role}`);
+        console.log(`[API] Registered simulated user: ${normalizedEmail} with role: ${role}`);
         return res.status(201).json({ success: true, message: 'User profile registered (Simulated).', user });
       }
     }
@@ -446,7 +487,7 @@ router.post('/users', async (req, res) => {
 });
 
 // @route   GET /api/users
-// @desc    List all users (Admin only)
+// @desc    List all users (Admin only) - Deduplicated by email
 router.get('/users', async (req, res) => {
   try {
     const { userId } = req.query;
@@ -468,14 +509,41 @@ router.get('/users', async (req, res) => {
     }
 
     if (global.dbConnected) {
-      const users = await User.find({}).sort({ createdAt: -1 });
-      return res.json({ success: true, users });
+      const allUsers = await User.find({}).sort({ createdAt: -1 });
+      const uniqueMap = new Map();
+      const duplicateIdsToDelete = [];
+
+      for (const u of allUsers) {
+        const lowerEmail = u.email.toLowerCase().trim();
+        if (!uniqueMap.has(lowerEmail)) {
+          uniqueMap.set(lowerEmail, u);
+        } else {
+          duplicateIdsToDelete.push(u._id);
+        }
+      }
+
+      // Auto purge duplicates from MongoDB in background
+      if (duplicateIdsToDelete.length > 0) {
+        User.deleteMany({ _id: { $in: duplicateIdsToDelete } })
+          .then(res => console.log(`[API] Auto-cleaned ${duplicateIdsToDelete.length} duplicate user records.`))
+          .catch(err => console.error('[API] Error purging duplicate users:', err));
+      }
+
+      const deduplicated = Array.from(uniqueMap.values());
+      return res.json({ success: true, users: deduplicated });
     } else {
-      return res.json({ success: true, users: memUsers });
+      const uniqueMap = new Map();
+      for (const u of memUsers) {
+        const lowerEmail = u.email.toLowerCase().trim();
+        if (!uniqueMap.has(lowerEmail)) {
+          uniqueMap.set(lowerEmail, u);
+        }
+      }
+      return res.json({ success: true, users: Array.from(uniqueMap.values()) });
     }
   } catch (error) {
-    console.error('[API] Error listing users:', error);
-    return res.status(500).json({ success: false, error: 'Server error listing users.' });
+    console.error('[API] Error fetching users:', error);
+    return res.status(500).json({ success: false, error: 'Server error fetching users.' });
   }
 });
 
