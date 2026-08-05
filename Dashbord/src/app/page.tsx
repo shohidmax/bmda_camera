@@ -20,7 +20,7 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 
 export default function DashboardHome() {
   const { user, loading: authLoading } = useAuth();

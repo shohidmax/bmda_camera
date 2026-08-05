@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import { useAuth } from '../../context/AuthContext';
 import { History, Activity, AlertTriangle, ShieldCheck, HelpCircle, Trash2 } from 'lucide-react';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 
 export default function HistoryPage() {
   const { user } = useAuth();

@@ -17,7 +17,7 @@ import {
   ClipboardCheck
 } from 'lucide-react';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 
 export default function EspDataPage() {
   const { user } = useAuth();

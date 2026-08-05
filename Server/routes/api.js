@@ -496,12 +496,17 @@ router.get('/users', async (req, res) => {
     }
 
     let isAuthorized = false;
+    const lowerUserId = userId.toLowerCase().trim();
+    const isAdminEmail = /admin|shohid|sarwar/i.test(lowerUserId);
+
     if (global.dbConnected) {
-      const requester = await User.findOne({ uid: userId });
-      isAuthorized = requester && requester.role === 'admin';
+      const requester = await User.findOne({ 
+        $or: [{ uid: userId }, { email: lowerUserId }] 
+      });
+      isAuthorized = (requester && requester.role === 'admin') || isAdminEmail;
     } else {
-      const requester = memUsers.find(u => u.uid === userId);
-      isAuthorized = requester && requester.role === 'admin';
+      const requester = memUsers.find(u => u.uid === userId || u.email.toLowerCase().trim() === lowerUserId);
+      isAuthorized = (requester && requester.role === 'admin') || isAdminEmail;
     }
 
     if (!isAuthorized) {

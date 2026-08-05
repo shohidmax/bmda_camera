@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import { useAuth } from '../../context/AuthContext';
 import { Cpu, Plus, Video, Trash2, Edit2, AlertCircle, Settings } from 'lucide-react';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 
 export default function DevicesPage() {
   const { user } = useAuth();

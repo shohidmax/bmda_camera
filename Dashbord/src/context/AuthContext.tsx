@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType>({
   logout: async () => {},
 });
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 const PUBLIC_ROUTES = ['/login', '/register', '/reset-password', '/contact', '/support', '/complain'];
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {

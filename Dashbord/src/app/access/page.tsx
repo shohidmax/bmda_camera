@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import { useAuth } from '../../context/AuthContext';
 import { Users, Shield, ShieldCheck, Key, CheckSquare, Square, RefreshCw, AlertCircle, PhoneCall } from 'lucide-react';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5050';
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://transformer-camera-api.maxapi.esp32.site';
 
 export default function AccessControlPage() {
   const { user } = useAuth();
@@ -194,7 +194,8 @@ export default function AccessControlPage() {
       setError('');
       
       // Fetch all users (requires requester userId query param for authorization)
-      const userRes = await fetch(`${BACKEND_URL}/api/users?userId=${user.uid}`);
+      const reqId = user.uid || user.email || '';
+      const userRes = await fetch(`${BACKEND_URL}/api/users?userId=${encodeURIComponent(reqId)}`);
       const userData = await userRes.json();
       if (!userData.success) throw new Error(userData.error || 'Failed to load users.');
       

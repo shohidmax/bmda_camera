@@ -1,7 +1,7 @@
 // API Service connecting to Express Backend
 
-export const BACKEND_URL = 'http://192.168.0.220:5050'; 
-export const FALLBACK_BACKEND_URL = 'https://tcam.maxapi.esp32.site';
+export const BACKEND_URL = 'https://transformer-camera-api.maxapi.esp32.site'; 
+export const FALLBACK_BACKEND_URL = 'http://192.168.0.220:5050';
 
 export async function fetchDevices(userId: string) {
   try {
@@ -72,11 +72,22 @@ export async function syncUserProfile(uid: string, email: string, displayName?: 
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ uid, email, displayName })
     });
-    return await res.json();
+    const data = await res.json();
+    if (data.success) return data;
   } catch (err) {
-    console.error('API Error syncUserProfile:', err);
-    return { success: false };
+    try {
+      const res = await fetch(`${FALLBACK_BACKEND_URL}/api/users`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uid, email, displayName })
+      });
+      const data = await res.json();
+      if (data.success) return data;
+    } catch (e) {
+      console.error('API Error syncUserProfile fallback:', e);
+    }
   }
+  return { success: false };
 }
 
 export async function deleteThreatEvent(eventId: string, userId: string) {
