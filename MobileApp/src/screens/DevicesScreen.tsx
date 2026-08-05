@@ -165,6 +165,9 @@ export default function DevicesScreen() {
                 mediaPlaybackRequiresUserAction={false}
                 javaScriptEnabled={true}
                 domStorageEnabled={true}
+                mixedContentMode="always"
+                originWhitelist={['*']}
+                scalesPageToFit={true}
                 startInLoadingState={true}
                 renderLoading={() => (
                   <View style={styles.loadingOverlay}>

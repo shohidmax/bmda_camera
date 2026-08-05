@@ -278,6 +278,9 @@ export default function HomeScreen({ onNavigateTab }: { onNavigateTab: (tab: str
                   mediaPlaybackRequiresUserAction={false}
                   javaScriptEnabled={true}
                   domStorageEnabled={true}
+                  mixedContentMode="always"
+                  originWhitelist={['*']}
+                  scalesPageToFit={true}
                   startInLoadingState={true}
                   renderLoading={() => (
                     <View style={styles.loadingOverlay}>
