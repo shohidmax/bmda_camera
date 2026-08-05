@@ -188,16 +188,21 @@ router.get('/devices/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     if (global.dbConnected) {
-      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId }] });
+      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId.toLowerCase().trim() }] });
       const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
-      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
-      const accessibleUids = user ? user.accessibleDevices : [];
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email)) || /admin|shohid|sarwar/i.test(userId);
+      const accessibleUids = user && Array.isArray(user.accessibleDevices) ? user.accessibleDevices : [];
 
       let query = {};
       if (!isAdmin) {
+        const userIdentifiers = [userId];
+        if (user) {
+          if (user.uid && !userIdentifiers.includes(user.uid)) userIdentifiers.push(user.uid);
+          if (user.email && !userIdentifiers.includes(user.email)) userIdentifiers.push(user.email);
+        }
         query = {
           $or: [
-            { userId: userId },
+            { userId: { $in: userIdentifiers } },
             { uid: { $in: accessibleUids } }
           ]
         };
@@ -206,16 +211,21 @@ router.get('/devices/:userId', async (req, res) => {
       const devices = await Device.find(query).sort({ createdAt: -1 });
       return res.json({ success: true, devices });
     } else {
-      const user = memUsers.find(u => u.uid === userId || u.email === userId);
+      const user = memUsers.find(u => u.uid === userId || u.email.toLowerCase().trim() === userId.toLowerCase().trim());
       const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
-      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
-      const accessibleUids = user ? user.accessibleDevices : [];
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email)) || /admin|shohid|sarwar/i.test(userId);
+      const accessibleUids = user && Array.isArray(user.accessibleDevices) ? user.accessibleDevices : [];
 
       let devices;
       if (isAdmin) {
         devices = [...memDevices];
       } else {
-        devices = memDevices.filter(d => d.userId === userId || accessibleUids.includes(d.uid));
+        const userIdentifiers = [userId];
+        if (user) {
+          if (user.uid && !userIdentifiers.includes(user.uid)) userIdentifiers.push(user.uid);
+          if (user.email && !userIdentifiers.includes(user.email)) userIdentifiers.push(user.email);
+        }
+        devices = memDevices.filter(d => userIdentifiers.includes(d.userId) || accessibleUids.includes(d.uid));
       }
       const sortedDevices = [...devices].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
       return res.json({ success: true, devices: sortedDevices });
@@ -232,18 +242,23 @@ router.get('/events/:userId', async (req, res) => {
   try {
     const userId = req.params.userId;
     if (global.dbConnected) {
-      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId }] });
+      const user = await User.findOne({ $or: [{ uid: userId }, { email: userId.toLowerCase().trim() }] });
       const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
-      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
-      const accessibleUids = user ? user.accessibleDevices : [];
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email)) || /admin|shohid|sarwar/i.test(userId);
+      const accessibleUids = user && Array.isArray(user.accessibleDevices) ? user.accessibleDevices : [];
 
       let events;
       if (isAdmin) {
         events = await Event.find({}).sort({ createdAt: -1 });
       } else {
+        const userIdentifiers = [userId];
+        if (user) {
+          if (user.uid && !userIdentifiers.includes(user.uid)) userIdentifiers.push(user.uid);
+          if (user.email && !userIdentifiers.includes(user.email)) userIdentifiers.push(user.email);
+        }
         const devices = await Device.find({
           $or: [
-            { userId: userId },
+            { userId: { $in: userIdentifiers } },
             { uid: { $in: accessibleUids } }
           ]
         });
@@ -252,16 +267,21 @@ router.get('/events/:userId', async (req, res) => {
       }
       return res.json({ success: true, events });
     } else {
-      const user = memUsers.find(u => u.uid === userId || u.email === userId);
+      const user = memUsers.find(u => u.uid === userId || u.email.toLowerCase().trim() === userId.toLowerCase().trim());
       const role = user ? user.role : (userId === 'admin' ? 'admin' : 'operator');
-      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email));
-      const accessibleUids = user ? user.accessibleDevices : [];
+      const isAdmin = role === 'admin' || (user && /admin|shohid|sarwar/i.test(user.email)) || /admin|shohid|sarwar/i.test(userId);
+      const accessibleUids = user && Array.isArray(user.accessibleDevices) ? user.accessibleDevices : [];
 
       let uids;
       if (isAdmin) {
         uids = memDevices.map(d => d.uid);
       } else {
-        const devices = memDevices.filter(d => d.userId === userId || accessibleUids.includes(d.uid));
+        const userIdentifiers = [userId];
+        if (user) {
+          if (user.uid && !userIdentifiers.includes(user.uid)) userIdentifiers.push(user.uid);
+          if (user.email && !userIdentifiers.includes(user.email)) userIdentifiers.push(user.email);
+        }
+        const devices = memDevices.filter(d => userIdentifiers.includes(d.userId) || accessibleUids.includes(d.uid));
         uids = devices.map(d => d.uid);
       }
       
